@@ -8,19 +8,21 @@ Live showcase: [vacuum.stjhn.xyz](https://vacuum.stjhn.xyz)
 
 ## Showcase
 
+Interactive sections are recorded as GIFs; static ones are stills.
+
 | Section | Preview |
 |---|---|
 | Displays | ![Displays](assets/gifs/displays.gif) |
-| Materials | ![Materials](assets/gifs/materials.gif) |
+| Materials | ![Materials](assets/gifs/materials.jpg) |
 | Forms | ![Forms](assets/gifs/forms.gif) |
 | Navigation | ![Navigation](assets/gifs/navigation.gif) |
 | Overlays | ![Overlays](assets/gifs/overlays.gif) |
-| Cards | ![Cards](assets/gifs/cards.gif) |
-| Badges | ![Badges](assets/gifs/badges.gif) |
+| Cards | ![Cards](assets/gifs/cards.jpg) |
+| Badges | ![Badges](assets/gifs/badges.jpg) |
 | Buttons | ![Buttons](assets/gifs/buttons.gif) |
-| Alerts | ![Alerts](assets/gifs/alerts.gif) |
-| Palette | ![Palette](assets/gifs/palette.gif) |
-| Data | ![Data](assets/gifs/data.gif) |
+| Alerts | ![Alerts](assets/gifs/alerts.jpg) |
+| Palette | ![Palette](assets/gifs/palette.jpg) |
+| Data | ![Data](assets/gifs/data.jpg) |
 
 - **Dark** is a black hi-fi chassis with silkscreened legends.
 - **Daylight** is a brushed silver chassis with dark legends.
