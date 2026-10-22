@@ -7,7 +7,7 @@ const surfaces = [
   { name: 'paper', class: 'paper' },
   { name: 'paper manila', class: 'paper manila rounded-sm' },
   { name: 'rack', class: 'rack rounded-sm' },
-  { name: 'rails', class: 'rails' },
+  { name: 'drawer', class: 'drawer drawer-front-left relative' },
   { name: 'note', class: 'note', label: 'Call MAGI' },
   { name: 'paper punched', class: 'paper punched' },
 ]
@@ -16,7 +16,7 @@ const tapes = [
   { name: 'Dyed', class: '[--tape:var(--ui-color-error-600)]' },
   { name: 'Clear', class: '[--tape:oklch(100%_0_0/0.07)] [--tape-ink:var(--ui-color-primary-500)]' },
   { name: 'Black', class: '' },
-  { name: 'White', class: '[--tape:oklch(95%_0.006_90)] [--tape-ink:var(--ui-color-info-600)]' },
+  { name: 'White', class: '[--tape:oklch(95%_0.006_90)] [--tape-ink:var(--ui-color-info-600)] [--emboss:oklch(100%_0_0/0.9)]' },
 ]
 
 const folders = ['Personnel', 'Budget', 'Pattern blue', 'Archive']
@@ -145,7 +145,7 @@ function toggle(index: number) {
             v-if="openFolder === index"
             class="folder-face"
           >
-            <p class="paper rounded-[2px] px-4 py-3 text-sm">
+            <p class="paper rounded-t-[2px] rounded-b-none px-4 pt-3 pb-[calc(0.75rem+var(--folder-tab-height)-var(--folder-lip))] text-sm">
               Contents of {{ folder.toLowerCase() }}.
             </p>
           </div>

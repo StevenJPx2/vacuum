@@ -11,6 +11,17 @@ export const vfd = {
 
 export type VfdColor = keyof typeof vfd
 
+/** Readouts stay luminous behind dark glass in daylight too; neutral is white, not amber. */
+export const litVfd = {
+  primary: '[--vfd:var(--ui-color-primary-400)]',
+  secondary: '[--vfd:var(--ui-color-secondary-400)]',
+  success: '[--vfd:var(--ui-color-success-400)]',
+  info: '[--vfd:var(--ui-color-info-400)]',
+  warning: '[--vfd:var(--ui-color-warning-400)]',
+  error: '[--vfd:var(--ui-color-error-400)]',
+  neutral: '[--vfd:var(--ui-color-neutral-100)]',
+} as const
+
 export const colors = Object.keys(vfd) as VfdColor[]
 
 /** Pigments for printed and moulded objects, fixed across colour modes like the physical thing. */
@@ -29,7 +40,7 @@ export const tape = {
   dyed: '[--tape:var(--pigment)] [--tape-ink:oklch(97%_0.005_90)]',
   clear: '[--tape:oklch(100%_0_0/0.07)] [--tape-ink:var(--pigment)]',
   black: '[--tape:oklch(17%_0.01_220)] [--tape-ink:color-mix(in_oklab,var(--pigment),white_40%)]',
-  white: '[--tape:oklch(95%_0.006_90)] [--tape-ink:var(--pigment)]',
+  white: '[--tape:oklch(95%_0.006_90)] [--tape-ink:var(--pigment)] [--emboss:oklch(100%_0_0/0.9)]',
 }
 
 /** Uppercase hardware legend in the body face. */

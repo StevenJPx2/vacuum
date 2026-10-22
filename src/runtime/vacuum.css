@@ -330,10 +330,7 @@
   background-repeat: no-repeat;
 }
 
-/*
- * Telescopic steel runners along the top and bottom (`rails`) or the sides (`rails-y`)
- * of a chassis drawer pulled out of its housing.
- */
+/* Telescopic steel runners retained for standalone chassis compositions. */
 @utility rails {
   @apply chassis;
   --rail: 0.5rem;
@@ -361,6 +358,81 @@
 }
 
 /*
+ * A drawer pulled out of the chassis: a brushed-metal front plate along the edge that faces
+ * you, with a recessed finger pull. `drawer-front-left|right|top|bottom` places the front.
+ * The element must be positioned, as a fixed or absolute panel already is.
+ */
+@utility drawer {
+  @apply chassis;
+  --drawer-front: 0.875rem;
+  background:
+    linear-gradient(var(--front-angle, 90deg), oklch(78% 0.006 220), oklch(60% 0.008 220) 60%, oklch(70% 0.006 220)) var(--front-pos, left top) / var(--front-size, var(--drawer-front) 100%) no-repeat,
+    var(--vfd-texture),
+    var(--vfd-chassis);
+
+  /* The finger pull: a dark slot cut into the front plate. */
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    left: var(--pull-x, calc(var(--drawer-front) / 2));
+    top: var(--pull-y, 50%);
+    width: var(--pull-w, 0.375rem);
+    height: var(--pull-h, 4rem);
+    translate: -50% -50%;
+    border-radius: 9999px;
+    background: oklch(24% 0.01 220);
+    box-shadow: inset 0 1px 2px oklch(0% 0 0 / 0.7), 0 1px 0 oklch(100% 0 0 / 0.35);
+  }
+}
+
+@utility drawer-front-left {
+  --front-angle: 90deg;
+  --front-pos: left top;
+  --front-size: var(--drawer-front) 100%;
+  --pull-x: calc(var(--drawer-front) / 2);
+  --pull-y: 50%;
+  padding-left: var(--drawer-front);
+}
+
+@utility drawer-front-right {
+  --front-angle: 270deg;
+  --front-pos: right top;
+  --front-size: var(--drawer-front) 100%;
+  --pull-x: calc(100% - var(--drawer-front) / 2);
+  --pull-y: 50%;
+  padding-right: var(--drawer-front);
+}
+
+@utility drawer-front-top {
+  --front-angle: 180deg;
+  --front-pos: left top;
+  --front-size: 100% var(--drawer-front);
+  --pull-x: 50%;
+  --pull-y: calc(var(--drawer-front) / 2);
+  --pull-w: 4rem;
+  --pull-h: 0.375rem;
+  padding-top: var(--drawer-front);
+}
+
+@utility drawer-front-bottom {
+  --front-angle: 0deg;
+  --front-pos: left bottom;
+  --front-size: 100% var(--drawer-front);
+  --pull-x: 50%;
+  --pull-y: calc(100% - var(--drawer-front) / 2);
+  --pull-w: 4rem;
+  --pull-h: 0.375rem;
+  padding-bottom: var(--drawer-front);
+}
+
+/* A key set into a recessed well in its panel, as for a close or eject key. */
+@utility inset-key {
+  --tw-ring-shadow: 0 0 0 3px var(--vfd-slot), 0 0 0 4px var(--vfd-highlight);
+  box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+/*
  * A plastic keycap. Colour comes from the element's background colour;
  * `knurled` adds grip grooves and `dished` a concave top.
  */
@@ -383,7 +455,8 @@
   transition-duration: 120ms;
   transition-timing-function: var(--ease-out);
 
-  &:active:not(:disabled, [aria-disabled="true"]) {
+  /* Only keys that do something travel; a static cap (an avatar) stays put with what's mounted on it. */
+  &:is(button, a, label, [role="button"], [role="tab"], [role="radio"], [role="checkbox"], [tabindex], :has(button, [role="radio"])):active:not(:disabled, [aria-disabled="true"]) {
     transform: translateY(2px) scale(0.98);
     --tw-shadow:
       inset 0 1px 0 oklch(100% 0 0 / 0.12),
@@ -443,11 +516,12 @@
   box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
 }
 
-/* Raised lettering pressed up from behind, as on label-maker tape or a nameplate. */
+/*
+ * Raised lettering pressed up from behind, as on label-maker tape or a nameplate: a single
+ * crisp 1px edge. `--emboss` is the edge's colour; light surfaces catch light rather than cast shade.
+ */
 @utility embossed {
-  text-shadow:
-    0 1px 0 oklch(0% 0 0 / 0.45),
-    0 -0.5px 0 oklch(100% 0 0 / 0.35);
+  text-shadow: 0 1px 0 var(--emboss, oklch(0% 0 0 / 0.5));
 }
 
 /*
@@ -563,7 +637,8 @@
 @utility punched {
   --punch-margin: 1.5rem;
   padding-inline-start: var(--punch-margin);
-  background-image: radial-gradient(circle at 50% 50%, var(--ui-bg) 0 0.28rem, oklch(0% 0 0 / 0.22) 0.28rem 0.33rem, transparent 0.35rem);
+  /* A clean die-cut hole: the page behind, with a hard (half-pixel anti-aliased) edge. */
+  background-image: radial-gradient(circle at 50% 50%, var(--ui-bg) 0 0.3rem, transparent calc(0.3rem + 0.5px));
   background-position: left top;
   background-size: var(--punch-margin) 1.75rem;
   background-repeat: repeat-y;
@@ -575,17 +650,37 @@
   position: relative;
   rotate: -0.6deg;
 
+  /*
+   * A steel gem clip. The inner loop grips the paper from the front: one leg runs up to the
+   * top edge and over, the other ends free just below it. The outer loop is the same wire on
+   * the back, so only the turn above the paper's edge shows; the clip-path cuts it off where
+   * the sheet begins, which is what makes it read as passing behind the paper.
+   */
   &::before {
     content: "";
     position: absolute;
-    top: -0.625rem;
+    top: -0.875rem;
     left: 1.25rem;
-    z-index: 1;
-    width: 0.75rem;
-    height: 1.75rem;
-    border: 2px solid oklch(74% 0.008 220);
-    border-radius: 9999px;
-    box-shadow: 0 1px 1px oklch(0% 0 0 / 0.3);
+    z-index: 2;
+    width: 0.875rem;
+    height: 2.5rem;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 44'%3E%3Cdefs%3E%3ClinearGradient id='s' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23e3e6e8'/%3E%3Cstop offset='.45' stop-color='%23878d92'/%3E%3Cstop offset='.6' stop-color='%23b9bec2'/%3E%3Cstop offset='1' stop-color='%23d5d9dc'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M4.5 15.4V33.25a2.75 2.75 0 0 0 5.5 0V17.5' fill='none' stroke='url(%23s)' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+    filter: drop-shadow(0 1px 0.5px oklch(0% 0 0 / 0.45));
+  }
+
+  /* The far side of the wire, emerging over the top edge and dropping behind the sheet. */
+  &::after {
+    content: "";
+    position: absolute;
+    top: -0.875rem;
+    left: 1.25rem;
+    z-index: 0;
+    width: 0.875rem;
+    height: 2.5rem;
+    pointer-events: none;
+    clip-path: inset(0 0 calc(100% - 0.875rem) 0);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 44'%3E%3Cdefs%3E%3ClinearGradient id='s' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23c5cacd'/%3E%3Cstop offset='.45' stop-color='%236d7378'/%3E%3Cstop offset='.6' stop-color='%23999fa4'/%3E%3Cstop offset='1' stop-color='%23b2b7bb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M4.5 15.4a4 4 0 0 1 8 0' fill='none' stroke='url(%23s)' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
   }
 }
 
@@ -597,7 +692,7 @@
 /* Continuous-feed margins: tractor-feed holes and perforations down both edges. */
 @utility tractor-feed {
   --margin: 1.75rem;
-  --hole: radial-gradient(circle at 50% 50%, var(--ui-bg) 0 0.3rem, oklch(0% 0 0 / 0.25) 0.3rem 0.34rem, transparent 0.36rem);
+  --hole: radial-gradient(circle at 50% 50%, var(--ui-bg) 0 0.3rem, transparent calc(0.3rem + 0.5px));
   --perforation: linear-gradient(oklch(0% 0 0 / 0.2) 50%, transparent 50%);
   padding-inline: var(--margin);
   background-image: var(--hole), var(--hole), var(--perforation), var(--perforation);
@@ -681,17 +776,19 @@
  * The open folder's face; paper inside it is white sheet stock. The stack's geometry is the
  * same open or closed, so opening only grows this face. Its contents are inset by margins
  * rather than padding, so the whole face, spacing included, grows inside the height animation
- * of whatever reveals it; the bottom margin is the strip the next folder's tab covers.
+ * of whatever reveals it. Paper runs to the bottom and is cropped by the folder, not floated
+ * above it. Give its text bottom padding to clear the next overlapping tab.
  */
 @utility folder-face {
   --paper: oklch(97% 0.01 95);
   display: flow-root;
+  overflow: hidden;
   background-color: var(--folder-stock, var(--paper));
   border-top-right-radius: 0.375rem;
   box-shadow: 0 -1px 3px oklch(0% 0 0 / 0.3);
 
   & > * {
-    margin: 0.75rem 1.5rem calc(var(--folder-tab-height, 2.25rem) - var(--folder-lip, 0.875rem));
+    margin: 0.75rem 1.5rem 0;
   }
 }
 
@@ -821,6 +918,15 @@
 
 @utility segments-y {
   mask-image: repeating-linear-gradient(0deg, #000 0 var(--vfd-segment, 6px), transparent var(--vfd-segment, 6px) calc(var(--vfd-segment, 6px) + 2px));
+}
+
+/* Painted LED segments, not a mask: a drop-shadow can escape their edges without being cut off. */
+@utility led-bar {
+  background-image: repeating-linear-gradient(90deg, var(--vfd, var(--ui-primary)) 0 var(--vfd-segment, 6px), transparent var(--vfd-segment, 6px) calc(var(--vfd-segment, 6px) + 2px));
+}
+
+@utility led-bar-y {
+  background-image: repeating-linear-gradient(0deg, var(--vfd, var(--ui-primary)) 0 var(--vfd-segment, 6px), transparent var(--vfd-segment, 6px) calc(var(--vfd-segment, 6px) + 2px));
 }
 
 /* The control grid in front of the phosphor. */

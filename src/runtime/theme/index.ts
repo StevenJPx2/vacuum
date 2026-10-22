@@ -1,4 +1,4 @@
-import { colors, legend, perColor, pigment, tape, vfd } from './shared'
+import { colors, legend, litVfd, perColor, pigment, tape, vfd } from './shared'
 
 /* Materials */
 
@@ -6,18 +6,26 @@ import { colors, legend, perColor, pigment, tape, vfd } from './shared'
 const keyBg = 'bg-(--vfd-key) hover:bg-(--vfd-key) active:bg-(--vfd-key) disabled:bg-(--vfd-key) aria-disabled:bg-(--vfd-key) dark:disabled:bg-(--vfd-key) dark:aria-disabled:bg-(--vfd-key)'
 
 /** A field is a small screen: lit phosphor text behind glass set in a thin moulded frame. */
-const field = 'screen [--bezel:0.25rem] [--bezel-radius:0.5rem] rounded-(--bezel-radius) font-mono text-highlighted glow placeholder:text-dimmed caret-(--ui-primary)'
+const field = 'screen [--bezel:0.25rem] [--bezel-radius:0.5rem] rounded-(--bezel-radius) font-mono glow'
+const fieldInk = 'text-(--vfd) placeholder:text-[color-mix(in_oklab,var(--vfd)_60%,var(--vfd-window))] caret-(--vfd)'
 const glass = 'bg-(--vfd-window) hover:bg-(--vfd-window) focus:bg-(--vfd-window) has-focus:bg-(--vfd-window) disabled:bg-(--vfd-window) dark:disabled:bg-(--vfd-window)'
 /** The frame replaces Nuxt UI's outline; a highlighted field lights a ring around its frame. */
 const fieldVariants = [
-  ...perColor('base'),
+  ...perColor('root', litVfd),
+  ...perColor('base', litVfd),
+  // Upstream variant text utilities come after slots, so the selected phosphor wins here.
+  { color: colors, class: { base: fieldInk } },
   { variant: ['soft', 'subtle', 'ghost'], class: { base: glass } },
   { variant: ['outline', 'subtle'], class: { base: 'ring-0' } },
   { highlight: true, class: { base: 'light-ring-on' } },
 ]
 
-/** A printed menu card punched for a binder; the hovered line is marked with a highlighter. */
-const menuCard = 'paper punched bg-(--paper) rounded-[2px] ring-0'
+/** A small VFD menu screen with crisp, inverted selection rows. */
+const menuCard = 'screen [--bezel:0.25rem] [--bezel-radius:0.375rem] rounded-(--bezel-radius) ring-0 font-mono'
+const menuItem = 'font-mono before:rounded-[1px] data-highlighted:not-data-disabled:text-(--vfd-window) data-highlighted:not-data-disabled:before:bg-(--vfd)'
+
+/** A printed close legend on a key seated in the faceplate, not a floating glyph. */
+const closeKey = `keycap inset-key ${keyBg} rounded-[3px] size-8 justify-center text-(--vfd-key-legend) focus-visible:outline-2 focus-visible:outline-offset-4`
 
 /* Keys */
 
@@ -156,6 +164,8 @@ export const breadcrumb = {
 const fieldTheme = {
   slots: {
     base: field,
+    leadingIcon: 'text-(--vfd)',
+    trailingIcon: 'text-(--vfd)',
   },
   compoundVariants: fieldVariants,
 }
@@ -176,11 +186,16 @@ const selectTheme = {
   slots: {
     base: field,
     value: 'glow',
+    placeholder: 'text-[color-mix(in_oklab,var(--vfd)_60%,var(--vfd-window))]',
+    leadingIcon: 'text-(--vfd)',
+    trailingIcon: 'text-(--vfd)',
     content: menuCard,
     label: 'font-mono uppercase tracking-[0.12em] text-[10px] text-muted',
-    item: 'font-mono data-highlighted:not-data-disabled:before:bg-(--highlighter)',
+    item: menuItem,
+    itemLeadingIcon: 'text-current group-data-highlighted:not-group-data-disabled:text-current',
+    itemDescription: 'text-current opacity-70',
   },
-  compoundVariants: fieldVariants,
+  compoundVariants: [...fieldVariants, ...perColor('content', litVfd)],
 }
 
 export const select = selectTheme
@@ -269,15 +284,16 @@ export { switchTheme as switch }
 // A mixer fader: a wide knurled cap with a centre line, over a segmented LED trail and a printed scale.
 export const slider = {
   slots: {
-    track: 'recess bg-(--vfd-slot) rounded-none',
-    range: 'rounded-none glow-box',
+    track: 'recess bg-(--vfd-slot) rounded-none overflow-visible',
+    range: 'rounded-none glow-svg',
     thumb: 'keycap bg-(--vfd-key) rounded-[2px] ring-0 relative w-8 h-4',
   },
   compoundVariants: [
-    ...perColor('range'),
+    ...perColor('root'),
     ...perColor('thumb'),
-    { orientation: 'horizontal', class: { root: 'scale pb-2.5', range: 'segments', thumb: 'dished needle' } },
-    { orientation: 'vertical', class: { root: 'scale-y ps-2.5', range: 'segments-y', thumb: 'dished-y needle-y' } },
+    { color: colors, class: { range: 'bg-transparent' } },
+    { orientation: 'horizontal', class: { root: 'scale pb-2.5', range: 'led-bar', thumb: 'dished needle' } },
+    { orientation: 'vertical', class: { root: 'scale-y ps-2.5', range: 'led-bar-y', thumb: 'dished-y needle-y' } },
   ],
 }
 
@@ -341,7 +357,7 @@ export const accordion = {
     trailingIcon: 'hidden',
     content: 'folder-face',
     // The details are a sheet of paper filed inside the folder.
-    body: 'paper rounded-[2px] px-4 py-3 text-sm',
+    body: 'paper rounded-t-[2px] rounded-b-none px-4 pt-3 pb-[calc(0.75rem+var(--folder-tab-height)-var(--folder-lip))] text-sm',
   },
 }
 
@@ -366,7 +382,7 @@ export const separator = {
   },
 }
 
-/* Overlays: hardware for tasks, paper for notes and menus */
+/* Overlays: hardware for tasks, paper for notes, VFD screens for menus */
 
 // A rack-mount module: a faceplate with rack ears and screws.
 export const modal = {
@@ -374,6 +390,8 @@ export const modal = {
     overlay: 'bg-black/55',
     title: 'silkscreen text-xs',
     description: 'text-xs',
+    close: `${closeKey} end-12`,
+    wrapper: 'pe-12',
   },
   // A compound, so the faceplate merges after the `fullscreen` variant's `shadow-lg`.
   compoundVariants: [
@@ -381,17 +399,21 @@ export const modal = {
   ],
 }
 
-// A drawer pulled out of the chassis on telescopic runners.
+// A drawer pulled out of the chassis, with a metal leading edge and recessed finger pull.
 export const slideover = {
   slots: {
     overlay: 'bg-black/55',
-    content: 'bg-(--vfd-chassis) rounded-none ring-0',
+    content: 'drawer bg-(--vfd-chassis) rounded-none ring-0',
     title: 'silkscreen text-xs',
     description: 'text-xs',
+    close: closeKey,
+    wrapper: 'pe-12',
   },
   compoundVariants: [
-    { side: ['left', 'right'], class: { content: 'rails' } },
-    { side: ['top', 'bottom'], class: { content: 'rails-y' } },
+    { side: 'right', class: { content: 'drawer-front-left' } },
+    { side: 'left', class: { content: 'drawer-front-right', close: 'end-8' } },
+    { side: 'bottom', class: { content: 'drawer-front-top', close: 'top-8' } },
+    { side: 'top', class: { content: 'drawer-front-bottom' } },
   ],
 }
 
@@ -404,12 +426,14 @@ export const popover = {
 
 export const dropdownMenu = {
   slots: {
-    content: menuCard,
+    content: `${menuCard} [--vfd:var(--ui-primary)]`,
     label: 'font-mono uppercase tracking-[0.12em] text-[10px] text-muted',
-    item: 'font-mono',
+    item: 'font-mono before:rounded-[1px]',
+    itemDescription: 'text-current opacity-70',
   },
   compoundVariants: [
-    { active: false, class: { item: 'data-highlighted:before:bg-(--highlighter) data-[state=open]:before:bg-(--highlighter)' } },
-    { active: true, class: { item: 'before:bg-(--highlighter)' } },
+    ...perColor('item'),
+    { active: false, class: { item: 'text-(--vfd) data-highlighted:text-(--vfd-window) data-[state=open]:text-(--vfd-window) data-highlighted:before:bg-(--vfd) data-[state=open]:before:bg-(--vfd)', itemLeadingIcon: 'text-current group-data-highlighted:text-current group-data-[state=open]:text-current' } },
+    { active: true, class: { item: 'text-(--vfd-window) before:bg-(--vfd)', itemLeadingIcon: 'text-current' } },
   ],
 }

@@ -12,19 +12,19 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 | Checkbox | An illuminated push button: a tick printed on a tinted lens in a light-ringed housing; checking lights both |
 | Radio group | Interlocking radio keys with indicator LEDs |
 | Switch | A chrome toggle knob in a slot ringed by a light that comes on with it |
-| Slider, Progress | A mixer fader over a segmented LED trail and printed scale, and a segmented LED bar graph |
+| Slider, Progress | A mixer fader over a glowing segmented LED trail and printed scale, and a segmented LED bar graph |
 | Tabs | `pill`: latching source-selector keys in a recessed tray. `link`: a tuner dial with a sliding needle |
 | Accordion | A stack of manila file folders; the open one shows a paper sheet filed inside |
 | Table | A printout on continuous-feed green-bar paper |
-| Input, Select, Textarea, Pin input | Small screens in a thin moulded frame; `highlight` lights a ring around the frame |
+| Input, Select, Textarea, Pin input | Small screens in a thin moulded frame; text, placeholder and icons light in the field's colour, and `highlight` lights a ring around the frame |
 | Breadcrumb | A display window |
 | Alert, Toast, Tooltip | Display windows with dot-matrix titles |
 | Badge | Label-maker tape with embossed letters: dyed (`solid`), clear (`outline`), black (`soft`), white (`subtle`) |
 | Card | Screens in a moulded frame; `solid` is lit edge to edge, `soft` is bare glass |
 | Modal | A rack-mount module with rack ears and screws |
-| Slideover | A drawer pulled out on telescopic runners |
-| Dropdown menu, Select menus | A printed menu card punched for a binder; the hovered line is highlighted |
-| Popover | A paper note held by a paperclip |
+| Slideover | A drawer pulled out of the chassis: a brushed leading edge with a recessed finger pull, and a close key set into the faceplate |
+| Dropdown menu, Select menus | A small VFD screen; the highlighted line inverts to dark text on lit phosphor |
+| Popover | A paper note held by a steel gem clip whose outer loop wraps behind the sheet |
 
 ## Setup
 
@@ -120,18 +120,21 @@ Every component theme is a composition of these utilities; the showcase's Materi
 | `folder-stack`, `folder`, `folder-tab`, `folder-face` | Stacked file folders with staggered tabs stepping down in a staircase; only tabs and open faces take clicks; the `data-state="open"` folder shows its face, and `paper` inside it is white sheet stock |
 | `rack` | Rack-mount faceplate with ears and screws (`--rack-ear`) |
 | `rails`, `rails-y` | Telescopic drawer runners top and bottom, or on the sides (`--rail`) |
-| `label-tape`, `embossed` | Label-maker tape (`--tape`, `--tape-ink`) and raised lettering |
+| `drawer`, `drawer-front-{left,right,top,bottom}` | A drawer with a brushed metal leading edge, recessed finger pull and inset content (`--drawer-front`) |
+| `inset-key` | A key seated in a recessed well, as for an eject or close key |
+| `label-tape`, `embossed` | Label-maker tape (`--tape`, `--tape-ink`) and raised lettering (`--emboss` edge colour) |
 | `metal` | Polished metal for knobs and levers |
 | `light-ring`, `light-ring-on` | An illuminated ring around a control's housing, dim and lit |
 | `lens`, `lens-lit` | A tinted lens over a lamp, unlit and glowing; `lens` composes with `keycap` |
 | `legend-check` | A tick printed on a key, always present like a real legend (`--legend-ink`) |
 | `punched` | Binder punch holes down a sheet's left margin |
-| `note` | Paper held by a paperclip, set down slightly askew |
+| `note` | Paper held by a gem clip — inner loop in front, outer loop around the back — set down slightly askew |
 | `silkscreen` | Printed chassis label |
 | `led`, `led-on` | Indicator LED (`--led-size`), unlit and lit; works on `before:`/`after:` |
 | `needle`, `needle-y` | Glowing index line across a positioned element's centre |
 | `scale`, `scale-y` | Printed tick marks (`--scale-step`, `--scale-height`) |
 | `segments`, `segments-y` | Cut an element into bar-graph segments |
+| `led-bar`, `led-bar-y` | Paint bar-graph segments as background, so their glow is not clipped by a mask |
 | `glow`, `glow-box`, `glow-svg` | Phosphor glow on text, boxes and SVG |
 | `ghost` | Unlit segment tint |
 | `mesh` | Control-grid overlay |
