@@ -99,7 +99,7 @@ export const badge = {
 // A screen: display glass in a moulded frame, titled in dot-matrix.
 export const card = {
   slots: {
-    root: 'screen [--bezel-radius:0.875rem] rounded-(--bezel-radius) ring-0 text-base text-default [--vfd:var(--ui-primary)] relative matrix-grid',
+    root: 'screen [--bezel-radius:0.875rem] rounded-(--bezel-radius) ring-0 text-base text-default [--vfd:var(--ui-primary)]',
     // Cards on the screen read as a vacuum readout: the title is dot-matrix.
     title: 'matrix font-matrix font-normal text-base uppercase tracking-normal text-highlighted glow',
     description: 'font-mono text-muted',
@@ -118,7 +118,7 @@ export const card = {
 
 export const alert = {
   slots: {
-    root: 'window mesh rounded-sm text-base relative matrix-grid',
+    root: 'window mesh rounded-sm text-base',
     title: 'matrix font-matrix font-normal text-base uppercase tracking-normal glow',
     description: 'font-mono',
     icon: 'matrix-icon glow-icon',
@@ -136,7 +136,7 @@ export const alert = {
 
 export const toast = {
   slots: {
-    root: 'window mesh rounded-sm ring-0 text-base relative matrix-grid',
+    root: 'window mesh rounded-sm ring-0 text-base',
     title: 'matrix font-matrix font-normal text-base uppercase tracking-normal text-highlighted glow',
     description: 'font-mono',
     icon: 'matrix-icon glow-icon',
@@ -146,7 +146,7 @@ export const toast = {
 
 export const tooltip = {
   slots: {
-    content: 'window rounded-xs ring-0 font-mono text-xs uppercase tracking-wider glow relative matrix-grid',
+    content: 'window rounded-xs ring-0 font-mono text-xs uppercase tracking-wider glow',
     text: 'matrix font-matrix font-normal text-xs uppercase tracking-normal glow',
   },
 }
@@ -163,10 +163,10 @@ export const table = {
 
 export const breadcrumb = {
   slots: {
-    root: 'window inline-flex rounded-xs px-3 py-1.5 text-xs relative matrix-grid',
+    root: 'window inline-flex rounded-xs px-3 py-1.5 text-xs',
     link: 'matrix font-matrix font-normal text-xs uppercase tracking-normal',
-    linkLeadingIcon: 'matrix-icon glow-icon',
-    separatorIcon: 'matrix-icon text-(--ui-color-neutral-500)',
+    linkLeadingIcon: 'text-(--vfd) glow-icon',
+    separatorIcon: 'text-(--ui-color-neutral-500) size-4',
   },
   compoundVariants: [
     { active: true, class: { link: 'glow', linkLeadingIcon: 'glow-icon' } },
@@ -231,7 +231,7 @@ const selectTheme = {
     leadingIcon: 'text-(--vfd) glow-icon',
     // The drum is its own affordance; no dropdown chevron.
     trailingIcon: 'hidden',
-    content: `${menuCard} text-base relative matrix-grid`,
+    content: `${menuCard} text-base`,
     label: 'font-mono uppercase tracking-[0.12em] text-[10px] text-muted',
     item: menuItem,
     itemLabel: 'matrix font-matrix font-normal text-base uppercase tracking-normal',
@@ -490,7 +490,7 @@ export const popover = {
 
 export const dropdownMenu = {
   slots: {
-    content: `${menuCard} [--vfd:var(--ui-primary)] text-base relative matrix-grid`,
+    content: `${menuCard} [--vfd:var(--ui-primary)] text-base`,
     label: 'matrix font-matrix font-normal text-base uppercase tracking-normal text-muted',
     item: 'font-mono before:rounded-[1px]',
     itemLabel: 'matrix font-matrix font-normal text-base uppercase tracking-normal',

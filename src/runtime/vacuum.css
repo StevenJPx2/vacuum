@@ -1126,48 +1126,32 @@ svg.iconify {
 
 /*
  * Text set as a lit dot-matrix display in Vacuum Matrix (the `VDotMatrix` glyphs as a font),
- * over the faint unlit dots of every cell it spans. An em is eight dot rows and a character six
- * dot columns, so the unlit grid is painted in step with the letters. Keep the font size a
- * multiple of 8px so dots land on whole pixels: 16px gives a 2px pitch, 24px a 3px pitch.
+ * with the faint unlit dots of every cell it spans painted behind the letters. An em is eight
+ * dot rows and a character six dot columns, so the unlit grid lines up with the letters. Keep
+ * the font size a multiple of 8px so dots land on whole pixels: 16px gives a 2px pitch,
+ * 24px a 3px pitch.
  */
 @utility matrix {
+  --matrix-dot: calc(1em / 8);
+  --matrix-ghost: color-mix(in oklab, var(--vfd, currentColor) 11%, transparent);
+  --matrix-cell: radial-gradient(circle at calc(var(--matrix-dot) / 2) 50%, var(--matrix-ghost) 0 calc(var(--matrix-dot) * 0.38), transparent calc(var(--matrix-dot) * 0.38 + 0.5px));
   font-family: var(--font-matrix);
   font-weight: 400;
   font-synthesis: none;
   letter-spacing: 0;
   word-spacing: 0;
   line-height: 1;
-}
-
-/*
- * The unlit dot grid of a display, painted across the whole surface behind its contents. Pair
- * with `matrix` on the text inside: the grid tiles from the content box so its dots line up with
- * the letters, but it covers the whole panel the way a real display does.
- */
-@utility matrix-grid {
-  position: relative;
-  isolation: isolate;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    --matrix-dot: calc(1em / 8);
-    --matrix-ghost: color-mix(in oklab, var(--vfd, currentColor) 11%, transparent);
-    --matrix-cell: radial-gradient(circle at calc(var(--matrix-dot) / 2) 50%, var(--matrix-ghost) 0 calc(var(--matrix-dot) * 0.38), transparent calc(var(--matrix-dot) * 0.38 + 0.5px));
-    background-image: var(--matrix-cell), var(--matrix-cell), var(--matrix-cell), var(--matrix-cell), var(--matrix-cell);
-    background-size: calc(var(--matrix-dot) * 6) var(--matrix-dot);
-    background-position:
-      0 0,
-      var(--matrix-dot) 0,
-      calc(var(--matrix-dot) * 2) 0,
-      calc(var(--matrix-dot) * 3) 0,
-      calc(var(--matrix-dot) * 4) 0;
-    background-origin: content-box;
-    background-clip: border-box;
-  }
+  /* Five dot columns per six-column character cell; the sixth stays dark between characters. */
+  background-image: var(--matrix-cell), var(--matrix-cell), var(--matrix-cell), var(--matrix-cell), var(--matrix-cell);
+  background-size: calc(var(--matrix-dot) * 6) var(--matrix-dot);
+  background-position:
+    0 0,
+    var(--matrix-dot) 0,
+    calc(var(--matrix-dot) * 2) 0,
+    calc(var(--matrix-dot) * 3) 0,
+    calc(var(--matrix-dot) * 4) 0;
+  background-origin: content-box;
+  background-clip: content-box;
 }
 
 /*
