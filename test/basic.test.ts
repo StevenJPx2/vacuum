@@ -49,7 +49,7 @@ describe('ssr', async () => {
     // Notes on paper, tags on tape, a channel thumbwheel, a code on counter keys.
     expect(html).toContain('tractor-feed')
     expect(html).toContain('teletype')
-    expect(html).toContain('tape-field')
+    expect(html).toContain('label-tape')
     expect(html).toContain('thumbwheel')
   })
 

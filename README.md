@@ -19,7 +19,7 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 | Input | A lit field. `outline` is a screen in a moulded frame, `soft` a screen flush in a rubber gasket, `subtle` a screen in a brushed steel bezel, `ghost` bare phosphor over a dashed printed rule, `none` bare phosphor. `highlight` lights a ring around it |
 | Textarea | A teletype sheet on continuous-feed paper: sprocket holes, a printer's margin rule and ink text |
 | Select, Select menu | A detented channel thumbwheel with a lit index window; the open menu is a small VFD screen |
-| Input tags | A strip of white label-maker tape in a slot; each tag is a black tape chip with embossed letters |
+| Input tags | A dark label-maker well; each tag is a cut chip of white tape with embossed letters, and new text is typed in the well |
 | Pin input | A code on counter keys seated in a recessed tray; the focused key lights its ring and digit |
 | Breadcrumb | A display window |
 | Alert, Toast, Tooltip | Display windows with dot-matrix titles |
@@ -82,7 +82,7 @@ Ioskeley Mono isn't on a font provider, so at build time Vacuum downloads five w
 
 Nuxt UI's built-in icons (chevrons, close, check, loading, alerts…) are mapped to the [Pixel Icon Library](https://pixeliconlibrary.com) by HackerNoon, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), which ships with the package as `@iconify-json/pixel`. Use any of its icons as `i-pixel-*`, for example `<UIcon name="i-pixel-cassette-tape" />`. The mapping lives in `src/runtime/icons.ts`; override any of it in your `app.config.ts` under `ui.icons`.
 
-Modal and slideover close keys print an eject legend (`legend-eject`) instead of the mapped close glyph, so dismissing a panel reads as a hardware control rather than a UI close button. The accessible name is still “Close”.
+Modal and slideover close keys spell out CLOSE in silkscreen (`legend-word`) instead of the mapped close glyph, so dismissing a panel reads as a hardware control rather than a UI close button. The legend is the key's accessible name, so it follows your locale.
 
 `@nuxt/icon` finds collections installed under your app's or workspace's `node_modules`, which covers bun and npm installs. With pnpm's strict layout, add `@iconify-json/pixel` to your app's dependencies too, or the icons load from the Iconify API at runtime.
 
@@ -138,8 +138,8 @@ Every component theme is a composition of these utilities; the showcase's Materi
 | `rails`, `rails-y` | Telescopic drawer runners top and bottom, or on the sides (`--rail`) |
 | `drawer`, `drawer-front-{left,right,top,bottom}` | A drawer with a brushed metal leading edge, recessed finger pull and inset content (`--drawer-front`) |
 | `inset-key` | A key seated in a recessed well, as for an eject or close key |
-| `legend-eject` | A printed eject legend (triangle over a bar) masked from the current ink |
-| `label-tape`, `embossed` | Label-maker tape (`--tape`, `--tape-ink`) and raised lettering (`--emboss` edge colour); `tape-field` seats a strip in a shallow slot |
+| `legend-word` | A silkscreened key legend taken from the element's `aria-label` |
+| `label-tape`, `embossed` | Label-maker tape (`--tape`, `--tape-ink`) and raised lettering (`--emboss` edge colour) |
 | `metal` | Polished metal for knobs and levers |
 | `light-ring`, `light-ring-on` | An illuminated ring around a control's housing, dim and lit |
 | `lens`, `lens-lit` | A tinted lens over a lamp, unlit and glowing; `lens` composes with `keycap` |

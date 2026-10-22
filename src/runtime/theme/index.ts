@@ -33,8 +33,8 @@ const fieldVariants = [
 const menuCard = 'screen [--bezel:0.25rem] [--bezel-radius:0.375rem] rounded-(--bezel-radius) ring-0 font-mono'
 const menuItem = 'font-mono before:rounded-[1px] data-highlighted:not-data-disabled:text-(--vfd-window) data-highlighted:not-data-disabled:before:bg-(--vfd)'
 
-/** A printed eject legend on a key seated in the faceplate, not a floating close glyph. */
-const closeKey = `keycap inset-key legend-eject [&_.iconify]:hidden [&>svg]:hidden ${keyBg} rounded-[3px] size-8 justify-center text-(--vfd-key-legend) focus-visible:outline-2 focus-visible:outline-offset-4`
+/** A key seated in the faceplate with CLOSE silkscreened on it, not a floating close glyph. */
+const closeKey = `keycap inset-key legend-word [&_.iconify]:hidden [&>svg]:hidden ${keyBg} rounded-[3px] h-8 px-3 justify-center text-(--vfd-key-legend) focus-visible:outline-2 focus-visible:outline-offset-4`
 
 /* Keys */
 
@@ -193,27 +193,27 @@ export const textarea = {
   ],
 }
 
-// Tags are a strip of label tape in a slot: the field is the tape, the tags are cut chips.
+// Tags are cut label tape fed from a dark label-maker well; new text is typed in the well.
 export const inputTags = {
   slots: {
-    root: 'focus-within:outline-2 focus-within:outline-offset-4 focus-within:outline-[color-mix(in_oklab,var(--pigment)_55%,transparent)]',
-    base: `label-tape ${tape.white} tape-field font-mono`,
-    item: `label-tape ${tape.black} rounded-[2px] font-mono text-[10px]`,
-    itemDelete: 'text-(--tape-ink) hover:text-(--tape-ink) hover:bg-white/10',
-    input: 'bg-transparent text-(--tape-ink) placeholder:text-[color-mix(in_oklab,var(--tape-ink)_50%,var(--tape))] caret-(--tape-ink) focus:outline-none',
+    base: 'recess [--bezel:0.25rem] [--bezel-radius:0.5rem] rounded-(--bezel-radius) border-(length:--bezel) border-transparent font-mono',
+    item: `label-tape ${tape.white} rounded-[2px] font-mono text-[10px]`,
+    itemDelete: 'text-(--tape-ink) hover:text-(--tape-ink) hover:bg-black/10',
+    input: 'bg-transparent text-(--vfd-key-legend) placeholder:text-[color-mix(in_oklab,var(--vfd-key-legend)_45%,transparent)] caret-(--vfd) uppercase tracking-[0.12em] focus:outline-none',
   },
   compoundVariants: [
-    ...perColor('base', pigment),
+    ...perColor('base', litVfd),
     ...perColor('item', pigment),
-    // Nuxt UI's variant fill and ring come after slot classes; put the tape back on top.
+    // Nuxt UI's variant fill and ring come after slot classes; put the well and the tape back on top.
     {
       color: colors,
       class: {
-        base: 'bg-(--tape) hover:bg-(--tape) focus:bg-(--tape) has-focus:bg-(--tape) ring-1 ring-inset ring-black/30',
+        base: 'bg-(--vfd-slot) hover:bg-(--vfd-slot) focus:bg-(--vfd-slot) has-focus:bg-(--vfd-slot) ring-0 has-focus-visible:outline-0 has-focus:light-ring-on',
         item: 'bg-(--tape) text-(--tape-ink) ring-0',
-        itemDelete: 'text-(--tape-ink) hover:text-(--tape-ink) hover:bg-white/10',
+        itemDelete: 'text-(--tape-ink) hover:text-(--tape-ink) hover:bg-black/10',
       },
     },
+    { highlight: true, class: { base: 'light-ring-on' } },
   ],
 }
 
@@ -442,7 +442,7 @@ export const modal = {
     title: 'silkscreen text-xs',
     description: 'text-xs',
     close: `${closeKey} end-12`,
-    wrapper: 'pe-12',
+    wrapper: 'pe-24',
   },
   // A compound, so the faceplate merges after the `fullscreen` variant's `shadow-lg`.
   compoundVariants: [
@@ -458,7 +458,7 @@ export const slideover = {
     title: 'silkscreen text-xs',
     description: 'text-xs',
     close: closeKey,
-    wrapper: 'pe-12',
+    wrapper: 'pe-20',
   },
   compoundVariants: [
     { side: 'right', class: { content: 'drawer-front-left' } },
