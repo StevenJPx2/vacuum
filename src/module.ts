@@ -109,7 +109,8 @@ export default defineNuxtModule<ModuleOptions>({
           twMergeConfig: {
             extend: {
               classGroups: {
-                shadow: ['keycap', 'window', 'screen', 'screen-lit', 'bezel', 'chassis', 'recess', 'patch', 'paper'],
+                'shadow': ['keycap', 'window', 'screen', 'screen-lit', 'bezel', 'chassis', 'rack', 'rails', 'rails-y', 'recess', 'paper', 'note', 'metal', 'label-tape'],
+                'ring-w': ['light-ring', 'light-ring-on'],
               },
             },
           },

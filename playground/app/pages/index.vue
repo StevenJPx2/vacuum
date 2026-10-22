@@ -880,11 +880,13 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
               variant="subtle"
             />
             <template #content>
-              <div class="window m-2 rounded-xs p-3">
-                <VDotMatrix
-                  text="STANDBY"
-                  size="sm"
-                />
+              <div class="w-56 space-y-1 px-4 pt-4 pb-3 font-mono text-sm">
+                <p class="text-highlighted">
+                  Standby
+                </p>
+                <p class="text-muted">
+                  Hold until pattern blue is confirmed by MAGI.
+                </p>
               </div>
             </template>
           </UPopover>

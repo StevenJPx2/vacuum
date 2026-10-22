@@ -1,16 +1,23 @@
-import { colors, edgeInColor, fabric, legend, perColor, thread, threadOnBlack, vfd } from './shared'
+import { colors, legend, perColor, pigment, tape, vfd } from './shared'
 
 /* Materials */
 
 /** A dark plastic key that keeps its colour through hover, press and disabled states. */
 const keyBg = 'bg-(--vfd-key) hover:bg-(--vfd-key) active:bg-(--vfd-key) disabled:bg-(--vfd-key) aria-disabled:bg-(--vfd-key) dark:disabled:bg-(--vfd-key) dark:aria-disabled:bg-(--vfd-key)'
 
-/** A display window field: lit phosphor text behind smoked glass. */
-const field = 'window rounded-xs font-mono text-highlighted glow placeholder:text-dimmed caret-(--ui-primary)'
+/** A field is a small screen: lit phosphor text behind glass set in a thin moulded frame. */
+const field = 'screen [--bezel:0.25rem] [--bezel-radius:0.5rem] rounded-(--bezel-radius) font-mono text-highlighted glow placeholder:text-dimmed caret-(--ui-primary)'
 const glass = 'bg-(--vfd-window) hover:bg-(--vfd-window) focus:bg-(--vfd-window) has-focus:bg-(--vfd-window) disabled:bg-(--vfd-window) dark:disabled:bg-(--vfd-window)'
+/** The frame replaces Nuxt UI's outline; a highlighted field lights a ring around its frame. */
+const fieldVariants = [
+  ...perColor('base'),
+  { variant: ['soft', 'subtle', 'ghost'], class: { base: glass } },
+  { variant: ['outline', 'subtle'], class: { base: 'ring-0' } },
+  { highlight: true, class: { base: 'light-ring-on' } },
+]
 
-/** A raised chassis panel for overlays. */
-const panel = 'chassis bg-(--vfd-chassis) rounded-sm ring-0'
+/** A printed menu card punched for a binder; the hovered line is marked with a highlighter. */
+const menuCard = 'paper punched bg-(--paper) rounded-[2px] ring-0'
 
 /* Keys */
 
@@ -50,25 +57,23 @@ export const avatar = {
   ],
 }
 
-/* Embroidered patches */
+/* Label-maker tape */
+
+// Tape colour and embossed letters replace Nuxt UI's fill, text and ring per variant.
+const tapeOn = 'bg-(--tape) text-(--tape-ink) ring-0 rounded-[2px]'
 
 export const badge = {
   slots: {
-    base: 'patch [--patch-radius:5px] font-bold uppercase tracking-[0.1em]',
-    label: 'embroidered',
-  },
-  variants: {
-    size: {
-      xs: { base: '[--patch-edge-width:2px]' },
-      sm: { base: '[--patch-edge-width:2px]' },
-    },
+    base: 'label-tape rounded-[2px]',
   },
   compoundVariants: [
-    ...perColor('base', thread),
-    { variant: 'solid', class: { base: `${fabric.dyed} text-(--patch-thread)` } },
-    { variant: 'outline', class: { base: `${fabric.black} ${threadOnBlack} ${edgeInColor} text-(--patch-thread)` } },
-    { variant: 'soft', class: { base: `${fabric.black} ${threadOnBlack} text-(--patch-thread)` } },
-    { variant: 'subtle', class: { base: `${fabric.cream} text-(--patch-thread)` } },
+    ...perColor('base', pigment),
+    { variant: 'solid', class: { base: `${tape.dyed} ${tapeOn}` } },
+    { variant: 'outline', class: { base: `${tape.clear} ${tapeOn}` } },
+    { variant: 'soft', class: { base: `${tape.black} ${tapeOn}` } },
+    { variant: 'subtle', class: { base: `${tape.white} ${tapeOn}` } },
+    // Neutral letters on clear or black tape emboss white to stay legible.
+    { color: 'neutral', variant: ['outline', 'soft'], class: { base: '[--tape-ink:oklch(93%_0.005_90)]' } },
   ],
 }
 
@@ -146,15 +151,13 @@ export const breadcrumb = {
   ],
 }
 
-/* Form fields as display windows */
+/* Form fields as small screens */
 
 const fieldTheme = {
   slots: {
     base: field,
   },
-  compoundVariants: [
-    { variant: ['soft', 'subtle', 'ghost'], class: { base: glass } },
-  ],
+  compoundVariants: fieldVariants,
 }
 
 export const input = fieldTheme
@@ -166,22 +169,18 @@ export const inputTags = {
     base: field,
     item: 'rounded-[2px] font-mono uppercase text-[10px]',
   },
-  compoundVariants: [
-    { variant: ['soft', 'subtle', 'ghost'], class: { base: glass } },
-  ],
+  compoundVariants: fieldVariants,
 }
 
 const selectTheme = {
   slots: {
     base: field,
     value: 'glow',
-    content: panel,
-    label: 'silkscreen text-[9px] text-muted',
-    item: 'uppercase tracking-[0.06em]',
+    content: menuCard,
+    label: 'font-mono uppercase tracking-[0.12em] text-[10px] text-muted',
+    item: 'font-mono data-highlighted:not-data-disabled:before:bg-(--highlighter)',
   },
-  compoundVariants: [
-    { variant: ['soft', 'subtle', 'ghost'], class: { base: glass } },
-  ],
+  compoundVariants: fieldVariants,
 }
 
 export const select = selectTheme
@@ -192,7 +191,7 @@ export const pinInput = {
     base: `${field} font-display font-black`,
   },
   compoundVariants: [
-    { variant: ['soft', 'subtle', 'ghost'], class: { base: glass } },
+    ...fieldVariants,
     { size: 'xs', class: { base: 'text-base md:text-base' } },
     { size: 'sm', class: { base: 'text-lg md:text-lg' } },
     { size: 'md', class: { base: 'text-xl md:text-xl' } },
@@ -212,15 +211,21 @@ export const formField = {
 
 /* Physical controls */
 
-// A push key that lights up when checked.
+// An illuminated push button: a tinted lens over a lamp that glows when checked.
 export const checkbox = {
   slots: {
-    base: 'keycap bg-(--vfd-key) ring-0 rounded-[2px]',
-    indicator: 'glow-box',
+    base: 'keycap lens ring-0 rounded-[3px]',
+    indicator: 'lens-lit',
     label: `${legend} text-xs`,
     description: 'text-xs',
   },
-  compoundVariants: perColor('indicator'),
+  compoundVariants: [
+    ...perColor('base'),
+    { size: 'sm', class: { base: 'size-4' } },
+    { size: 'md', class: { base: 'size-5', icon: 'size-4' } },
+    { size: 'lg', class: { base: 'size-6', icon: 'size-4.5' } },
+    { size: 'xl', class: { base: 'size-7', icon: 'size-5' } },
+  ],
 }
 
 // Interlocking radio keys, each with an indicator LED.
@@ -243,17 +248,17 @@ export const radioGroup = {
   ],
 }
 
-// A slide switch: a knurled toggle riding in a recessed slot that backlights when on.
+// A metal toggle: a chrome knob riding in a slot ringed by a light that comes on with it.
 const switchTheme = {
   slots: {
-    base: 'recess rounded-[3px] data-[state=unchecked]:bg-(--vfd-slot)',
-    thumb: 'keycap knurled dished bg-(--vfd-key) rounded-[2px]',
+    base: 'recess light-ring rounded-full data-[state=unchecked]:bg-(--vfd-slot)',
+    thumb: 'metal rounded-full',
     label: `${legend} text-xs`,
     description: 'text-xs',
   },
   compoundVariants: [
     ...perColor('base'),
-    { color: colors, class: { base: 'data-[state=checked]:bg-[color-mix(in_oklab,var(--vfd)_55%,var(--vfd-slot))] data-[state=checked]:glow-box' } },
+    { color: colors, class: { base: 'data-[state=checked]:bg-(--vfd-slot) data-[state=checked]:light-ring-on' } },
   ],
 }
 
@@ -324,13 +329,13 @@ export const tabs = {
   ],
 }
 
-// File folders: staggered manila tabs; the open folder pulls forward from the stack.
+// File folders: staggered manila tabs; the open folder shows a paper sheet filed inside.
 export const accordion = {
   slots: {
     root: 'folder-stack manila pt-1',
     item: 'folder border-0',
     trigger: `folder-tab flex-none rounded-t-md rounded-b-none ${legend} text-xs px-4 py-0`,
-    content: 'folder-face px-3 pt-2',
+    content: 'folder-face px-6 pt-3',
     // The details are a sheet of paper filed inside the folder.
     body: 'paper rounded-[2px] px-4 py-3 text-sm',
   },
@@ -357,36 +362,50 @@ export const separator = {
   },
 }
 
-/* Chassis panels */
+/* Overlays: hardware for tasks, paper for notes and menus */
 
+// A rack-mount module: a faceplate with rack ears and screws.
 export const modal = {
   slots: {
     overlay: 'bg-black/55',
-    content: panel,
     title: 'silkscreen text-xs',
     description: 'text-xs',
   },
+  // A compound, so the faceplate merges after the `fullscreen` variant's `shadow-lg`.
+  compoundVariants: [
+    { fullscreen: [true, false], class: { content: 'rack bg-(--vfd-chassis) rounded-sm ring-0' } },
+  ],
 }
 
+// A drawer pulled out of the chassis on telescopic runners.
 export const slideover = {
   slots: {
     overlay: 'bg-black/55',
-    content: panel,
+    content: 'bg-(--vfd-chassis) rounded-none ring-0',
     title: 'silkscreen text-xs',
     description: 'text-xs',
   },
+  compoundVariants: [
+    { side: ['left', 'right'], class: { content: 'rails' } },
+    { side: ['top', 'bottom'], class: { content: 'rails-y' } },
+  ],
 }
 
+// A note clipped to its trigger.
 export const popover = {
   slots: {
-    content: panel,
+    content: 'note bg-(--paper) rounded-[2px] ring-0',
   },
 }
 
 export const dropdownMenu = {
   slots: {
-    content: panel,
-    label: 'silkscreen text-[9px] text-muted',
-    item: 'uppercase tracking-[0.06em]',
+    content: menuCard,
+    label: 'font-mono uppercase tracking-[0.12em] text-[10px] text-muted',
+    item: 'font-mono',
   },
+  compoundVariants: [
+    { active: false, class: { item: 'data-highlighted:before:bg-(--highlighter) data-[state=open]:before:bg-(--highlighter)' } },
+    { active: true, class: { item: 'before:bg-(--highlighter)' } },
+  ],
 }

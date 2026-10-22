@@ -13,27 +13,24 @@ export type VfdColor = keyof typeof vfd
 
 export const colors = Object.keys(vfd) as VfdColor[]
 
-/** Thread colours for embroidered patches, fixed across colour modes like a physical object. */
-export const thread = {
-  primary: '[--vfd:var(--ui-color-primary-500)]',
-  secondary: '[--vfd:var(--ui-color-secondary-500)]',
-  success: '[--vfd:var(--ui-color-success-500)]',
-  info: '[--vfd:var(--ui-color-info-500)]',
-  warning: '[--vfd:var(--ui-color-warning-500)]',
-  error: '[--vfd:var(--ui-color-error-500)]',
-  neutral: '[--vfd:oklch(95%_0.008_85)]',
+/** Pigments for printed and moulded objects, fixed across colour modes like the physical thing. */
+export const pigment = {
+  primary: '[--pigment:var(--ui-color-primary-600)]',
+  secondary: '[--pigment:var(--ui-color-secondary-600)]',
+  success: '[--pigment:var(--ui-color-success-600)]',
+  info: '[--pigment:var(--ui-color-info-600)]',
+  warning: '[--pigment:var(--ui-color-warning-600)]',
+  error: '[--pigment:var(--ui-color-error-600)]',
+  neutral: '[--pigment:oklch(22%_0.01_220)]',
 } as const
 
-/** Patch fabrics: black twill, colour-dyed twill and cream twill. */
-export const fabric = {
-  black: '[--patch-fabric:oklch(16%_0.006_220)] [--patch-edge:oklch(22%_0.006_220)]',
-  dyed: '[--patch-fabric:var(--vfd)] [--patch-edge:color-mix(in_oklab,var(--vfd)_72%,black)] [--patch-thread:oklch(15%_0.006_220)]',
-  cream: '[--patch-fabric:oklch(94%_0.018_85)] [--patch-edge:var(--vfd)] [--patch-thread:color-mix(in_oklab,var(--vfd)_85%,black)]',
+/** Label-maker tapes: dyed, clear, black and white, with the letters embossed in the pigment where the tape is plain. */
+export const tape = {
+  dyed: '[--tape:var(--pigment)] [--tape-ink:oklch(97%_0.005_90)]',
+  clear: '[--tape:oklch(100%_0_0/0.07)] [--tape-ink:var(--pigment)]',
+  black: '[--tape:oklch(17%_0.01_220)] [--tape-ink:color-mix(in_oklab,var(--pigment),white_40%)]',
+  white: '[--tape:oklch(95%_0.006_90)] [--tape-ink:var(--pigment)]',
 }
-
-/** Black-fabric thread follows the colour; edge in the colour for `outline`. */
-export const threadOnBlack = '[--patch-thread:var(--vfd)]'
-export const edgeInColor = '[--patch-edge:var(--vfd)]'
 
 /** Uppercase hardware legend in the body face. */
 export const legend = 'font-semibold uppercase tracking-[0.08em]'

@@ -1,6 +1,6 @@
 # Vacuum
 
-An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every component is a physical object: keys you press, lamps that light, fields behind smoked glass and stitched patches. It adds SVG display components for vacuum fluorescent readouts: segment digits, dot-matrix text, bar-graph meters and annunciator lamps.
+An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every component is a physical object: keys you press, lamps that light, screens behind smoked glass, label tape and paper. It adds SVG display components for vacuum fluorescent readouts: segment digits, dot-matrix text, bar-graph meters and annunciator lamps.
 
 - **Dark** is a black hi-fi chassis with silkscreened legends.
 - **Daylight** is a brushed silver chassis with dark legends.
@@ -9,16 +9,22 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 | Component | Material |
 |---|---|
 | Button, Kbd, Avatar, Pagination | Keycaps that travel when pressed; `subtle` keys carry an LED, `active` keys latch down |
-| Checkbox, Radio group, Switch | Light-up push keys, interlocking radio keys with LEDs, a knurled slide switch that backlights |
+| Checkbox | An illuminated push button: a tinted lens that glows when checked |
+| Radio group | Interlocking radio keys with indicator LEDs |
+| Switch | A chrome toggle knob in a slot ringed by a light that comes on with it |
 | Slider, Progress | A mixer fader over a segmented LED trail and printed scale, and a segmented LED bar graph |
 | Tabs | `pill`: latching source-selector keys in a recessed tray. `link`: a tuner dial with a sliding needle |
-| Accordion | A stack of manila file folders; the open one pulls forward |
+| Accordion | A stack of manila file folders; the open one shows a paper sheet filed inside |
 | Table | A printout on continuous-feed green-bar paper |
-| Input, Select, Textarea, Pin input, Breadcrumb | Display windows with glowing phosphor text |
+| Input, Select, Textarea, Pin input | Small screens in a thin moulded frame; `highlight` lights a ring around the frame |
+| Breadcrumb | A display window |
 | Alert, Toast, Tooltip | Display windows with dot-matrix titles |
-| Badge | Embroidered patches: twill fabric, merrowed edges, satin-stitch lettering |
+| Badge | Label-maker tape with embossed letters: dyed (`solid`), clear (`outline`), black (`soft`), white (`subtle`) |
 | Card | Screens in a moulded frame; `solid` is lit edge to edge, `soft` is bare glass |
-| Modal, Slideover, Popover, Dropdown | Raised chassis panels |
+| Modal | A rack-mount module with rack ears and screws |
+| Slideover | A drawer pulled out on telescopic runners |
+| Dropdown menu, Select menus | A printed menu card punched for a binder; the hovered line is highlighted |
+| Popover | A paper note held by a paperclip |
 
 ## Setup
 
@@ -103,10 +109,17 @@ Every component theme is a composition of these utilities; the showcase's Materi
 | `screen`, `screen-lit` | Glass set in a moulded plastic frame on one element, corners concentric; `screen-lit` is lit edge to edge |
 | `bezel` | Moulded plastic frame around any child, whose corners follow the frame's (`--bezel`, `--bezel-radius`) |
 | `recess` | Recessed slot or groove |
-| `paper`, `manila`, `ink` | Paper stock printed in ink; `ink` alone re-points text tokens to ink |
+| `paper`, `manila`, `ink` | Paper stock (`--paper`) printed in ink; `ink` alone re-points text tokens to ink and defines `--highlighter` |
 | `tractor-feed`, `greenbar` | Continuous-feed margins with holes and perforations; alternating green rows |
-| `folder-stack`, `folder`, `folder-tab`, `folder-face` | Stacked file folders with staggered tabs stepping down in a staircase; the `data-state="open"` folder pulls forward, and `paper` inside its face is white sheet stock |
-| `patch`, `embroidered` | Embroidered patch; set `--patch-fabric`, `--patch-edge`, `--patch-thread` |
+| `folder-stack`, `folder`, `folder-tab`, `folder-face` | Stacked file folders with staggered tabs stepping down in a staircase; only tabs and open faces take clicks; the `data-state="open"` folder shows its face, and `paper` inside it is white sheet stock |
+| `rack` | Rack-mount faceplate with ears and screws (`--rack-ear`) |
+| `rails`, `rails-y` | Telescopic drawer runners top and bottom, or on the sides (`--rail`) |
+| `label-tape`, `embossed` | Label-maker tape (`--tape`, `--tape-ink`) and raised lettering |
+| `metal` | Polished metal for knobs and levers |
+| `light-ring`, `light-ring-on` | An illuminated ring around a control's housing, dim and lit |
+| `lens`, `lens-lit` | A tinted lens over a lamp, unlit and glowing; `lens` composes with `keycap` |
+| `punched` | Binder punch holes down a sheet's left margin |
+| `note` | Paper held by a paperclip, set down slightly askew |
 | `silkscreen` | Printed chassis label |
 | `led`, `led-on` | Indicator LED (`--led-size`), unlit and lit; works on `before:`/`after:` |
 | `needle`, `needle-y` | Glowing index line across a positioned element's centre |

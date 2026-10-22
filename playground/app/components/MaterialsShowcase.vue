@@ -6,7 +6,17 @@ const surfaces = [
   { name: 'recess', class: 'recess rounded-[3px]' },
   { name: 'paper', class: 'paper' },
   { name: 'paper manila', class: 'paper manila rounded-sm' },
-  { name: 'patch', class: 'patch [--patch-fabric:oklch(16%_0.006_220)] [--patch-edge:var(--ui-color-primary-500)] [--patch-thread:var(--ui-color-primary-500)]', label: 'Stitched' },
+  { name: 'rack', class: 'rack rounded-sm' },
+  { name: 'rails', class: 'rails' },
+  { name: 'note', class: 'note', label: 'Call MAGI' },
+  { name: 'paper punched', class: 'paper punched' },
+]
+
+const tapes = [
+  { name: 'Dyed', class: '[--tape:var(--ui-color-error-600)]' },
+  { name: 'Clear', class: '[--tape:oklch(100%_0_0/0.07)] [--tape-ink:var(--ui-color-primary-500)]' },
+  { name: 'Black', class: '' },
+  { name: 'White', class: '[--tape:oklch(95%_0.006_90)] [--tape-ink:var(--ui-color-info-600)]' },
 ]
 
 const folders = ['Personnel', 'Budget', 'Pattern blue', 'Archive']
@@ -19,7 +29,7 @@ function toggle(index: number) {
 
 <template>
   <div class="space-y-8">
-    <div class="grid grid-cols-2 gap-6 md:grid-cols-4 xl:grid-cols-7">
+    <div class="grid grid-cols-2 gap-6 md:grid-cols-4 xl:grid-cols-5">
       <figure
         v-for="surface in surfaces"
         :key="surface.name"
@@ -32,7 +42,7 @@ function toggle(index: number) {
           />
           <span
             v-else-if="surface.label"
-            class="embroidered font-bold uppercase tracking-[0.1em]"
+            class="font-mono text-sm"
           >{{ surface.label }}</span>
         </div>
         <figcaption class="font-mono text-xs text-muted">
@@ -66,6 +76,27 @@ function toggle(index: number) {
         class="keycap dished-y needle-y relative h-8 w-4 rounded-[2px] bg-(--vfd-key)"
         title="dished-y needle-y"
       />
+    </ShowcaseRow>
+
+    <ShowcaseRow label="label-tape">
+      <span
+        v-for="item in tapes"
+        :key="item.name"
+        :class="['label-tape px-2 py-1 text-xs', item.class]"
+      >{{ item.name }}</span>
+    </ShowcaseRow>
+
+    <ShowcaseRow label="metal · light-ring · lens">
+      <span class="recess light-ring inline-flex h-5 w-9 items-center rounded-full px-0.5">
+        <span class="metal size-4 rounded-full" />
+      </span>
+      <span class="recess light-ring-on inline-flex h-5 w-9 items-center justify-end rounded-full px-0.5">
+        <span class="metal size-4 rounded-full" />
+      </span>
+      <span class="keycap lens size-6 rounded-[3px]" />
+      <span class="keycap latched lens relative size-6 overflow-hidden rounded-[3px]">
+        <span class="lens-lit absolute inset-0" />
+      </span>
     </ShowcaseRow>
 
     <ShowcaseRow label="led · silkscreen">
@@ -112,7 +143,7 @@ function toggle(index: number) {
           </button>
           <div
             v-if="openFolder === index"
-            class="folder-face px-3 pt-2"
+            class="folder-face px-6 pt-3"
           >
             <p class="paper rounded-[2px] px-4 py-3 text-sm">
               Contents of {{ folder.toLowerCase() }}.

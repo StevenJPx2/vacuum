@@ -101,6 +101,8 @@
 
     /* Smoked glass in front of the phosphor, the same in both modes. */
     --vfd-window: oklch(11% 0.012 220);
+    /* Default sheet stock; `manila` and folder faces swap it. */
+    --paper: oklch(96.5% 0.014 95);
     --vfd-glow-1: 1px;
     --vfd-glow-2: 9px;
     --vfd-mesh: oklch(0% 0 0 / 0.38);
@@ -230,6 +232,7 @@
   --ui-border-accented: color-mix(in oklab, var(--ui-color-primary-400) 35%, transparent);
   --ui-border-inverted: var(--ui-color-primary-300);
 
+  --mesh-radius: initial;
   background-color: var(--vfd-window);
   color: var(--ui-text);
   --tw-shadow:
@@ -247,6 +250,8 @@
   @apply window;
   border: var(--bezel, 0.5rem) solid transparent;
   border-radius: var(--bezel-radius, 0.875rem);
+  /* Overlays drawn on the glass (`mesh`) follow the glass's inner corners. */
+  --mesh-radius: max(0px, calc(var(--bezel-radius, 0.875rem) - var(--bezel, 0.5rem)));
   background:
     linear-gradient(var(--vfd-window), var(--vfd-window)) padding-box,
     linear-gradient(180deg, oklch(100% 0 0 / 0.1), oklch(100% 0 0 / 0) 35%, oklch(0% 0 0 / 0.28)) border-box,
@@ -307,6 +312,52 @@
     0 1px 2px var(--vfd-shadow),
     0 8px 24px -12px var(--vfd-shadow);
   box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+/* A rack-mount faceplate: a chassis panel with rack ears, each held by two screws. */
+@utility rack {
+  @apply chassis;
+  --rack-ear: 1.75rem;
+  --screw: radial-gradient(circle, oklch(80% 0.005 220) 0 2.5px, oklch(45% 0.01 220) 2.5px 3.5px, oklch(0% 0 0 / 0.35) 3.5px 4.5px, transparent 5px);
+  --ear-seam: linear-gradient(90deg,
+    transparent calc(var(--rack-ear) - 1px), oklch(0% 0 0 / 0.35) calc(var(--rack-ear) - 1px) var(--rack-ear),
+    transparent var(--rack-ear) calc(100% - var(--rack-ear)), oklch(0% 0 0 / 0.35) calc(100% - var(--rack-ear)) calc(100% - var(--rack-ear) + 1px),
+    transparent calc(100% - var(--rack-ear) + 1px));
+  padding-inline: var(--rack-ear);
+  background-image: var(--screw), var(--screw), var(--screw), var(--screw), var(--ear-seam), var(--vfd-texture);
+  background-size: var(--rack-ear) 2.5rem, var(--rack-ear) 2.5rem, var(--rack-ear) 2.5rem, var(--rack-ear) 2.5rem, 100% 100%, 100% 100%;
+  background-position: left top, left bottom, right top, right bottom, 0 0, 0 0;
+  background-repeat: no-repeat;
+}
+
+/*
+ * Telescopic steel runners along the top and bottom (`rails`) or the sides (`rails-y`)
+ * of a chassis drawer pulled out of its housing.
+ */
+@utility rails {
+  @apply chassis;
+  --rail: 0.5rem;
+  --runner: linear-gradient(180deg, oklch(84% 0.005 220), oklch(56% 0.008 220));
+  --slots: repeating-linear-gradient(90deg, transparent 0 0.75rem, oklch(22% 0.01 220) 0.75rem 1.5rem);
+  border-block: var(--rail) solid transparent;
+  background:
+    var(--vfd-texture) padding-box,
+    linear-gradient(var(--vfd-chassis), var(--vfd-chassis)) padding-box,
+    var(--slots) 0 50% / 100% 2px border-box no-repeat,
+    var(--runner) border-box;
+}
+
+@utility rails-y {
+  @apply chassis;
+  --rail: 0.5rem;
+  --runner: linear-gradient(90deg, oklch(84% 0.005 220), oklch(56% 0.008 220));
+  --slots: repeating-linear-gradient(180deg, transparent 0 0.75rem, oklch(22% 0.01 220) 0.75rem 1.5rem);
+  border-inline: var(--rail) solid transparent;
+  background:
+    var(--vfd-texture) padding-box,
+    linear-gradient(var(--vfd-chassis), var(--vfd-chassis)) padding-box,
+    var(--slots) 50% 0 / 2px 100% border-box no-repeat,
+    var(--runner) border-box;
 }
 
 /*
@@ -392,33 +443,80 @@
   box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
 }
 
+/* Raised lettering pressed up from behind, as on label-maker tape or a nameplate. */
+@utility embossed {
+  text-shadow:
+    0 1px 0 oklch(0% 0 0 / 0.45),
+    0 -0.5px 0 oklch(100% 0 0 / 0.35);
+}
+
 /*
- * An embroidered patch: twill fabric inside a merrowed, rope-stitched edge.
- * Set `--patch-fabric`, `--patch-edge` and `--patch-thread`; `embroidered` text uses the thread.
+ * Label-maker tape: glossy ribbed plastic with embossed letters.
+ * Set `--tape` (plastic colour, may be translucent for clear tape) and `--tape-ink`.
  */
-@utility patch {
-  border: var(--patch-edge-width, 3px) solid transparent;
-  border-radius: var(--patch-radius, 6px);
+@utility label-tape {
+  @apply embossed;
+  color: var(--tape-ink, oklch(97% 0.005 90));
   background:
-    repeating-linear-gradient(45deg, oklch(100% 0 0 / 0.05) 0 1px, transparent 1px 3px) padding-box,
-    repeating-linear-gradient(-45deg, oklch(0% 0 0 / 0.07) 0 1px, transparent 1px 3px) padding-box,
-    linear-gradient(var(--patch-fabric), var(--patch-fabric)) padding-box,
-    repeating-linear-gradient(60deg, var(--patch-edge) 0 1.3px, color-mix(in oklab, var(--patch-edge) 62%, black) 1.3px 2.3px) border-box;
-  color: var(--patch-thread);
+    linear-gradient(180deg, oklch(100% 0 0 / 0.22), oklch(100% 0 0 / 0) 42%, oklch(0% 0 0 / 0.16)),
+    repeating-linear-gradient(90deg, oklch(100% 0 0 / 0.035) 0 1px, transparent 1px 3px),
+    var(--tape, oklch(18% 0.01 220));
+  border-radius: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   --tw-shadow:
-    inset 0 0 0 1px oklch(0% 0 0 / 0.25),
-    0 1px 0 oklch(0% 0 0 / 0.35),
-    0 5px 12px -5px oklch(0% 0 0 / 0.6);
+    inset 0 0 0 1px oklch(0% 0 0 / 0.18),
+    0 1px 1px oklch(0% 0 0 / 0.35);
   box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
 }
 
-/* Satin-stitch lettering in the patch thread colour. */
-@utility embroidered {
-  background-image: repeating-linear-gradient(-62deg, var(--patch-thread) 0 1.1px, color-mix(in oklab, var(--patch-thread) 68%, black) 1.1px 1.9px);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 1px 0 oklch(0% 0 0 / 0.55));
+/* Polished metal, lit from above: for toggle levers, screws and knobs. */
+@utility metal {
+  background:
+    radial-gradient(circle at 35% 28%, oklch(100% 0 0 / 0.85), oklch(100% 0 0 / 0) 42%),
+    linear-gradient(160deg, oklch(88% 0.005 220), oklch(62% 0.008 220) 55%, oklch(78% 0.006 220));
+  --tw-shadow:
+    inset 0 -1px 1px oklch(0% 0 0 / 0.35),
+    inset 0 1px 0 oklch(100% 0 0 / 0.6),
+    0 1px 2px oklch(0% 0 0 / 0.55);
+  box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+/*
+ * An illuminated ring around a control's housing: dim when off, lit with `light-ring-on`.
+ * Rides in the ring slot of Tailwind's shadow stack so it composes with the housing's own shadow.
+ */
+@utility light-ring {
+  --tw-ring-shadow: 0 0 0 1.5px color-mix(in oklab, var(--vfd, var(--ui-primary)) 22%, oklch(12% 0.01 220));
+  box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+@utility light-ring-on {
+  --tw-ring-shadow:
+    0 0 0 1.5px var(--vfd, var(--ui-primary)),
+    0 0 var(--vfd-glow-1) 1.5px var(--vfd, var(--ui-primary)),
+    0 0 var(--vfd-glow-2) 1px color-mix(in oklab, var(--vfd, var(--ui-primary)) 50%, transparent);
+  box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+/*
+ * A translucent coloured lens over a lamp, as on an illuminated push button:
+ * faintly tinted when off, glowing with `lens-lit`. Composes with `keycap` via its dish layer.
+ */
+@utility lens {
+  background-color: color-mix(in oklab, var(--vfd, var(--ui-primary)) 20%, oklch(16% 0.01 220));
+  --vfd-dish: radial-gradient(circle at 50% 35%, oklch(100% 0 0 / 0.14), oklch(100% 0 0 / 0) 60%);
+}
+
+@utility lens-lit {
+  background:
+    radial-gradient(circle at 50% 35%, oklch(100% 0 0 / 0.55), oklch(100% 0 0 / 0) 65%),
+    var(--vfd, var(--ui-primary));
+  --tw-ring-offset-shadow:
+    0 0 var(--vfd-glow-1) var(--vfd, var(--ui-primary)),
+    0 0 var(--vfd-glow-2) color-mix(in oklab, var(--vfd, var(--ui-primary)) 55%, transparent);
+  box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
 }
 
 /* Ink on paper: re-points Nuxt UI's text and border tokens to printed ink. */
@@ -430,17 +528,48 @@
   --ui-text-highlighted: oklch(18% 0.012 250);
   --ui-border: oklch(0% 0 0 / 0.12);
   --ui-border-accented: oklch(0% 0 0 / 0.22);
+  --highlighter: oklch(92% 0.16 100 / 0.7);
   color: var(--ui-text);
 }
 
 /* A sheet of paper stock, colour from `--paper`, printed in ink. */
 @utility paper {
   @apply ink;
-  background-color: var(--paper, oklch(96.5% 0.014 95));
+  background-color: var(--paper);
   --tw-shadow:
     0 1px 2px oklch(0% 0 0 / 0.3),
     0 12px 24px -12px oklch(0% 0 0 / 0.55);
   box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+/* Binder punch holes down the left margin of a paper sheet. */
+@utility punched {
+  --punch-margin: 1.5rem;
+  padding-inline-start: var(--punch-margin);
+  background-image: radial-gradient(circle at 50% 50%, var(--ui-bg) 0 0.28rem, oklch(0% 0 0 / 0.22) 0.28rem 0.33rem, transparent 0.35rem);
+  background-position: left top;
+  background-size: var(--punch-margin) 1.75rem;
+  background-repeat: repeat-y;
+}
+
+/* A note on paper held by a paperclip at its top edge, set down slightly askew. */
+@utility note {
+  @apply paper;
+  position: relative;
+  rotate: -0.6deg;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -0.625rem;
+    left: 1.25rem;
+    z-index: 1;
+    width: 0.75rem;
+    height: 1.75rem;
+    border: 2px solid oklch(74% 0.008 220);
+    border-radius: 9999px;
+    box-shadow: 0 1px 1px oklch(0% 0 0 / 0.3);
+  }
 }
 
 /* Manila folder stock. */
@@ -472,22 +601,36 @@
  * a folder covers the one behind it except a `--folder-lip` of its face, so the faces
  * close up and the tabs step down in a staircase. Tabs are staggered across the width
  * and the lip is a third of a tab, so even every third tab clears the one above it.
- * The open folder (`data-state="open"`) pulls forward and leaves room for the next tab.
+ * The open folder (`data-state="open"`) shows its face and leaves room for the next tab.
  */
 @utility folder-stack {
   --folder-tab-height: 2.25rem;
   --folder-edge: 1.5rem;
   --folder-lip: calc(var(--folder-tab-height) / 3 + 2px);
 
+  /*
+   * A folder's empty tab row overlaps the tabs of the folders behind it, so only
+   * tabs and open faces take pointer input; everything else lets clicks through.
+   */
   & > * {
     --folder-stock: color-mix(in oklab, var(--paper), black var(--paper-shade, 0%));
     position: relative;
     margin-top: calc(var(--folder-lip) - var(--folder-edge) - var(--folder-tab-height));
-    transition: translate 200ms var(--ease-out);
+    pointer-events: none;
+  }
+
+  & .folder-tab,
+  & .folder-face {
+    pointer-events: auto;
   }
 
   & > :first-child {
     margin-top: 0;
+  }
+
+  /* The folder after an open one sits on the open folder's tab-high bottom band, clear of its contents. */
+  & > :is([data-state="open"], .open) + * {
+    margin-top: calc(-1 * var(--folder-tab-height));
   }
 
   & > :nth-child(even) {
@@ -502,15 +645,6 @@
     margin-inline-start: 60%;
   }
 
-  & > :is([data-state="open"], .open) {
-    translate: 0 -0.375rem;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    & > * {
-      transition: none;
-    }
-  }
 }
 
 /* A folder in a `folder-stack`: its face ends in the folder's bottom edge, visible even when closed. */
@@ -526,10 +660,14 @@
     box-shadow: 0 -1px 3px oklch(0% 0 0 / 0.3);
   }
 
-  /* An open folder's face runs on under the next folder's tab, so its content stays clear. */
+  /* An open folder ends in a band one tab high, which the next folder's tab sits on. */
   &:is([data-state="open"], .open)::after {
-    height: calc(var(--folder-edge, 1.5rem) + var(--folder-tab-height, 2.25rem));
+    height: var(--folder-tab-height, 2.25rem);
     border-top-right-radius: 0;
+  }
+
+  &:is([data-state="open"], .open):last-child::after {
+    height: var(--folder-edge, 1.5rem);
   }
 }
 
@@ -684,5 +822,6 @@
       linear-gradient(var(--vfd-mesh) 1px, transparent 1px),
       linear-gradient(90deg, var(--vfd-mesh) 1px, transparent 1px);
     background-size: 3px 3px;
+    border-radius: var(--mesh-radius, inherit);
   }
 }

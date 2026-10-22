@@ -33,7 +33,7 @@ describe('ssr', async () => {
     const html = await $fetch<string>('/')
     const thumb = html.match(/data-slot="thumb"[^>]*class="([^"]*)"|class="([^"]*)"[^>]*data-slot="thumb"/)
     const classes = thumb?.[1] ?? thumb?.[2] ?? ''
-    expect(classes).toContain('keycap')
+    expect(classes).toContain('metal')
     expect(classes).not.toMatch(/\bshadow-lg\b/)
   })
 
