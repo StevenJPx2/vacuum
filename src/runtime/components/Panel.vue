@@ -29,8 +29,11 @@ withDefaults(defineProps<{
       class="mb-3 flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-[0.2em] text-muted"
     >
       <slot name="header">
-        <span class="glow">{{ title }}</span>
-        <span v-if="caption">{{ caption }}</span>
+        <span class="matrix font-matrix font-normal uppercase tracking-normal glow">{{ title }}</span>
+        <span
+          v-if="caption"
+          class="matrix font-matrix font-normal uppercase tracking-normal glow"
+        >{{ caption }}</span>
       </slot>
     </header>
     <slot />

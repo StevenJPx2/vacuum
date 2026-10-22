@@ -119,8 +119,9 @@ export const card = {
 export const alert = {
   slots: {
     root: 'window mesh rounded-sm',
-    title: 'font-display font-black text-base uppercase tracking-[0.04em] glow',
+    title: 'matrix font-matrix font-normal text-base uppercase tracking-normal glow',
     description: 'font-mono',
+    icon: 'matrix-icon glow-icon',
   },
   compoundVariants: [
     ...perColor('root'),
@@ -138,7 +139,7 @@ export const toast = {
     root: 'window mesh rounded-sm ring-0',
     title: 'matrix font-matrix font-normal text-base uppercase tracking-normal text-highlighted glow',
     description: 'font-mono',
-    icon: 'glow-icon',
+    icon: 'matrix-icon glow-icon',
   },
   compoundVariants: perColor('root'),
 }
@@ -146,7 +147,7 @@ export const toast = {
 export const tooltip = {
   slots: {
     content: 'window rounded-xs ring-0 font-mono uppercase tracking-wider glow',
-    icon: 'glow-icon',
+    text: 'matrix font-matrix font-normal text-base uppercase tracking-normal glow',
   },
 }
 
