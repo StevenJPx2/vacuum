@@ -9,7 +9,7 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 | Component | Material |
 |---|---|
 | Button, Kbd, Avatar, Pagination | Keycaps that travel when pressed; `subtle` keys carry an LED, `active` keys latch down |
-| Checkbox | An illuminated push button: a tinted lens that glows when checked |
+| Checkbox | An illuminated push button: a tick printed on a tinted lens in a light-ringed housing; checking lights both |
 | Radio group | Interlocking radio keys with indicator LEDs |
 | Switch | A chrome toggle knob in a slot ringed by a light that comes on with it |
 | Slider, Progress | A mixer fader over a segmented LED trail and printed scale, and a segmented LED bar graph |
@@ -74,6 +74,12 @@ Vacuum installs `@nuxt/ui` for you and defaults colour mode to dark.
 
 Ioskeley Mono isn't on a font provider, so at build time Vacuum downloads five weights from the pinned `v2.2.0` release and serves them from `/_vacuum/fonts`, where `@nuxt/fonts` self-hosts them. Set `font: false` to skip the download.
 
+## Icons
+
+Nuxt UI's built-in icons (chevrons, close, check, loading, alerts…) are mapped to the [Pixel Icon Library](https://pixeliconlibrary.com) by HackerNoon, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), which ships with the package as `@iconify-json/pixel`. Use any of its icons as `i-pixel-*`, for example `<UIcon name="i-pixel-cassette-tape" />`. The mapping lives in `src/runtime/icons.ts`; override any of it in your `app.config.ts` under `ui.icons`.
+
+`@nuxt/icon` finds collections installed under your app's or workspace's `node_modules`, which covers bun and npm installs. With pnpm's strict layout, add `@iconify-json/pixel` to your app's dependencies too, or the icons load from the Iconify API at runtime.
+
 ## Display components
 
 ```vue
@@ -118,6 +124,7 @@ Every component theme is a composition of these utilities; the showcase's Materi
 | `metal` | Polished metal for knobs and levers |
 | `light-ring`, `light-ring-on` | An illuminated ring around a control's housing, dim and lit |
 | `lens`, `lens-lit` | A tinted lens over a lamp, unlit and glowing; `lens` composes with `keycap` |
+| `legend-check` | A tick printed on a key, always present like a real legend (`--legend-ink`) |
 | `punched` | Binder punch holes down a sheet's left margin |
 | `note` | Paper held by a paperclip, set down slightly askew |
 | `silkscreen` | Printed chassis label |

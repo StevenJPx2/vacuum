@@ -5,6 +5,7 @@
     "": {
       "name": "vacuum",
       "dependencies": {
+        "@iconify-json/pixel": "^1.2.2",
         "@nuxt/kit": "^4.6.2",
         "@nuxt/ui": "^4.12.0",
         "defu": "^6.1.7",
@@ -33,7 +34,6 @@
       "name": "vacuum-playground",
       "dependencies": {
         "@fdcn/vacuum": "file:..",
-        "@iconify-json/lucide": "^1.2.142",
         "nuxt": "^4.6.2",
         "tailwindcss": "^4.3.3",
       },
@@ -218,7 +218,7 @@
 
     "@humanwhocodes/retry": ["@humanwhocodes/retry@0.4.3", "", {}, "sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ=="],
 
-    "@iconify-json/lucide": ["@iconify-json/lucide@1.2.147", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-7Qqa/joSBeUxihWsQJx5nKcqMWtV3YrH90Jldxcx4J9ciTLavRUlpexQwRTcx9dcb7CJpISfjZTj42zD/30sqA=="],
+    "@iconify-json/pixel": ["@iconify-json/pixel@1.2.2", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-33uIyTe0teB9ykpRNucSXveMFYb4Hd0lxSO0oShs44OEixTuQdQk7kZpZWMMHdjDTGORpLTuOrV26pFkoIYSng=="],
 
     "@iconify/collections": ["@iconify/collections@1.0.754", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-5AJQgPgjBFGwsQGyDjySYvkzX2tU4GO+blKb1HExUuiha3rhvUvw5rvQxZ/WBX3YJFl4kqqV3gcjpdidsXhH/w=="],
 

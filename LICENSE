@@ -8,6 +8,12 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 ---
 
+Icons and the printed check glyph in src/runtime/vacuum.css: Pixel Icon Library by HackerNoon
+(https://pixeliconlibrary.com), licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
+Distributed via @iconify-json/pixel. The check glyph is used unmodified as a CSS mask.
+
+---
+
 Third-party notices for src/runtime/utils/glyphs.ts
 
 14-segment font table from Adafruit_LED_Backpack:

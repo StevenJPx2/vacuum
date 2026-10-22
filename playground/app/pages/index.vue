@@ -92,12 +92,12 @@ const modes = [
 
 /* Navigation */
 const tabItems: TabsItem[] = [
-  { label: 'Tuner', icon: 'i-lucide-radio', content: 'FM 98.7 MHz — signal strong.' },
-  { label: 'Tape', icon: 'i-lucide-cassette-tape', content: 'Side A — 12:40 remaining.' },
-  { label: 'Aux', icon: 'i-lucide-cable', content: 'No input detected.' },
+  { label: 'Tuner', icon: 'i-pixel-rss', content: 'FM 98.7 MHz — signal strong.' },
+  { label: 'Tape', icon: 'i-pixel-cassette-tape', content: 'Side A — 12:40 remaining.' },
+  { label: 'Aux', icon: 'i-pixel-headphones', content: 'No input detected.' },
 ]
 const breadcrumb = [
-  { label: 'System', icon: 'i-lucide-cpu' },
+  { label: 'System', icon: 'i-pixel-robot' },
   { label: 'Audio' },
   { label: 'Equaliser' },
 ]
@@ -132,7 +132,7 @@ const columns: TableColumn<Unit>[] = [
 /* Overlays */
 const toast = useToast()
 function notify(color: typeof colors[number]) {
-  toast.add({ title: `${color} signal`, description: 'Transmission received on all channels.', color, icon: 'i-lucide-radio-tower' })
+  toast.add({ title: `${color} signal`, description: 'Transmission received on all channels.', color, icon: 'i-pixel-wifi' })
 }
 
 const palette = ['phosphor-amber', 'phosphor-cyan', 'phosphor-green', 'phosphor-red', 'glass']
@@ -189,7 +189,7 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
             size="xs"
             variant="ghost"
             color="neutral"
-            icon="i-lucide-power"
+            icon="i-pixel-bolt"
             aria-label="Replay warm-up"
             @click="bootKey++"
           />
@@ -494,7 +494,7 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
             :key="size"
             :label="size"
             :size="size"
-            icon="i-lucide-zap"
+            icon="i-pixel-bolt"
           />
         </ShowcaseRow>
         <ShowcaseRow label="States">
@@ -507,13 +507,13 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
             disabled
           />
           <UButton
-            icon="i-lucide-power"
+            icon="i-pixel-bolt"
             aria-label="Power"
             square
           />
           <UButton
             label="Trailing"
-            trailing-icon="i-lucide-arrow-right"
+            trailing-icon="i-pixel-arrow-right"
             variant="outline"
           />
           <UButton
@@ -572,7 +572,7 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
               :key="color"
               :title="`${color} alert`"
               description="Pattern detected in sector 7."
-              icon="i-lucide-triangle-alert"
+              icon="i-pixel-exclamation-triangle"
               :color="color"
               :variant="variant"
             />
@@ -631,7 +631,7 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
           <UInput
             v-model="form.callsign"
             :variant="variant"
-            icon="i-lucide-radio"
+            icon="i-pixel-rss"
             placeholder="Callsign"
           />
           <UInput
@@ -806,7 +806,7 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
             inset
           >
             <UAvatar
-              icon="i-lucide-cpu"
+              icon="i-pixel-robot"
               alt="MAGI"
             />
           </UChip>
@@ -897,12 +897,12 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
             />
           </UTooltip>
           <UDropdownMenu
-            :items="[[{ label: 'Diagnostics', icon: 'i-lucide-activity' }, { label: 'Calibrate', icon: 'i-lucide-gauge' }], [{ label: 'Shut down', icon: 'i-lucide-power', color: 'error' }]]"
+            :items="[[{ label: 'Diagnostics', icon: 'i-pixel-chart-line' }, { label: 'Calibrate', icon: 'i-pixel-cog' }], [{ label: 'Shut down', icon: 'i-pixel-bolt', color: 'error' }]]"
           >
             <UButton
               label="Menu"
               variant="soft"
-              trailing-icon="i-lucide-chevron-down"
+              trailing-icon="i-pixel-chevron-down"
             />
           </UDropdownMenu>
         </div>

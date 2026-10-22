@@ -38,6 +38,7 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
+    "@iconify-json/pixel": "^1.2.2",
     "@nuxt/kit": "^4.6.2",
     "@nuxt/ui": "^4.12.0",
     "defu": "^6.1.7",

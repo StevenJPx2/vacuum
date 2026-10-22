@@ -211,11 +211,13 @@ export const formField = {
 
 /* Physical controls */
 
-// An illuminated push button: a tinted lens over a lamp that glows when checked.
+// An illuminated push button: a tick printed on a tinted lens, in a housing ringed with light.
+// The lamp lights the lens and the ring when checked; the printed tick reads dark against it.
 export const checkbox = {
   slots: {
-    base: 'keycap lens ring-0 rounded-[3px]',
+    base: 'keycap lens legend-check light-ring data-[state=checked]:light-ring-on rounded-[3px]',
     indicator: 'lens-lit',
+    icon: 'text-[oklch(14%_0.01_220/0.85)]',
     label: `${legend} text-xs`,
     description: 'text-xs',
   },
@@ -335,7 +337,9 @@ export const accordion = {
     root: 'folder-stack manila pt-1',
     item: 'folder border-0',
     trigger: `folder-tab flex-none rounded-t-md rounded-b-none ${legend} text-xs px-4 py-0`,
-    content: 'folder-face px-6 pt-3',
+    // A folder tab carries only its label.
+    trailingIcon: 'hidden',
+    content: 'folder-face',
     // The details are a sheet of paper filed inside the folder.
     body: 'paper rounded-[2px] px-4 py-3 text-sm',
   },

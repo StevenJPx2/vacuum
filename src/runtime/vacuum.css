@@ -501,6 +501,23 @@
 }
 
 /*
+ * A check mark printed on a key's lens, always present like a real button legend, in
+ * `--legend-ink`. The glyph is the Pixel set's `check` (HackerNoon, CC-BY-4.0), so it matches
+ * the icon a lit checkbox draws over it.
+ */
+@utility legend-check {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 10%;
+    background-color: var(--legend-ink, oklch(100% 0 0 / 0.28));
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 4v2h-1v1h-1v1h-1v1h-1v1h-1v1h-1v1h-1v1h-1v1h-1v1h-1v1h-1v1H8v-1H7v-1H6v-1H5v-1H4v-1H3v-1H2v-2h2v1h1v1h1v1h1v1h1v1h2v-1h1v-1h1v-1h1v-1h1v-1h1V9h1V8h1V7h1V6h1V5h1V4z'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+}
+
+/*
  * A translucent coloured lens over a lamp, as on an illuminated push button:
  * faintly tinted when off, glowing with `lens-lit`. Composes with `keycap` via its dish layer.
  */
@@ -601,7 +618,7 @@
  * a folder covers the one behind it except a `--folder-lip` of its face, so the faces
  * close up and the tabs step down in a staircase. Tabs are staggered across the width
  * and the lip is a third of a tab, so even every third tab clears the one above it.
- * The open folder (`data-state="open"`) shows its face and leaves room for the next tab.
+ * The open folder (`data-state="open"`) shows its `folder-face`.
  */
 @utility folder-stack {
   --folder-tab-height: 2.25rem;
@@ -626,11 +643,6 @@
 
   & > :first-child {
     margin-top: 0;
-  }
-
-  /* The folder after an open one sits on the open folder's tab-high bottom band, clear of its contents. */
-  & > :is([data-state="open"], .open) + * {
-    margin-top: calc(-1 * var(--folder-tab-height));
   }
 
   & > :nth-child(even) {
@@ -660,23 +672,27 @@
     box-shadow: 0 -1px 3px oklch(0% 0 0 / 0.3);
   }
 
-  /* An open folder ends in a band one tab high, which the next folder's tab sits on. */
   &:is([data-state="open"], .open)::after {
-    height: var(--folder-tab-height, 2.25rem);
     border-top-right-radius: 0;
-  }
-
-  &:is([data-state="open"], .open):last-child::after {
-    height: var(--folder-edge, 1.5rem);
   }
 }
 
-/* The open folder's face; paper inside it is white sheet stock. */
+/*
+ * The open folder's face; paper inside it is white sheet stock. The stack's geometry is the
+ * same open or closed, so opening only grows this face. Its contents are inset by margins
+ * rather than padding, so the whole face, spacing included, grows inside the height animation
+ * of whatever reveals it; the bottom margin is the strip the next folder's tab covers.
+ */
 @utility folder-face {
   --paper: oklch(97% 0.01 95);
+  display: flow-root;
   background-color: var(--folder-stock, var(--paper));
   border-top-right-radius: 0.375rem;
   box-shadow: 0 -1px 3px oklch(0% 0 0 / 0.3);
+
+  & > * {
+    margin: 0.75rem 1.5rem calc(var(--folder-tab-height, 2.25rem) - var(--folder-lip, 0.875rem));
+  }
 }
 
 /* The tab jutting out of a folder. */

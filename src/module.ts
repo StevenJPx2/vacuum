@@ -3,6 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { join } from 'pathe'
 import { addComponentsDir, addImportsDir, addPlugin, createResolver, defineNuxtModule, updateAppConfig, useLogger } from '@nuxt/kit'
 import { name, version } from '../package.json'
+import { icons } from './runtime/icons'
 import * as theme from './runtime/theme'
 import { phosphorColors } from './runtime/utils/phosphor'
 import type { Glow, Phosphor } from './runtime/utils/phosphor'
@@ -104,6 +105,7 @@ export default defineNuxtModule<ModuleOptions>({
     updateAppConfig({
       ui: {
         colors: phosphorColors(options.phosphor),
+        icons,
         // Materials draw their own shadow stack, so they replace Nuxt UI's `shadow-*` when merged.
         tv: {
           twMergeConfig: {

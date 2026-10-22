@@ -37,6 +37,11 @@ describe('ssr', async () => {
     expect(classes).not.toMatch(/\bshadow-lg\b/)
   })
 
+  it('maps Nuxt UI icons to the Pixel set', async () => {
+    const html = await $fetch<string>('/')
+    expect(html).toContain('<output data-icon-close>i-pixel-times</output>')
+  })
+
   it('applies slot-level colour and variant overrides', async () => {
     const html = await $fetch<string>('/')
     expect(html).toMatch(/data-slot="root"[^>]*class="[^"]*\[--vfd:var\(--ui-error\)\][^"]*glow-box/)
