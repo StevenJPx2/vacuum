@@ -329,7 +329,10 @@ export const tabs = {
       class: {
         list: 'recess bg-(--vfd-slot) rounded-[3px] gap-1',
         indicator: 'hidden',
-        trigger: 'keycap bg-(--vfd-key) rounded-[2px] text-muted before:led data-[state=active]:before:led-on',
+        // A key with an icon uses the icon as its lamp: the LED is left off and the icon itself lights.
+        trigger:
+          'keycap bg-(--vfd-key) rounded-[2px] text-muted before:led data-[state=active]:before:led-on has-[.iconify]:before:hidden',
+        leadingIcon: 'group-data-[state=active]:text-(--vfd) group-data-[state=active]:glow-svg',
       },
     },
     { color: colors, variant: 'pill', class: { trigger: 'data-[state=active]:text-(--vfd)' } },
@@ -357,7 +360,8 @@ export const accordion = {
     trailingIcon: 'hidden',
     content: 'folder-face',
     // The details are a sheet of paper filed inside the folder.
-    body: 'paper rounded-t-[2px] rounded-b-none px-4 pt-3 pb-[calc(0.75rem+var(--folder-tab-height)-var(--folder-lip))] text-sm',
+    // The sheet is cut square; only the folder stock has a folded tab.
+    body: 'paper rounded-none px-4 pt-3 pb-[calc(0.75rem+var(--folder-tab-height)-var(--folder-lip))] text-sm',
   },
 }
 

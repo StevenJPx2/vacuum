@@ -13,7 +13,7 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 | Radio group | Interlocking radio keys with indicator LEDs |
 | Switch | A chrome toggle knob in a slot ringed by a light that comes on with it |
 | Slider, Progress | A mixer fader over a glowing segmented LED trail and printed scale, and a segmented LED bar graph |
-| Tabs | `pill`: latching source-selector keys in a recessed tray. `link`: a tuner dial with a sliding needle |
+| Tabs | `pill`: latching source-selector keys in a recessed tray; a key with an icon lights that icon instead of an LED. `link`: a tuner dial with a sliding needle |
 | Accordion | A stack of manila file folders; the open one shows a paper sheet filed inside |
 | Table | A printout on continuous-feed green-bar paper |
 | Input, Select, Textarea, Pin input | Small screens in a thin moulded frame; text, placeholder and icons light in the field's colour, and `highlight` lights a ring around the frame |
@@ -117,7 +117,7 @@ Every component theme is a composition of these utilities; the showcase's Materi
 | `recess` | Recessed slot or groove |
 | `paper`, `manila`, `ink` | Paper stock (`--paper`) printed in ink; `ink` alone re-points text tokens to ink and defines `--highlighter` |
 | `tractor-feed`, `greenbar` | Continuous-feed margins with holes and perforations; alternating green rows |
-| `folder-stack`, `folder`, `folder-tab`, `folder-face` | Stacked file folders with staggered tabs stepping down in a staircase; only tabs and open faces take clicks; the `data-state="open"` folder shows its face, and `paper` inside it is white sheet stock |
+| `folder-stack`, `folder`, `folder-tab`, `folder-face` | Stacked file folders with staggered tabs stepping down in a staircase; only tabs and open faces take clicks; the `data-state="open"` folder shows its face, and `paper` inside it is white sheet stock cut with square corners |
 | `rack` | Rack-mount faceplate with ears and screws (`--rack-ear`) |
 | `rails`, `rails-y` | Telescopic drawer runners top and bottom, or on the sides (`--rail`) |
 | `drawer`, `drawer-front-{left,right,top,bottom}` | A drawer with a brushed metal leading edge, recessed finger pull and inset content (`--drawer-front`) |

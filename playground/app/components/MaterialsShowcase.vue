@@ -145,7 +145,7 @@ function toggle(index: number) {
             v-if="openFolder === index"
             class="folder-face"
           >
-            <p class="paper rounded-t-[2px] rounded-b-none px-4 pt-3 pb-[calc(0.75rem+var(--folder-tab-height)-var(--folder-lip))] text-sm">
+            <p class="paper rounded-none px-4 pt-3 pb-[calc(0.75rem+var(--folder-tab-height)-var(--folder-lip))] text-sm">
               Contents of {{ folder.toLowerCase() }}.
             </p>
           </div>
