@@ -1,4 +1,4 @@
-import { colors, edgeInColor, fabric, legend, onBlackFabric, onLightFabric, perColor, thread, threadOnBlack, vfd } from './shared'
+import { colors, edgeInColor, fabric, legend, perColor, thread, threadOnBlack, vfd } from './shared'
 
 /* Materials */
 
@@ -72,17 +72,20 @@ export const badge = {
   ],
 }
 
+// A screen: display glass in a moulded frame, titled in dot-matrix.
 export const card = {
   slots: {
-    root: 'patch [--patch-radius:10px] [--patch-edge-width:4px] [--vfd:var(--ui-color-primary-500)] text-(--ui-text) divide-dashed',
-    title: 'embroidered font-bold uppercase tracking-[0.08em] text-base',
-    description: 'text-muted',
+    root: 'screen [--bezel-radius:0.875rem] rounded-(--bezel-radius) ring-0 text-default [--vfd:var(--ui-primary)]',
+    title: 'font-display font-black text-lg uppercase tracking-[0.04em] text-highlighted glow',
+    description: 'font-mono text-muted',
   },
   compoundVariants: [
-    { variant: 'outline', class: { root: `${fabric.black} ${threadOnBlack} ${onBlackFabric} ring-0 divide-(--ui-border)` } },
-    { variant: 'solid', class: { root: `${fabric.dyed} ${onLightFabric} divide-(--ui-border)`, description: 'text-muted' } },
-    { variant: 'soft', class: { root: `${fabric.cream} ${onLightFabric} divide-(--ui-border) outline-1 outline-dashed -outline-offset-8 outline-(--patch-thread)/45` } },
-    { variant: 'subtle', class: { root: `${fabric.black} ${threadOnBlack} ${edgeInColor} ${onBlackFabric} ring-0 divide-(--ui-border) outline-1 outline-dashed -outline-offset-8 outline-(--patch-thread)/45` } },
+    // Lit edge to edge; sparse dot-matrix dots wash out on the lit glass, so legends are solid.
+    { variant: 'solid', class: { root: 'screen-lit', title: 'font-mono font-bold text-highlighted [text-shadow:none]', description: 'text-muted' } },
+    // The mesh covers the readout only, never the keys in the body or footer.
+    { variant: 'subtle', class: { header: 'mesh' } },
+    // Bare glass without a frame.
+    { variant: 'soft', class: { root: 'window rounded-sm' } },
   ],
 }
 
@@ -244,7 +247,7 @@ export const radioGroup = {
 const switchTheme = {
   slots: {
     base: 'recess rounded-[3px] data-[state=unchecked]:bg-(--vfd-slot)',
-    thumb: 'keycap knurled bg-(--vfd-key) rounded-[2px]',
+    thumb: 'keycap knurled dished bg-(--vfd-key) rounded-[2px]',
     label: `${legend} text-xs`,
     description: 'text-xs',
   },
@@ -266,8 +269,8 @@ export const slider = {
   compoundVariants: [
     ...perColor('range'),
     ...perColor('thumb'),
-    { orientation: 'horizontal', class: { root: 'scale pb-2.5', range: 'segments', thumb: 'knurled needle' } },
-    { orientation: 'vertical', class: { root: 'scale-y ps-2.5', range: 'segments-y', thumb: 'knurled-y needle-y' } },
+    { orientation: 'horizontal', class: { root: 'scale pb-2.5', range: 'segments', thumb: 'dished needle' } },
+    { orientation: 'vertical', class: { root: 'scale-y ps-2.5', range: 'segments-y', thumb: 'dished-y needle-y' } },
   ],
 }
 
@@ -307,17 +310,17 @@ export const tabs = {
       },
     },
     { color: colors, variant: 'pill', class: { trigger: 'data-[state=active]:text-(--vfd)' } },
-    // A tuner dial: stations on lit glass over a tick scale, with a red needle that slides to the active one.
+    // A tuner dial: stations on lit glass above a tick scale, with a red pointer riding the scale under the active one.
     {
       variant: 'link',
       class: {
-        list: 'window rounded-xs border-0 px-2 [--scale-step:8px] [--scale-height:6px]',
+        list: 'window rounded-xs border-0 px-2 [--scale-step:8px] [--scale-height:8px]',
         indicator: '[--vfd:var(--ui-error)] bg-transparent',
         trigger: 'text-muted data-[state=active]:text-highlighted data-[state=active]:glow',
       },
     },
-    { orientation: 'horizontal', variant: 'link', class: { list: 'scale pt-1 pb-3', indicator: 'needle top-0 bottom-0 h-auto' } },
-    { orientation: 'vertical', variant: 'link', class: { list: 'scale-y ps-3 py-1', indicator: 'needle-y start-0 end-0 w-auto' } },
+    { orientation: 'horizontal', variant: 'link', class: { list: 'scale pt-1 pb-3.5', indicator: 'needle top-auto bottom-0 h-3.5' } },
+    { orientation: 'vertical', variant: 'link', class: { list: 'scale-y ps-3.5 py-1', indicator: 'needle-y start-0 end-auto w-3.5' } },
   ],
 }
 
@@ -326,9 +329,10 @@ export const accordion = {
   slots: {
     root: 'folder-stack manila pt-1',
     item: 'folder border-0',
-    trigger: `folder-tab flex-none rounded-t-md rounded-b-none ${legend} text-xs px-4 py-2`,
-    content: 'folder-face',
-    body: 'px-4 pt-3 pb-1',
+    trigger: `folder-tab flex-none rounded-t-md rounded-b-none ${legend} text-xs px-4 py-0`,
+    content: 'folder-face px-3 pt-2',
+    // The details are a sheet of paper filed inside the folder.
+    body: 'paper rounded-[2px] px-4 py-3 text-sm',
   },
 }
 

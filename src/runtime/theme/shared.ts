@@ -35,10 +35,6 @@ export const fabric = {
 export const threadOnBlack = '[--patch-thread:var(--vfd)]'
 export const edgeInColor = '[--patch-edge:var(--vfd)]'
 
-/** Sets text tokens for content stitched or printed on a fabric. */
-export const onBlackFabric = '[--ui-text:oklch(88%_0.008_85)] [--ui-text-muted:oklch(70%_0.01_85)] [--ui-text-dimmed:oklch(55%_0.01_85)] [--ui-text-highlighted:oklch(97%_0.006_85)] [--ui-border:oklch(100%_0_0/0.12)]'
-export const onLightFabric = '[--ui-text:oklch(28%_0.01_85)] [--ui-text-muted:oklch(42%_0.012_85)] [--ui-text-dimmed:oklch(55%_0.012_85)] [--ui-text-highlighted:oklch(15%_0.006_220)] [--ui-border:oklch(0%_0_0/0.14)]'
-
 /** Uppercase hardware legend in the body face. */
 export const legend = 'font-semibold uppercase tracking-[0.08em]'
 

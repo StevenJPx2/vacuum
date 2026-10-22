@@ -16,7 +16,8 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 | Table | A printout on continuous-feed green-bar paper |
 | Input, Select, Textarea, Pin input, Breadcrumb | Display windows with glowing phosphor text |
 | Alert, Toast, Tooltip | Display windows with dot-matrix titles |
-| Badge, Card | Embroidered patches: twill fabric, merrowed edges, satin-stitch lettering |
+| Badge | Embroidered patches: twill fabric, merrowed edges, satin-stitch lettering |
+| Card | Screens in a moulded frame; `solid` is lit edge to edge, `soft` is bare glass |
 | Modal, Slideover, Popover, Dropdown | Raised chassis panels |
 
 ## Setup
@@ -96,13 +97,15 @@ Every component theme is a composition of these utilities; the showcase's Materi
 |---|---|
 | `chassis` | Raised panel: black in dark mode, brushed silver in daylight |
 | `keycap` | Plastic key that travels on press; colour comes from its background. Latches with `.latched`, `aria-pressed`, `aria-checked` or `data-state="on/active/checked"`; `latch-on-checked` latches when a control inside is checked |
-| `knurled`, `knurled-y` | Grip ridges on a keycap |
+| `knurled`, `knurled-y` | Moulded grip grooves at a keycap's centre |
+| `dished`, `dished-y` | A concave keycap top |
 | `window` | Smoked display glass; Nuxt UI text and colour tokens inside it read as lit phosphor |
-| `bezel` | Moulded plastic frame around a window |
+| `screen`, `screen-lit` | Glass set in a moulded plastic frame on one element, corners concentric; `screen-lit` is lit edge to edge |
+| `bezel` | Moulded plastic frame around any child, whose corners follow the frame's (`--bezel`, `--bezel-radius`) |
 | `recess` | Recessed slot or groove |
 | `paper`, `manila`, `ink` | Paper stock printed in ink; `ink` alone re-points text tokens to ink |
 | `tractor-feed`, `greenbar` | Continuous-feed margins with holes and perforations; alternating green rows |
-| `folder-stack`, `folder`, `folder-tab`, `folder-face` | Stacked file folders with staggered tabs; the `data-state="open"` folder pulls forward |
+| `folder-stack`, `folder`, `folder-tab`, `folder-face` | Stacked file folders with staggered tabs stepping down in a staircase; the `data-state="open"` folder pulls forward, and `paper` inside its face is white sheet stock |
 | `patch`, `embroidered` | Embroidered patch; set `--patch-fabric`, `--patch-edge`, `--patch-thread` |
 | `silkscreen` | Printed chassis label |
 | `led`, `led-on` | Indicator LED (`--led-size`), unlit and lit; works on `before:`/`after:` |
