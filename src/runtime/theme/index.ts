@@ -164,9 +164,9 @@ export const table = {
 export const breadcrumb = {
   slots: {
     root: 'window inline-flex rounded-xs px-3 py-1.5',
-    link: 'font-mono uppercase tracking-[0.08em] text-xs',
-    linkLeadingIcon: 'matrix-icon',
-    separatorIcon: 'text-(--ui-color-neutral-500) size-4',
+    link: 'matrix font-matrix font-normal text-base uppercase tracking-normal',
+    linkLeadingIcon: 'matrix-icon glow-icon',
+    separatorIcon: 'matrix-icon text-(--ui-color-neutral-500)',
   },
   compoundVariants: [
     { active: true, class: { link: 'glow', linkLeadingIcon: 'glow-icon' } },
@@ -177,9 +177,9 @@ export const breadcrumb = {
 
 const fieldTheme = {
   slots: {
-    base: fieldBase,
-    leadingIcon: 'text-(--vfd) glow-icon',
-    trailingIcon: 'text-(--vfd) glow-icon',
+    base: `${fieldBase} matrix font-matrix font-normal text-base uppercase tracking-normal`,
+    leadingIcon: 'text-(--vfd) glow-icon matrix-icon',
+    trailingIcon: 'text-(--vfd) glow-icon matrix-icon',
   },
   compoundVariants: fieldVariants,
 }
@@ -358,7 +358,7 @@ export const progress = {
     root: 'glow-svg',
     base: 'rounded-none bg-[color-mix(in_oklab,var(--vfd)_14%,transparent)]',
     indicator: 'rounded-none',
-    status: 'font-mono',
+    status: 'matrix font-matrix font-normal text-base uppercase tracking-normal',
   },
   compoundVariants: [
     ...perColor('root'),
@@ -401,7 +401,7 @@ export const tabs = {
       class: {
         list: 'window rounded-xs border-0 px-2 [--scale-step:8px] [--scale-height:8px]',
         indicator: '[--vfd:var(--ui-error)] bg-transparent',
-        trigger: 'text-muted data-[state=active]:text-highlighted data-[state=active]:glow',
+        trigger: 'matrix font-matrix font-normal text-base uppercase tracking-normal text-muted data-[state=active]:text-highlighted data-[state=active]:glow',
         leadingIcon: 'matrix-icon group-data-[state=active]:glow-icon',
       },
     },
@@ -491,8 +491,11 @@ export const popover = {
 export const dropdownMenu = {
   slots: {
     content: `${menuCard} [--vfd:var(--ui-primary)]`,
-    label: 'font-mono uppercase tracking-[0.12em] text-[10px] text-muted',
+    label: 'matrix font-matrix font-normal text-base uppercase tracking-normal text-muted',
     item: 'font-mono before:rounded-[1px]',
+    itemLabel: 'matrix font-matrix font-normal text-base uppercase tracking-normal',
+    itemLeadingIcon: 'matrix-icon',
+    itemTrailingIcon: 'matrix-icon',
     itemDescription: 'text-current opacity-70',
   },
   compoundVariants: [
