@@ -2,6 +2,8 @@
 
 An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every component is a physical object: keys you press, lamps that light, screens behind smoked glass, label tape and paper. It adds SVG display components for vacuum fluorescent readouts: segment digits, dot-matrix text, bar-graph meters and annunciator lamps.
 
+Live showcase: [vacuum.stjhn.xyz](https://vacuum.stjhn.xyz)
+
 - **Dark** is a black hi-fi chassis with silkscreened legends.
 - **Daylight** is a brushed silver chassis with dark legends.
 - **Display windows** are dark smoked glass with lit phosphor in both modes.
