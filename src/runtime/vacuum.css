@@ -523,10 +523,10 @@
 @utility legend-word {
   &::before {
     content: attr(aria-label);
-    font-family: var(--font-label);
-    font-size: 0.5625rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.6875rem;
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     text-shadow: var(--vfd-emboss);
     white-space: nowrap;

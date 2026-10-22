@@ -1,6 +1,8 @@
 /**
  * Nuxt UI's built-in icons, drawn from HackerNoon's Pixel Icon Library (`@iconify-json/pixel`, CC-BY-4.0).
  * Where the set has no exact glyph, the closest in meaning stands in (noted inline).
+ * There are no chevrons: wherever Nuxt UI would draw one, a pixel arrow stands in, and purely
+ * decorative ones (select triggers, accordions) are hidden by the theme.
  */
 export const icons = {
   arrowDown: 'i-pixel-arrow-down',
@@ -9,13 +11,12 @@ export const icons = {
   arrowUp: 'i-pixel-arrow-up',
   caution: 'i-pixel-exclaimation',
   check: 'i-pixel-check',
-  // No double chevrons in the set: first/last page use arrows.
   chevronDoubleLeft: 'i-pixel-arrow-left',
   chevronDoubleRight: 'i-pixel-arrow-right',
-  chevronDown: 'i-pixel-chevron-down',
-  chevronLeft: 'i-pixel-angle-left',
-  chevronRight: 'i-pixel-angle-right',
-  chevronUp: 'i-pixel-chevron-up',
+  chevronDown: 'i-pixel-arrow-down',
+  chevronLeft: 'i-pixel-arrow-left',
+  chevronRight: 'i-pixel-arrow-right',
+  chevronUp: 'i-pixel-arrow-up',
   close: 'i-pixel-times',
   copy: 'i-pixel-copy',
   copyCheck: 'i-pixel-check',
@@ -35,9 +36,9 @@ export const icons = {
   loading: 'i-pixel-spinner-third',
   menu: 'i-pixel-bars',
   minus: 'i-pixel-minus',
-  // No sidebar glyphs in the set: panels open and close along the angle.
-  panelClose: 'i-pixel-angle-left',
-  panelOpen: 'i-pixel-angle-right',
+  // No sidebar glyphs in the set: panels open and close along an arrow.
+  panelClose: 'i-pixel-arrow-left',
+  panelOpen: 'i-pixel-arrow-right',
   plus: 'i-pixel-plus',
   reload: 'i-pixel-refresh',
   search: 'i-pixel-search',

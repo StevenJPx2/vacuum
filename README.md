@@ -13,7 +13,7 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 | Radio group | Interlocking radio keys with indicator LEDs |
 | Switch | A chrome toggle knob in a slot ringed by a light that comes on with it |
 | Slider, Progress | A mixer fader over a glowing segmented LED trail and printed scale, and a segmented LED bar graph |
-| Tabs | `pill`: latching source-selector keys in a recessed tray; a key with an icon lights that icon instead of an LED. `link`: a tuner dial with a sliding needle |
+| Tabs | `pill`: latching source-selector keys in a recessed tray, each with an LED lamp; icons stay plain ink. `link`: a tuner dial with a sliding needle |
 | Accordion | A stack of manila file folders; the open one shows a paper sheet filed inside |
 | Table | A printout on continuous-feed green-bar paper |
 | Input | A lit field. `outline` is a screen in a moulded frame, `soft` a screen flush in a rubber gasket, `subtle` a screen in a brushed steel bezel, `ghost` bare phosphor over a dashed printed rule, `none` bare phosphor. `highlight` lights a ring around it |
@@ -80,7 +80,7 @@ Ioskeley Mono isn't on a font provider, so at build time Vacuum downloads five w
 
 ## Icons
 
-Nuxt UI's built-in icons (chevrons, close, check, loading, alerts…) are mapped to the [Pixel Icon Library](https://pixeliconlibrary.com) by HackerNoon, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), which ships with the package as `@iconify-json/pixel`. Use any of its icons as `i-pixel-*`, for example `<UIcon name="i-pixel-cassette-tape" />`. The mapping lives in `src/runtime/icons.ts`; override any of it in your `app.config.ts` under `ui.icons`.
+Nuxt UI's built-in icons (arrows, close, check, loading, alerts…) are mapped to the [Pixel Icon Library](https://pixeliconlibrary.com) by HackerNoon, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), which ships with the package as `@iconify-json/pixel`. Use any of its icons as `i-pixel-*`, for example `<UIcon name="i-pixel-cassette-tape" />`. The mapping lives in `src/runtime/icons.ts`; override any of it in your `app.config.ts` under `ui.icons`.
 
 Modal and slideover close keys spell out CLOSE in silkscreen (`legend-word`) instead of the mapped close glyph, so dismissing a panel reads as a hardware control rather than a UI close button. The legend is the key's accessible name, so it follows your locale.
 

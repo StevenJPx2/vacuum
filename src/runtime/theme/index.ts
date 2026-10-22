@@ -118,7 +118,6 @@ export const alert = {
     root: 'window mesh rounded-sm',
     title: 'font-display font-black text-base uppercase tracking-[0.04em] glow',
     description: 'font-mono',
-    icon: 'glow-svg',
   },
   compoundVariants: [
     ...perColor('root'),
@@ -136,7 +135,6 @@ export const toast = {
     root: 'window mesh rounded-sm ring-0',
     title: 'font-display font-black text-base uppercase tracking-[0.04em] text-highlighted glow',
     description: 'font-mono',
-    icon: 'glow-svg',
   },
   compoundVariants: perColor('root'),
 }
@@ -173,8 +171,8 @@ export const breadcrumb = {
 const fieldTheme = {
   slots: {
     base: fieldBase,
-    leadingIcon: 'text-(--vfd)',
-    trailingIcon: 'text-(--vfd)',
+    leadingIcon: 'text-muted',
+    trailingIcon: 'text-muted',
   },
   compoundVariants: fieldVariants,
 }
@@ -223,8 +221,9 @@ const selectTheme = {
     base: 'thumbwheel [--bezel:0.25rem] [--bezel-radius:0.5rem] rounded-(--bezel-radius) relative inline-flex items-center font-mono focus-visible:outline-0',
     value: 'glow text-(--vfd) font-semibold uppercase tracking-[0.12em]',
     placeholder: 'text-[color-mix(in_oklab,var(--vfd)_40%,var(--vfd-window))] uppercase tracking-[0.12em]',
-    leadingIcon: 'text-(--vfd)',
-    trailingIcon: 'text-(--vfd)',
+    leadingIcon: 'text-muted',
+    // The drum is its own affordance; no dropdown chevron.
+    trailingIcon: 'hidden',
     content: menuCard,
     label: 'font-mono uppercase tracking-[0.12em] text-[10px] text-muted',
     item: menuItem,
@@ -376,10 +375,9 @@ export const tabs = {
       class: {
         list: 'recess bg-(--vfd-slot) rounded-[3px] gap-1',
         indicator: 'hidden',
-        // A key with an icon uses the icon as its lamp: the LED is left off and the icon itself lights.
-        trigger:
-          'keycap bg-(--vfd-key) rounded-[2px] text-muted before:led data-[state=active]:before:led-on has-[.iconify]:before:hidden',
-        leadingIcon: 'group-data-[state=active]:text-(--vfd) group-data-[state=active]:glow-svg',
+        // The LED is the lamp; a key's icon stays plain ink and only brightens when latched.
+        trigger: 'keycap bg-(--vfd-key) rounded-[2px] text-muted before:led data-[state=active]:before:led-on',
+        leadingIcon: 'text-muted group-data-[state=active]:text-highlighted',
       },
     },
     { color: colors, variant: 'pill', class: { trigger: 'data-[state=active]:text-(--vfd)' } },
