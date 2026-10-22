@@ -12,8 +12,6 @@ const glass = 'bg-(--vfd-window) hover:bg-(--vfd-window) focus:bg-(--vfd-window)
 /** A raised chassis panel for overlays. */
 const panel = 'chassis bg-(--vfd-chassis) rounded-sm ring-0'
 
-const led = 'before:content-[\'\'] before:size-1.5 before:shrink-0 before:rounded-full'
-
 /* Keys */
 
 export const button = {
@@ -29,7 +27,7 @@ export const button = {
     // Neutral legends are printed on the key, independent of the surface it sits on.
     { color: 'neutral', variant: ['outline', 'soft', 'subtle'], class: 'text-(--vfd-key-legend)' },
     // An illuminated key: a lit LED beside the legend.
-    { variant: 'subtle', class: `${led} before:led-on` },
+    { variant: 'subtle', class: 'before:led before:led-on' },
     { variant: 'link', class: 'underline-offset-4 hover:underline' },
     { active: true, class: 'latched' },
   ],
@@ -124,11 +122,13 @@ export const tooltip = {
   },
 }
 
+// A dot-matrix printout on continuous-feed paper.
 export const table = {
   slots: {
-    root: 'window rounded-sm',
-    th: 'font-mono uppercase tracking-[0.12em] text-xs glow',
-    td: 'font-mono text-default glow',
+    root: 'paper tractor-feed greenbar rounded-none',
+    th: 'font-mono uppercase tracking-[0.12em] text-xs border-b border-dashed border-(--ui-border-accented)',
+    td: 'font-mono text-default',
+    tbody: 'divide-y-0',
   },
 }
 
@@ -224,26 +224,27 @@ export const checkbox = {
 export const radioGroup = {
   slots: {
     legend: 'silkscreen text-[9px] text-muted',
-    base: `keycap bg-(--vfd-key) ring-0 rounded-[2px] relative ${led} before:absolute before:inset-0 before:m-auto before:led`,
-    indicator: 'after:led-on after:z-1',
+    base: 'keycap bg-(--vfd-key) ring-0 rounded-[2px] relative before:led before:absolute before:inset-0 before:m-auto',
+    indicator: 'after:led after:led-on after:z-1',
     label: `${legend} text-xs`,
     description: 'text-xs',
   },
   compoundVariants: [
     ...perColor('base'),
     { color: colors, class: { indicator: 'bg-transparent' } },
-    { variant: ['card', 'table'], class: { item: `keycap latch-on-checked ${keyBg} border-0` } },
+    // The whole item is the key; its radio shrinks to the indicator LED.
+    { variant: ['card', 'table'], class: { item: `keycap latch-on-checked ${keyBg} border-0`, base: 'bg-transparent shadow-none' } },
     { color: colors, variant: ['card', 'table'], class: { item: 'has-data-[state=checked]:bg-(--vfd-key) has-data-[state=checked]:border-transparent' } },
     { orientation: 'horizontal', variant: 'table', class: { fieldset: 'gap-1 space-x-0', item: 'rounded-[2px]' } },
     { orientation: 'vertical', variant: 'table', class: { fieldset: 'gap-1 space-y-0', item: 'rounded-[2px]' } },
   ],
 }
 
-// A slide switch: a key riding in a recessed slot that backlights when on.
+// A slide switch: a knurled toggle riding in a recessed slot that backlights when on.
 const switchTheme = {
   slots: {
-    base: 'recess rounded-[3px] border-0 data-[state=unchecked]:bg-(--vfd-slot)',
-    thumb: 'keycap bg-(--vfd-key) rounded-[2px]',
+    base: 'recess rounded-[3px] data-[state=unchecked]:bg-(--vfd-slot)',
+    thumb: 'keycap knurled bg-(--vfd-key) rounded-[2px]',
     label: `${legend} text-xs`,
     description: 'text-xs',
   },
@@ -255,18 +256,18 @@ const switchTheme = {
 
 export { switchTheme as switch }
 
-// A fader: a ridged cap in a slot, with a segmented LED trail.
+// A mixer fader: a wide knurled cap with a centre line, over a segmented LED trail and a printed scale.
 export const slider = {
   slots: {
     track: 'recess bg-(--vfd-slot) rounded-none',
     range: 'rounded-none glow-box',
-    thumb: 'keycap bg-(--vfd-key) rounded-[2px] ring-0 relative after:absolute after:content-[\'\'] after:bg-(--vfd)',
+    thumb: 'keycap bg-(--vfd-key) rounded-[2px] ring-0 relative w-8 h-4',
   },
   compoundVariants: [
     ...perColor('range'),
     ...perColor('thumb'),
-    { orientation: 'horizontal', class: { range: 'segments', thumb: 'w-3 h-6 after:inset-x-0.5 after:top-1/2 after:h-0.5 after:-translate-y-1/2' } },
-    { orientation: 'vertical', class: { range: 'segments-y', thumb: 'w-6 h-3 after:inset-y-0.5 after:left-1/2 after:w-0.5 after:-translate-x-1/2' } },
+    { orientation: 'horizontal', class: { root: 'scale pb-2.5', range: 'segments', thumb: 'knurled needle' } },
+    { orientation: 'vertical', class: { root: 'scale-y ps-2.5', range: 'segments-y', thumb: 'knurled-y needle-y' } },
   ],
 }
 
@@ -302,18 +303,32 @@ export const tabs = {
       class: {
         list: 'recess bg-(--vfd-slot) rounded-[3px] gap-1',
         indicator: 'hidden',
-        trigger: `keycap bg-(--vfd-key) rounded-[2px] text-muted ${led} before:led data-[state=active]:before:led-on`,
+        trigger: 'keycap bg-(--vfd-key) rounded-[2px] text-muted before:led data-[state=active]:before:led-on',
       },
     },
     { color: colors, variant: 'pill', class: { trigger: 'data-[state=active]:text-(--vfd)' } },
-    { variant: 'link', class: { indicator: 'glow-box', trigger: 'data-[state=active]:glow' } },
+    // A tuner dial: stations on lit glass over a tick scale, with a red needle that slides to the active one.
+    {
+      variant: 'link',
+      class: {
+        list: 'window rounded-xs border-0 px-2 [--scale-step:8px] [--scale-height:6px]',
+        indicator: '[--vfd:var(--ui-error)] bg-transparent',
+        trigger: 'text-muted data-[state=active]:text-highlighted data-[state=active]:glow',
+      },
+    },
+    { orientation: 'horizontal', variant: 'link', class: { list: 'scale pt-1 pb-3', indicator: 'needle top-0 bottom-0 h-auto' } },
+    { orientation: 'vertical', variant: 'link', class: { list: 'scale-y ps-3 py-1', indicator: 'needle-y start-0 end-0 w-auto' } },
   ],
 }
 
+// File folders: staggered manila tabs; the open folder pulls forward from the stack.
 export const accordion = {
   slots: {
-    trigger: `${legend} text-xs`,
-    body: 'text-muted',
+    root: 'folder-stack manila pt-1',
+    item: 'folder border-0',
+    trigger: `folder-tab flex-none rounded-t-md rounded-b-none ${legend} text-xs px-4 py-2`,
+    content: 'folder-face',
+    body: 'px-4 pt-3 pb-1',
   },
 }
 

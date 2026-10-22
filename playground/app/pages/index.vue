@@ -21,6 +21,7 @@ const glowOptions = ['off', 'soft', 'strong'] as const
 const { phosphor, glow } = useVacuum()
 
 const sections = [
+  { id: 'materials', label: 'Materials' },
   { id: 'displays', label: 'Displays' },
   { id: 'palette', label: 'Palette' },
   { id: 'buttons', label: 'Buttons' },
@@ -242,6 +243,15 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
           </div>
         </div>
       </VPanel>
+
+      <!-- Materials -->
+      <ShowcaseSection
+        id="materials"
+        title="Materials"
+        description="The utilities every component is built from"
+      >
+        <MaterialsShowcase />
+      </ShowcaseSection>
 
       <!-- Displays -->
       <ShowcaseSection

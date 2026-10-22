@@ -9,10 +9,12 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 | Component | Material |
 |---|---|
 | Button, Kbd, Avatar, Pagination | Keycaps that travel when pressed; `subtle` keys carry an LED, `active` keys latch down |
-| Checkbox, Radio group, Switch | Light-up push keys, interlocking radio keys with LEDs, a slide switch that backlights |
-| Slider, Progress | A fader cap over a segmented LED trail, and a segmented LED bar graph |
-| Tabs | Latching source-selector keys in a recessed tray |
-| Input, Select, Textarea, Pin input, Table, Breadcrumb | Display windows with glowing phosphor text |
+| Checkbox, Radio group, Switch | Light-up push keys, interlocking radio keys with LEDs, a knurled slide switch that backlights |
+| Slider, Progress | A mixer fader over a segmented LED trail and printed scale, and a segmented LED bar graph |
+| Tabs | `pill`: latching source-selector keys in a recessed tray. `link`: a tuner dial with a sliding needle |
+| Accordion | A stack of manila file folders; the open one pulls forward |
+| Table | A printout on continuous-feed green-bar paper |
+| Input, Select, Textarea, Pin input, Breadcrumb | Display windows with glowing phosphor text |
 | Alert, Toast, Tooltip | Display windows with dot-matrix titles |
 | Badge, Card | Embroidered patches: twill fabric, merrowed edges, satin-stitch lettering |
 | Modal, Slideover, Popover, Dropdown | Raised chassis panels |
@@ -88,15 +90,24 @@ glow.value = 'strong'
 
 ## Utilities
 
+Every component theme is a composition of these utilities; the showcase's Materials section shows each on its own.
+
 | Class | Effect |
 |---|---|
 | `chassis` | Raised panel: black in dark mode, brushed silver in daylight |
-| `keycap` | Plastic key that travels on press; colour comes from its background. Latches with `.latched`, `aria-pressed`, `aria-checked` or `data-state="on/active/checked"` |
+| `keycap` | Plastic key that travels on press; colour comes from its background. Latches with `.latched`, `aria-pressed`, `aria-checked` or `data-state="on/active/checked"`; `latch-on-checked` latches when a control inside is checked |
+| `knurled`, `knurled-y` | Grip ridges on a keycap |
 | `window` | Smoked display glass; Nuxt UI text and colour tokens inside it read as lit phosphor |
+| `bezel` | Moulded plastic frame around a window |
 | `recess` | Recessed slot or groove |
+| `paper`, `manila`, `ink` | Paper stock printed in ink; `ink` alone re-points text tokens to ink |
+| `tractor-feed`, `greenbar` | Continuous-feed margins with holes and perforations; alternating green rows |
+| `folder-stack`, `folder`, `folder-tab`, `folder-face` | Stacked file folders with staggered tabs; the `data-state="open"` folder pulls forward |
 | `patch`, `embroidered` | Embroidered patch; set `--patch-fabric`, `--patch-edge`, `--patch-thread` |
 | `silkscreen` | Printed chassis label |
-| `led`, `led-on` | Indicator LED, unlit and lit |
+| `led`, `led-on` | Indicator LED (`--led-size`), unlit and lit; works on `before:`/`after:` |
+| `needle`, `needle-y` | Glowing index line across a positioned element's centre |
+| `scale`, `scale-y` | Printed tick marks (`--scale-step`, `--scale-height`) |
 | `segments`, `segments-y` | Cut an element into bar-graph segments |
 | `glow`, `glow-box`, `glow-svg` | Phosphor glow on text, boxes and SVG |
 | `ghost` | Unlit segment tint |
