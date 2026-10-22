@@ -2,9 +2,13 @@
 @source "./components";
 
 @theme static {
-  --font-sans: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Share Tech Mono", ui-monospace, monospace;
-  --font-display: "Doto", "Share Tech Mono", ui-monospace, monospace;
+  --font-sans: "Ioskeley Mono", ui-monospace, monospace;
+  --font-mono: "Ioskeley Mono", ui-monospace, monospace;
+  --font-display: "Doto", "Ioskeley Mono", ui-monospace, monospace;
+  --font-label: "Michroma", "Ioskeley Mono", ui-sans-serif, sans-serif;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
   --color-phosphor-amber-50: oklch(98.5% 0.025 75);
   --color-phosphor-amber-100: oklch(96.2% 0.06 75);
@@ -93,19 +97,33 @@
 
 @layer theme {
   :root, :host {
-    --ui-radius: 0rem;
+    --ui-radius: 0.125rem;
+
+    /* Smoked glass in front of the phosphor, the same in both modes. */
+    --vfd-window: oklch(11% 0.012 220);
+    --vfd-glow-1: 1px;
+    --vfd-glow-2: 9px;
+    --vfd-mesh: oklch(0% 0 0 / 0.38);
+  }
+
+  [data-vacuum-glow="off"] {
     --vfd-glow-1: 0px;
     --vfd-glow-2: 0px;
   }
 
-  /* Daylight: an unlit display under ambient light. */
+  [data-vacuum-glow="strong"] {
+    --vfd-glow-1: 2px;
+    --vfd-glow-2: 18px;
+  }
+
+  /* Daylight: a brushed silver chassis with dark printed legends. */
   :root:not(.dark), .light {
-    --ui-primary: var(--ui-color-primary-700);
-    --ui-secondary: var(--ui-color-secondary-700);
-    --ui-success: var(--ui-color-success-700);
-    --ui-info: var(--ui-color-info-700);
-    --ui-warning: var(--ui-color-warning-700);
-    --ui-error: var(--ui-color-error-700);
+    --ui-primary: var(--ui-color-primary-600);
+    --ui-secondary: var(--ui-color-secondary-600);
+    --ui-success: var(--ui-color-success-600);
+    --ui-info: var(--ui-color-info-600);
+    --ui-warning: var(--ui-color-warning-600);
+    --ui-error: var(--ui-color-error-600);
 
     --ui-text-dimmed: var(--ui-color-neutral-500);
     --ui-text-muted: var(--ui-color-neutral-600);
@@ -114,9 +132,9 @@
     --ui-text-highlighted: var(--ui-color-neutral-950);
     --ui-text-inverted: var(--ui-color-neutral-50);
 
-    --ui-bg: var(--ui-color-neutral-100);
-    --ui-bg-muted: var(--ui-color-neutral-200);
-    --ui-bg-elevated: var(--ui-color-neutral-200);
+    --ui-bg: var(--ui-color-neutral-200);
+    --ui-bg-muted: var(--ui-color-neutral-100);
+    --ui-bg-elevated: var(--ui-color-neutral-100);
     --ui-bg-accented: var(--ui-color-neutral-300);
     --ui-bg-inverted: var(--ui-color-neutral-900);
 
@@ -125,52 +143,54 @@
     --ui-border-accented: var(--ui-color-neutral-400);
     --ui-border-inverted: var(--ui-color-neutral-900);
 
-    --vfd-ghost-tint: var(--ui-color-neutral-900);
-    --vfd-ghost-mix: 7%;
-    --vfd-mesh: color-mix(in oklab, var(--ui-color-neutral-900) 5%, transparent);
+    --vfd-chassis: var(--ui-color-neutral-100);
+    --vfd-key: var(--ui-color-neutral-50);
+    --vfd-key-legend: var(--ui-color-neutral-800);
+    --vfd-slot: var(--ui-color-neutral-400);
+    --vfd-highlight: oklch(100% 0 0 / 0.75);
+    --vfd-lowlight: oklch(0% 0 0 / 0.14);
+    --vfd-shadow: oklch(20% 0.02 220 / 0.32);
+    --vfd-emboss: 0 1px 0 oklch(100% 0 0 / 0.7);
+    --vfd-texture:
+      repeating-linear-gradient(90deg, oklch(100% 0 0 / 0.07) 0 1px, transparent 1px 3px),
+      linear-gradient(180deg, oklch(100% 0 0 / 0.35), oklch(100% 0 0 / 0) 60%);
   }
 
-  /* Dark: a lit display. Text glows in the primary phosphor. */
+  /* Dark: a black chassis with silkscreened legends. */
   .dark {
-    --ui-text-dimmed: var(--ui-color-primary-800);
-    --ui-text-muted: var(--ui-color-primary-600);
-    --ui-text-toned: var(--ui-color-primary-500);
-    --ui-text: var(--ui-color-primary-400);
-    --ui-text-highlighted: var(--ui-color-primary-300);
+    --ui-text-dimmed: var(--ui-color-neutral-500);
+    --ui-text-muted: var(--ui-color-neutral-400);
+    --ui-text-toned: var(--ui-color-neutral-300);
+    --ui-text: var(--ui-color-neutral-200);
+    --ui-text-highlighted: var(--ui-color-neutral-50);
     --ui-text-inverted: var(--ui-color-neutral-950);
 
     --ui-bg: var(--ui-color-neutral-950);
     --ui-bg-muted: var(--ui-color-neutral-900);
     --ui-bg-elevated: var(--ui-color-neutral-900);
     --ui-bg-accented: var(--ui-color-neutral-800);
-    --ui-bg-inverted: var(--ui-color-primary-300);
+    --ui-bg-inverted: var(--ui-color-neutral-200);
 
-    --ui-border: color-mix(in oklab, var(--ui-color-primary-400) 22%, transparent);
-    --ui-border-muted: color-mix(in oklab, var(--ui-color-primary-400) 12%, transparent);
-    --ui-border-accented: color-mix(in oklab, var(--ui-color-primary-400) 38%, transparent);
-    --ui-border-inverted: var(--ui-color-primary-300);
+    --ui-border: var(--ui-color-neutral-800);
+    --ui-border-muted: var(--ui-color-neutral-900);
+    --ui-border-accented: var(--ui-color-neutral-700);
+    --ui-border-inverted: var(--ui-color-neutral-200);
 
-    --vfd-glow-1: 1px;
-    --vfd-glow-2: 9px;
-    --vfd-ghost-tint: initial;
-    --vfd-ghost-mix: 11%;
-    --vfd-mesh: oklch(0% 0 0 / 0.38);
-  }
-
-  [data-vacuum-glow="off"] .dark, [data-vacuum-glow="off"].dark {
-    --vfd-glow-1: 0px;
-    --vfd-glow-2: 0px;
-  }
-
-  [data-vacuum-glow="strong"] .dark, [data-vacuum-glow="strong"].dark {
-    --vfd-glow-1: 2px;
-    --vfd-glow-2: 18px;
+    --vfd-chassis: var(--ui-color-neutral-900);
+    --vfd-key: var(--ui-color-neutral-800);
+    --vfd-key-legend: var(--ui-color-neutral-100);
+    --vfd-slot: oklch(7% 0.01 220);
+    --vfd-highlight: oklch(100% 0 0 / 0.09);
+    --vfd-lowlight: oklch(0% 0 0 / 0.5);
+    --vfd-shadow: oklch(0% 0 0 / 0.6);
+    --vfd-emboss: 0 1px 0 oklch(0% 0 0 / 0.7);
+    --vfd-texture: linear-gradient(180deg, oklch(100% 0 0 / 0.035), oklch(100% 0 0 / 0) 50%);
   }
 }
 
 @layer base {
-  .dark body {
-    background-image: radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--ui-primary) 7%, transparent), transparent 70%);
+  body {
+    background-image: var(--vfd-texture);
     background-attachment: fixed;
   }
 
@@ -180,6 +200,153 @@
   }
 }
 
+/*
+ * Display window: smoked glass with lit phosphor behind it.
+ * Re-points Nuxt UI's text, background and colour tokens so anything inside reads as lit.
+ */
+@utility window {
+  --ui-primary: var(--ui-color-primary-400);
+  --ui-secondary: var(--ui-color-secondary-400);
+  --ui-success: var(--ui-color-success-400);
+  --ui-info: var(--ui-color-info-400);
+  --ui-warning: var(--ui-color-warning-400);
+  --ui-error: var(--ui-color-error-400);
+
+  --ui-text-dimmed: var(--ui-color-primary-800);
+  --ui-text-muted: var(--ui-color-primary-600);
+  --ui-text-toned: var(--ui-color-primary-500);
+  --ui-text: var(--ui-color-primary-400);
+  --ui-text-highlighted: var(--ui-color-primary-300);
+  --ui-text-inverted: var(--vfd-window);
+
+  --ui-bg: var(--vfd-window);
+  --ui-bg-muted: color-mix(in oklab, var(--ui-color-primary-400) 5%, var(--vfd-window));
+  --ui-bg-elevated: color-mix(in oklab, var(--ui-color-primary-400) 9%, var(--vfd-window));
+  --ui-bg-accented: color-mix(in oklab, var(--ui-color-primary-400) 15%, var(--vfd-window));
+  --ui-bg-inverted: var(--ui-color-primary-300);
+
+  --ui-border: color-mix(in oklab, var(--ui-color-primary-400) 20%, transparent);
+  --ui-border-muted: color-mix(in oklab, var(--ui-color-primary-400) 10%, transparent);
+  --ui-border-accented: color-mix(in oklab, var(--ui-color-primary-400) 35%, transparent);
+  --ui-border-inverted: var(--ui-color-primary-300);
+
+  background-color: var(--vfd-window);
+  color: var(--ui-text);
+  --tw-shadow:
+    inset 0 2px 7px oklch(0% 0 0 / 0.8),
+    inset 0 0 0 1px oklch(0% 0 0 / 0.75),
+    0 1px 0 var(--vfd-highlight);
+  box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+/* A raised chassis module with a lit top edge. */
+@utility chassis {
+  background-color: var(--vfd-chassis);
+  background-image: var(--vfd-texture);
+  --tw-shadow:
+    inset 0 1px 0 var(--vfd-highlight),
+    inset 0 -1px 0 var(--vfd-lowlight),
+    0 1px 2px var(--vfd-shadow),
+    0 8px 24px -12px var(--vfd-shadow);
+  box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+/* A plastic keycap. Colour comes from the element's background colour. */
+@utility keycap {
+  background-image: linear-gradient(180deg, oklch(100% 0 0 / 0.16), oklch(100% 0 0 / 0) 48%, oklch(0% 0 0 / 0.16));
+  --tw-shadow:
+    inset 0 1px 0 oklch(100% 0 0 / 0.28),
+    inset 0 -3px 0 oklch(0% 0 0 / 0.28),
+    0 1px 0 oklch(0% 0 0 / 0.6),
+    0 3px 6px -2px var(--vfd-shadow);
+  box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+  transition-property: transform, box-shadow, background-color, color, filter;
+  transition-duration: 120ms;
+  transition-timing-function: var(--ease-out);
+
+  &:active:not(:disabled, [aria-disabled="true"]) {
+    transform: translateY(2px) scale(0.98);
+    --tw-shadow:
+      inset 0 1px 0 oklch(100% 0 0 / 0.12),
+      inset 0 -1px 0 oklch(0% 0 0 / 0.22),
+      0 0 0 oklch(0% 0 0 / 0.55),
+      0 1px 1px -1px var(--vfd-shadow);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover:not(:disabled, [aria-disabled="true"]) {
+      filter: brightness(1.08);
+    }
+  }
+
+  /* Latched down, like the selected source on an amplifier. */
+  &:not([data-slot="thumb"]):is(.latched, [aria-pressed="true"], [aria-checked="true"], [data-state="on"], [data-state="active"], [data-state="checked"]) {
+    transform: translateY(1px);
+    background-image: linear-gradient(180deg, oklch(0% 0 0 / 0.16), oklch(100% 0 0 / 0) 40%, oklch(100% 0 0 / 0.05));
+    --tw-shadow:
+      inset 0 1px 2px oklch(0% 0 0 / 0.45),
+      inset 0 -1px 0 oklch(100% 0 0 / 0.06),
+      0 0 0 1px oklch(0% 0 0 / 0.3);
+  }
+
+  /* A wrapper key that latches when the control inside it is checked. */
+  &.latch-on-checked:has([data-state="checked"]) {
+    transform: translateY(1px);
+    background-image: linear-gradient(180deg, oklch(0% 0 0 / 0.16), oklch(100% 0 0 / 0) 40%, oklch(100% 0 0 / 0.05));
+    --tw-shadow:
+      inset 0 1px 2px oklch(0% 0 0 / 0.45),
+      inset 0 -1px 0 oklch(100% 0 0 / 0.06),
+      0 0 0 1px oklch(0% 0 0 / 0.3);
+  }
+}
+
+/* A recessed groove, such as a fader slot or switch well. */
+@utility recess {
+  background-color: var(--vfd-slot);
+  --tw-shadow:
+    inset 0 1px 3px oklch(0% 0 0 / 0.65),
+    inset 0 0 0 1px oklch(0% 0 0 / 0.35),
+    0 1px 0 var(--vfd-highlight);
+  box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+/*
+ * An embroidered patch: twill fabric inside a merrowed, rope-stitched edge.
+ * Set `--patch-fabric`, `--patch-edge` and `--patch-thread`; `embroidered` text uses the thread.
+ */
+@utility patch {
+  border: var(--patch-edge-width, 3px) solid transparent;
+  border-radius: var(--patch-radius, 6px);
+  background:
+    repeating-linear-gradient(45deg, oklch(100% 0 0 / 0.05) 0 1px, transparent 1px 3px) padding-box,
+    repeating-linear-gradient(-45deg, oklch(0% 0 0 / 0.07) 0 1px, transparent 1px 3px) padding-box,
+    linear-gradient(var(--patch-fabric), var(--patch-fabric)) padding-box,
+    repeating-linear-gradient(60deg, var(--patch-edge) 0 1.3px, color-mix(in oklab, var(--patch-edge) 62%, black) 1.3px 2.3px) border-box;
+  color: var(--patch-thread);
+  --tw-shadow:
+    inset 0 0 0 1px oklch(0% 0 0 / 0.25),
+    0 1px 0 oklch(0% 0 0 / 0.35),
+    0 5px 12px -5px oklch(0% 0 0 / 0.6);
+  box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+/* Satin-stitch lettering in the patch thread colour. */
+@utility embroidered {
+  background-image: repeating-linear-gradient(-62deg, var(--patch-thread) 0 1.1px, color-mix(in oklab, var(--patch-thread) 68%, black) 1.1px 1.9px);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 0 oklch(0% 0 0 / 0.55));
+}
+
+/* Silkscreened label printed on the chassis. */
+@utility silkscreen {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-shadow: var(--vfd-emboss);
+}
+
 /* Glow follows `--vfd` when a component sets it, else the current text colour. */
 @utility glow {
   text-shadow:
@@ -187,10 +354,12 @@
     0 0 var(--vfd-glow-2) color-mix(in oklab, var(--vfd, currentColor) 55%, transparent);
 }
 
+/* Rides in the ring-offset slot of Tailwind's shadow stack so it composes with materials and rings. */
 @utility glow-box {
-  box-shadow:
+  --tw-ring-offset-shadow:
     0 0 var(--vfd-glow-1) var(--vfd, currentColor),
     0 0 var(--vfd-glow-2) color-mix(in oklab, var(--vfd, currentColor) 45%, transparent);
+  box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
 }
 
 @utility glow-svg {
@@ -199,11 +368,38 @@
     drop-shadow(0 0 calc(var(--vfd-glow-2) * 0.6) color-mix(in oklab, var(--vfd, currentColor) 55%, transparent));
 }
 
-/* Unlit segments: a faint phosphor tint when dark, dark glass when daylight. */
+/* An indicator LED. Add `led-on` to light it. */
+@utility led {
+  background:
+    radial-gradient(circle at 35% 30%, oklch(100% 0 0 / 0.35), transparent 50%),
+    color-mix(in oklab, var(--vfd, var(--ui-primary)) 22%, oklch(12% 0.01 220));
+  box-shadow: inset 0 0 0 1px oklch(0% 0 0 / 0.55), 0 1px 0 var(--vfd-highlight);
+}
+
+@utility led-on {
+  background:
+    radial-gradient(circle at 35% 30%, oklch(100% 0 0 / 0.7), transparent 55%),
+    var(--vfd, var(--ui-primary));
+  box-shadow:
+    inset 0 0 0 1px oklch(0% 0 0 / 0.25),
+    0 0 var(--vfd-glow-1) var(--vfd, var(--ui-primary)),
+    0 0 calc(var(--vfd-glow-2) * 0.9) color-mix(in oklab, var(--vfd, var(--ui-primary)) 60%, transparent);
+}
+
+/* Unlit segments: a faint tint of the phosphor behind the glass. */
 @utility ghost {
-  --vfd-ghost: color-mix(in oklab, var(--vfd-ghost-tint, var(--vfd, var(--ui-primary))) var(--vfd-ghost-mix, 10%), transparent);
+  --vfd-ghost: color-mix(in oklab, var(--vfd, var(--ui-color-primary-400)) 11%, transparent);
   color: var(--vfd-ghost);
   fill: var(--vfd-ghost);
+}
+
+/* Cuts an element into bar-graph segments along x or y. */
+@utility segments {
+  mask-image: repeating-linear-gradient(90deg, #000 0 var(--vfd-segment, 6px), transparent var(--vfd-segment, 6px) calc(var(--vfd-segment, 6px) + 2px));
+}
+
+@utility segments-y {
+  mask-image: repeating-linear-gradient(0deg, #000 0 var(--vfd-segment, 6px), transparent var(--vfd-segment, 6px) calc(var(--vfd-segment, 6px) + 2px));
 }
 
 /* The control grid in front of the phosphor. */

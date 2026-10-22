@@ -1,9 +1,21 @@
 # Vacuum
 
-A vacuum fluorescent display UI kit for Nuxt. Vacuum themes every [Nuxt UI](https://ui.nuxt.com) component with glowing phosphor colours, square edges and a control-grid mesh, and adds SVG display components: segment readouts, dot-matrix text, bar-graph meters and annunciator lamps.
+An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every component is a physical object: keys you press, lamps that light, fields behind smoked glass and stitched patches. It adds SVG display components for vacuum fluorescent readouts: segment digits, dot-matrix text, bar-graph meters and annunciator lamps.
 
-- **Dark** is a lit tube: near-black glass, text glowing in the primary phosphor, unlit segments faintly visible.
-- **Daylight** is the same display switched off under ambient light: grey glass with deep phosphor tones and no glow.
+- **Dark** is a black hi-fi chassis with silkscreened legends.
+- **Daylight** is a brushed silver chassis with dark legends.
+- **Display windows** are dark smoked glass with lit phosphor in both modes.
+
+| Component | Material |
+|---|---|
+| Button, Kbd, Avatar, Pagination | Keycaps that travel when pressed; `subtle` keys carry an LED, `active` keys latch down |
+| Checkbox, Radio group, Switch | Light-up push keys, interlocking radio keys with LEDs, a slide switch that backlights |
+| Slider, Progress | A fader cap over a segmented LED trail, and a segmented LED bar graph |
+| Tabs | Latching source-selector keys in a recessed tray |
+| Input, Select, Textarea, Pin input, Table, Breadcrumb | Display windows with glowing phosphor text |
+| Alert, Toast, Tooltip | Display windows with dot-matrix titles |
+| Badge, Card | Embroidered patches: twill fabric, merrowed edges, satin-stitch lettering |
+| Modal, Slideover, Popover, Dropdown | Raised chassis panels |
 
 ## Setup
 
@@ -20,6 +32,7 @@ export default defineNuxtConfig({
     phosphor: 'amber', // 'amber' | 'cyan' | 'green' | 'red'
     glow: 'soft', // 'off' | 'soft' | 'strong'
     prefix: 'V',
+    font: true, // download and self-host Ioskeley Mono
   },
 })
 ```
@@ -41,6 +54,16 @@ export default defineNuxtConfig({
 ```
 
 Vacuum installs `@nuxt/ui` for you and defaults colour mode to dark.
+
+## Typefaces
+
+| Role | Face |
+|---|---|
+| Body, legends, fields (`font-sans`, `font-mono`) | [Ioskeley Mono](https://github.com/ahatem/IoskeleyMono) (OFL-1.1) |
+| Silkscreened labels (`font-label`) | Michroma |
+| Dot-matrix titles (`font-display`) | Doto |
+
+Ioskeley Mono isn't on a font provider, so at build time Vacuum downloads five weights from the pinned `v2.2.0` release and serves them from `/_vacuum/fonts`, where `@nuxt/fonts` self-hosts them. Set `font: false` to skip the download.
 
 ## Display components
 
@@ -67,14 +90,20 @@ glow.value = 'strong'
 
 | Class | Effect |
 |---|---|
-| `glow` | Phosphor text glow |
-| `glow-box` | Phosphor box glow |
-| `glow-svg` | Phosphor glow for SVG shapes |
+| `chassis` | Raised panel: black in dark mode, brushed silver in daylight |
+| `keycap` | Plastic key that travels on press; colour comes from its background. Latches with `.latched`, `aria-pressed`, `aria-checked` or `data-state="on/active/checked"` |
+| `window` | Smoked display glass; Nuxt UI text and colour tokens inside it read as lit phosphor |
+| `recess` | Recessed slot or groove |
+| `patch`, `embroidered` | Embroidered patch; set `--patch-fabric`, `--patch-edge`, `--patch-thread` |
+| `silkscreen` | Printed chassis label |
+| `led`, `led-on` | Indicator LED, unlit and lit |
+| `segments`, `segments-y` | Cut an element into bar-graph segments |
+| `glow`, `glow-box`, `glow-svg` | Phosphor glow on text, boxes and SVG |
 | `ghost` | Unlit segment tint |
 | `mesh` | Control-grid overlay |
 | `animate-vfd-warmup`, `animate-vfd-flicker`, `animate-vfd-blink` | Tube animations; pair with `motion-safe:` |
 
-Glow follows the `--vfd` colour of the nearest themed component and falls back to the current text colour.
+Glow and LEDs follow the `--vfd` colour of the nearest themed component. Materials write Tailwind's `--tw-shadow`, so they compose with `ring-*` and `glow-box`, and replace `shadow-*` when classes merge.
 
 ## Customising
 

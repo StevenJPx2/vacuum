@@ -15,8 +15,7 @@ withDefaults(defineProps<{
 <template>
   <section
     :class="[
-      'relative bg-default ring ring-default p-4 sm:p-5',
-      'dark:shadow-[inset_0_0_32px_rgb(0_0_0/0.45)]',
+      'window relative rounded-sm p-4 sm:p-5',
       mesh && 'mesh',
       warmup && 'motion-safe:animate-vfd-warmup',
     ]"

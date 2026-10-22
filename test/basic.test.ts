@@ -26,7 +26,15 @@ describe('ssr', async () => {
 
   it('applies the theme preset to Nuxt UI components', async () => {
     const html = await $fetch<string>('/')
-    expect(html).toMatch(/<button[^>]*class="[^"]*tracking-\[0\.14em\][^"]*glow-box/)
+    expect(html).toMatch(/<button[^>]*class="[^"]*uppercase[^"]*keycap/)
+  })
+
+  it('lets materials replace Nuxt UI shadows when classes merge', async () => {
+    const html = await $fetch<string>('/')
+    const thumb = html.match(/data-slot="thumb"[^>]*class="([^"]*)"|class="([^"]*)"[^>]*data-slot="thumb"/)
+    const classes = thumb?.[1] ?? thumb?.[2] ?? ''
+    expect(classes).toContain('keycap')
+    expect(classes).not.toMatch(/\bshadow-lg\b/)
   })
 
   it('applies slot-level colour and variant overrides', async () => {

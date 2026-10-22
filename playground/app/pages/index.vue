@@ -140,16 +140,18 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
 
 <template>
   <div class="min-h-screen">
-    <header class="sticky top-0 z-50 border-b border-default bg-default/90 backdrop-blur">
+    <header class="chassis sticky top-0 z-50">
       <div class="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-3 px-4 py-3 sm:px-6">
         <div class="flex items-center gap-3">
-          <VDotMatrix
-            :key="bootKey"
-            text="VACUUM"
-            size="sm"
-            warmup
-          />
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-dimmed">UI kit</span>
+          <div class="window rounded-xs px-2 py-1.5">
+            <VDotMatrix
+              :key="bootKey"
+              text="VACUUM"
+              size="sm"
+              warmup
+            />
+          </div>
+          <span class="silkscreen text-[9px] text-muted">UI kit</span>
         </div>
 
         <nav class="hidden flex-1 flex-wrap gap-x-4 gap-y-1 lg:flex">
@@ -157,7 +159,7 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
             v-for="section in sections"
             :key="section.id"
             :href="`#${section.id}`"
-            class="font-mono text-[11px] uppercase tracking-[0.2em] text-muted hover:text-highlighted hover:glow"
+            class="silkscreen text-[9px] text-muted hover:text-highlighted"
           >{{ section.label }}</a>
         </nav>
 
@@ -579,22 +581,27 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
             v-for="variant in cardVariants"
             :key="variant"
             :variant="variant"
+            :title="`${variant} unit`"
+            description="No. R-05590 · Tokyo-3"
           >
-            <template #header>
-              <p class="font-mono text-sm uppercase tracking-[0.14em]">
-                {{ variant }}
-              </p>
-            </template>
-            <p class="font-mono text-sm">
+            <p class="text-sm">
               Synchronisation ratio holding steady across all pilots.
             </p>
             <template #footer>
-              <UButton
-                label="Engage"
-                size="xs"
-                :variant="variant === 'solid' ? 'outline' : 'solid'"
-                :color="variant === 'solid' ? 'neutral' : 'primary'"
-              />
+              <div class="flex items-center justify-between gap-2">
+                <UButton
+                  label="Engage"
+                  size="xs"
+                  :variant="variant === 'solid' ? 'outline' : 'solid'"
+                  :color="variant === 'solid' ? 'neutral' : 'primary'"
+                />
+                <UBadge
+                  label="Deployed"
+                  size="sm"
+                  :variant="variant === 'solid' ? 'soft' : 'subtle'"
+                  :color="variant === 'solid' ? 'neutral' : 'error'"
+                />
+              </div>
             </template>
           </UCard>
         </div>
@@ -809,13 +816,16 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
           >
             <UButton label="Open modal" />
             <template #body>
-              <div class="space-y-4">
+              <VPanel
+                title="T-minus"
+                class="space-y-4"
+              >
                 <VSegmentDisplay
                   value="00:05"
                   size="lg"
                 />
                 <VMeter :value="80" />
-              </div>
+              </VPanel>
             </template>
             <template #footer="{ close }">
               <UButton
@@ -840,14 +850,18 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
               variant="outline"
             />
             <template #body>
-              <div class="space-y-3">
+              <VPanel
+                title="Channels"
+                caption="12 ch"
+                class="space-y-3"
+              >
                 <VMeter
                   v-for="(value, index) in bars"
                   :key="index"
                   :value="value"
                   size="sm"
                 />
-              </div>
+              </VPanel>
             </template>
           </USlideover>
           <UPopover>
@@ -856,7 +870,7 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
               variant="subtle"
             />
             <template #content>
-              <div class="p-3">
+              <div class="window m-2 rounded-xs p-3">
                 <VDotMatrix
                   text="STANDBY"
                   size="sm"

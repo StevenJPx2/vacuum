@@ -7,7 +7,7 @@ withDefaults(defineProps<{
   /** Whether the lamp is lit. */
   active?: boolean
   color?: VfdColor
-  /** `solid` lights a filled block; `outline` lights the text and frame. */
+  /** `solid` lights the whole lens; `outline` lights the legend and frame. */
   variant?: 'solid' | 'outline'
   size?: 'sm' | 'md' | 'lg'
   blink?: boolean
@@ -29,14 +29,14 @@ const sizes = {
     role="status"
     :aria-label="`${label}: ${active ? 'on' : 'off'}`"
     :class="[
-      'inline-flex items-center justify-center font-mono uppercase tracking-[0.18em] ring ring-inset select-none',
+      'window inline-flex items-center justify-center rounded-xs font-mono uppercase tracking-[0.18em] select-none',
       vfd[color],
       sizes[size],
       active
         ? (variant === 'solid'
-          ? 'bg-(--vfd) text-inverted ring-(--vfd) glow-box'
-          : 'text-(--vfd) ring-(--vfd) glow')
-        : 'ghost ring-current',
+          ? 'bg-(--vfd) text-inverted glow-box'
+          : 'text-(--vfd) glow ring ring-inset ring-(--vfd)/60')
+        : 'ghost',
       active && blink && 'motion-safe:animate-vfd-blink',
     ]"
   >
