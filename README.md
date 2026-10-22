@@ -75,7 +75,8 @@ Vacuum installs `@nuxt/ui` for you and defaults colour mode to dark.
 | Body, legends, fields (`font-sans`, `font-mono`) | [Ioskeley Mono](https://github.com/ahatem/IoskeleyMono) (OFL-1.1) |
 | Silkscreened labels (`font-label`, `silkscreen`) | Ioskeley Mono semibold capitals |
 | Headings (`font-heading`, `terminal`) | [VT323](https://fonts.google.com/specimen/VT323), from the DEC VT320 terminal (OFL-1.1) |
-| Dot-matrix titles (`font-display`) | Doto |
+| Dot-matrix titles (`font-display`) | Doto (legacy; `matrix` now uses Vacuum Matrix) |
+| Matrix text and icons (`matrix`, `matrix-icon`) | Vacuum Matrix, built from the same 5×7 glyph table as `VDotMatrix` |
 
 Ioskeley Mono isn't on a font provider, so at build time Vacuum downloads five weights from the pinned `v2.2.0` release and serves them from `/_vacuum/fonts`, where `@nuxt/fonts` self-hosts them. Set `font: false` to skip the download.
 
@@ -160,6 +161,8 @@ Every component theme is a composition of these utilities; the showcase's Materi
 | `led-bar`, `led-bar-y` | Paint bar-graph segments as background, so their glow is not clipped by a mask |
 | `glow`, `glow-box`, `glow-svg` | Phosphor glow on text, boxes and SVG; icons inside `glow` text bloom by the same amount |
 | `glow-icon` | The text glow, for an icon beside glowing text |
+| `matrix` | Sets any text in Vacuum Matrix, with the unlit dot grid painted behind it; keep the font size a multiple of 8px for crisp dots (16px gives a 2px pitch) |
+| `matrix-icon` | Redraws a pixel icon as a dot matrix, one dot per art pixel, at a pitch matched to the screen |
 | `etched`, `etched-lit` | A key legend cut through the cap, unlit, and backlit with light leaking through; icons in the legend follow it |
 | `ghost` | Unlit segment tint |
 | `mesh` | Control-grid overlay |
