@@ -37,15 +37,12 @@ export const alert = {
     title: label,
     description: 'font-mono',
   },
-  variants: {
-    color: colorOn('root'),
-    variant: {
-      solid: { root: 'glow-box' },
-      outline: { root: 'glow' },
-      soft: { root: 'glow' },
-      subtle: { root: 'glow' },
-    },
-  },
+  compoundVariants: [
+    ...colorOn('root'),
+    // Dimmed in dark mode so a lit block glows without glaring.
+    { variant: 'solid', class: { root: 'glow-box dark:bg-[color-mix(in_oklab,var(--vfd)_68%,var(--ui-bg))]' } },
+    { variant: ['outline', 'soft', 'subtle'], class: { root: 'glow' } },
+  ],
 }
 
 export const card = {
@@ -53,11 +50,9 @@ export const card = {
     title: `${label} glow`,
     description: 'font-mono',
   },
-  variants: {
-    variant: {
-      solid: { root: 'glow-box' },
-    },
-  },
+  compoundVariants: [
+    { variant: 'solid', class: { root: 'glow-box' } },
+  ],
 }
 
 export const input = {
@@ -101,9 +96,7 @@ export const checkbox = {
   slots: {
     label: 'font-mono',
   },
-  variants: {
-    color: colorOn('base'),
-  },
+  compoundVariants: colorOn('base'),
 }
 
 export const radioGroup = {
@@ -118,13 +111,10 @@ const switchTheme = {
     thumb: 'rounded-none',
     label: 'font-mono',
   },
-  variants: {
-    color: colorOn('base'),
-  },
-  compoundVariants: [{
-    checked: true,
-    class: { base: 'glow-box' },
-  }],
+  compoundVariants: [
+    ...colorOn('base'),
+    { checked: true, class: { base: 'glow-box' } },
+  ],
 }
 
 export { switchTheme as switch }
@@ -135,9 +125,7 @@ export const slider = {
     range: 'rounded-none glow-box',
     thumb: 'rounded-none',
   },
-  variants: {
-    color: colorOn('range'),
-  },
+  compoundVariants: colorOn('range'),
 }
 
 export const progress = {
@@ -146,9 +134,7 @@ export const progress = {
     indicator: 'rounded-none glow-box',
     status: 'font-mono',
   },
-  variants: {
-    color: colorOn('indicator'),
-  },
+  compoundVariants: colorOn('indicator'),
 }
 
 export const tabs = {
@@ -156,9 +142,7 @@ export const tabs = {
     trigger: `${label} data-[state=active]:glow`,
     indicator: 'rounded-none glow-box',
   },
-  variants: {
-    color: colorOn('indicator'),
-  },
+  compoundVariants: colorOn('indicator'),
 }
 
 export const table = {

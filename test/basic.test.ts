@@ -28,4 +28,9 @@ describe('ssr', async () => {
     const html = await $fetch<string>('/')
     expect(html).toMatch(/<button[^>]*class="[^"]*tracking-\[0\.14em\][^"]*glow-box/)
   })
+
+  it('applies slot-level colour and variant overrides', async () => {
+    const html = await $fetch<string>('/')
+    expect(html).toMatch(/data-slot="root"[^>]*class="[^"]*\[--vfd:var\(--ui-error\)\][^"]*glow-box/)
+  })
 })

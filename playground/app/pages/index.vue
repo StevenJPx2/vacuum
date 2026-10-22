@@ -34,11 +34,12 @@ const sections = [
 ]
 
 /* Live readouts */
-const now = ref(new Date())
+const now = ref<Date>()
 const level = ref(62)
 const bars = ref(Array.from({ length: 12 }, () => 40))
 let timer: ReturnType<typeof setInterval> | undefined
 onMounted(() => {
+  now.value = new Date()
   timer = setInterval(() => {
     now.value = new Date()
     level.value = Math.round(45 + Math.random() * 50)
@@ -48,7 +49,10 @@ onMounted(() => {
 onBeforeUnmount(() => clearInterval(timer))
 
 const pad = (n: number) => String(n).padStart(2, '0')
-const clock = computed(() => `${pad(now.value.getHours())}:${pad(now.value.getMinutes())}:${pad(now.value.getSeconds())}`)
+// Rendered only after mount so SSR and hydration agree.
+const clock = computed(() => now.value
+  ? `${pad(now.value.getHours())}:${pad(now.value.getMinutes())}:${pad(now.value.getSeconds())}`
+  : '--:--:--')
 
 /* Warm-up replay */
 const bootKey = ref(0)
