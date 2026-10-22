@@ -27,6 +27,8 @@ const fieldVariants = [
   // A lit ring is the focus indicator for every housing; no modern outline.
   { variant: ['outline', 'soft', 'subtle', 'ghost', 'none'], class: { base: 'focus-visible:outline-0 focus-visible:light-ring-on' } },
   { highlight: true, class: { base: 'light-ring-on' } },
+  // Icons take the field's ink, printed rather than lit in daylight like the text beside them.
+  { variant: ['ghost', 'none'], class: { leadingIcon: 'field-daylight', trailingIcon: 'field-daylight' } },
 ]
 
 /** A small VFD menu screen with crisp, inverted selection rows. */
@@ -135,6 +137,7 @@ export const toast = {
     root: 'window mesh rounded-sm ring-0',
     title: 'font-display font-black text-base uppercase tracking-[0.04em] text-highlighted glow',
     description: 'font-mono',
+    icon: 'glow-icon',
   },
   compoundVariants: perColor('root'),
 }
@@ -159,7 +162,8 @@ export const breadcrumb = {
   slots: {
     root: 'window inline-flex rounded-xs px-3 py-1.5',
     link: 'font-mono uppercase tracking-[0.08em] text-xs',
-    separatorIcon: 'text-dimmed size-4',
+    // Icons take the colour of the text they sit in.
+    separatorIcon: 'text-muted',
   },
   compoundVariants: [
     { active: true, class: { link: 'glow' } },
@@ -171,8 +175,8 @@ export const breadcrumb = {
 const fieldTheme = {
   slots: {
     base: fieldBase,
-    leadingIcon: 'text-muted',
-    trailingIcon: 'text-muted',
+    leadingIcon: 'text-(--vfd) glow-icon',
+    trailingIcon: 'text-(--vfd) glow-icon',
   },
   compoundVariants: fieldVariants,
 }
@@ -221,7 +225,7 @@ const selectTheme = {
     base: 'thumbwheel [--bezel:0.25rem] [--bezel-radius:0.5rem] rounded-(--bezel-radius) relative inline-flex items-center font-mono focus-visible:outline-0',
     value: 'glow text-(--vfd) font-semibold uppercase tracking-[0.12em]',
     placeholder: 'text-[color-mix(in_oklab,var(--vfd)_40%,var(--vfd-window))] uppercase tracking-[0.12em]',
-    leadingIcon: 'text-muted',
+    leadingIcon: 'text-(--vfd) glow-icon',
     // The drum is its own affordance; no dropdown chevron.
     trailingIcon: 'hidden',
     content: menuCard,
@@ -375,12 +379,17 @@ export const tabs = {
       class: {
         list: 'recess bg-(--vfd-slot) rounded-[3px] gap-1',
         indicator: 'hidden',
-        // The LED is the lamp; a key's icon stays plain ink and only brightens when latched.
-        trigger: 'keycap bg-(--vfd-key) rounded-[2px] text-muted before:led data-[state=active]:before:led-on',
-        leadingIcon: 'text-muted group-data-[state=active]:text-highlighted',
+        // The legend is cut through the cap and lit from behind when latched. A key with an icon
+        // needs no LED; an icon-less key keeps one beside its legend.
+        trigger: 'keycap etched data-[state=active]:etched-lit bg-(--vfd-key) rounded-[2px] before:led data-[state=active]:before:led-on has-[.iconify]:before:hidden',
       },
     },
-    { color: colors, variant: 'pill', class: { trigger: 'data-[state=active]:text-(--vfd)' } },
+    // Through Nuxt UI's own state utilities, so its muted and hover colours give way to the legend's.
+    {
+      color: colors,
+      variant: 'pill',
+      class: { trigger: 'data-[state=inactive]:text-(--legend-unlit) hover:data-[state=inactive]:not-disabled:text-(--legend-hover) data-[state=active]:text-(--legend-lit)' },
+    },
     // A tuner dial: stations on lit glass above a tick scale, with a red pointer riding the scale under the active one.
     {
       variant: 'link',
@@ -437,7 +446,7 @@ export const separator = {
 export const modal = {
   slots: {
     overlay: 'bg-black/55',
-    title: 'silkscreen text-xs',
+    title: 'terminal text-2xl',
     description: 'text-xs',
     close: `${closeKey} end-12`,
     wrapper: 'pe-24',
@@ -453,7 +462,7 @@ export const slideover = {
   slots: {
     overlay: 'bg-black/55',
     content: 'drawer bg-(--vfd-chassis) rounded-none ring-0',
-    title: 'silkscreen text-xs',
+    title: 'terminal text-2xl',
     description: 'text-xs',
     close: closeKey,
     wrapper: 'pe-20',

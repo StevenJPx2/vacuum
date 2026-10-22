@@ -5,7 +5,8 @@
   --font-sans: "Ioskeley Mono", ui-monospace, monospace;
   --font-mono: "Ioskeley Mono", ui-monospace, monospace;
   --font-display: "Doto", "Ioskeley Mono", ui-monospace, monospace;
-  --font-label: "Michroma", "Ioskeley Mono", ui-sans-serif, sans-serif;
+  --font-label: "Ioskeley Mono", ui-monospace, monospace;
+  --font-heading: "VT323", "Ioskeley Mono", ui-monospace, monospace;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -365,6 +366,7 @@
   html:not(.dark) & {
     color: color-mix(in oklab, var(--vfd, var(--ui-primary)) 35%, black);
     text-shadow: none;
+    filter: none;
     caret-color: currentColor;
   }
 
@@ -997,19 +999,110 @@
   }
 }
 
-/* Silkscreened label printed on the chassis. */
+/* Silkscreened label printed on the chassis, in terminal capitals. */
 @utility silkscreen {
   font-family: var(--font-label);
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   text-shadow: var(--vfd-emboss);
 }
 
-/* Glow follows `--vfd` when a component sets it, else the current text colour. */
+/*
+ * A legend cut through a keycap into a translucent window, unlit: the cut reads darker than
+ * the plastic, with a shadowed upper wall. Pair with `etched-lit` for the backlit state.
+ * Colours are exposed as `--legend-unlit`, `--legend-hover` and `--legend-lit`, so a theme can
+ * route them through Nuxt UI's state-specific text utilities.
+ */
+@utility etched {
+  --legend-unlit: color-mix(in oklab, var(--vfd-key-legend) 52%, var(--vfd-key));
+  --legend-hover: color-mix(in oklab, var(--vfd-key-legend) 72%, var(--vfd-key));
+  --legend-lit: color-mix(in oklab, var(--vfd, var(--ui-primary)) 80%, white);
+  color: var(--legend-unlit);
+  text-shadow: 0 -1px 0 oklch(0% 0 0 / 0.5), 0 1px 0 oklch(100% 0 0 / 0.08);
+
+  & :is(.iconify, svg) {
+    filter: drop-shadow(0 -1px 0 oklch(0% 0 0 / 0.5));
+  }
+
+  /* On a pale daylight key the light behind the cut shows as a deeper, saturated colour. */
+  html:not(.dark) & {
+    --legend-lit: color-mix(in oklab, var(--vfd, var(--ui-primary)) 78%, black);
+  }
+}
+
+/* Light from behind the key leaking through the cut legend: a soft bleed around the cut. */
+@utility etched-lit {
+  text-shadow:
+    0 -1px 0 oklch(0% 0 0 / 0.35),
+    0 0 var(--vfd-glow-1) var(--vfd, var(--ui-primary)),
+    0 0 var(--vfd-glow-2) color-mix(in oklab, var(--vfd, var(--ui-primary)) 40%, transparent);
+
+  /*
+   * The icon is part of the same cut. A pixel icon is solid where text is a thin stroke, so it
+   * takes one lighter, tighter bloom to look as bright as the letters beside it.
+   */
+  & :is(.iconify, svg) {
+    filter: drop-shadow(0 0 calc(var(--vfd-glow-2) * 0.5) color-mix(in oklab, var(--vfd, var(--ui-primary)) 40%, transparent));
+  }
+}
+
+/*
+ * A heading in terminal type: VT323's tall bitmap capitals, from the DEC VT320. It has one
+ * weight, so nothing is synthesised bold; use it at heading sizes, where its pixels read cleanly.
+ */
+@utility terminal {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-shadow: var(--vfd-emboss);
+}
+
+/*
+ * Glow follows `--vfd` when a component sets it, else the current text colour. Icons inside
+ * glowing text bloom to match it, so a lit label and its icon read as one legend.
+ */
 @utility glow {
   text-shadow:
     0 0 var(--vfd-glow-1) var(--vfd, currentColor),
     0 0 var(--vfd-glow-2) color-mix(in oklab, var(--vfd, currentColor) 55%, transparent);
+
+  /* A solid pixel icon carries more lit area than a text stroke, so one lighter, tighter bloom matches it. */
+  & svg.iconify {
+    filter: drop-shadow(0 0 calc(var(--vfd-glow-2) * 0.5) color-mix(in oklab, var(--vfd, currentColor) 40%, transparent));
+  }
+}
+
+/*
+ * Pixel icons are drawn on a 24-unit grid, one unit per art pixel, and only stay sharp when each
+ * art pixel covers whole device pixels: 24px on a 1x screen, 12px on 2x, 16px on 3x. Unlayered,
+ * so it wins over Nuxt UI's `size-*` icon classes. Set `--icon-units` (a multiple of 24, e.g.
+ * 48) for a larger icon.
+ */
+svg.iconify {
+  --icon-px: calc(var(--icon-units, 24) * 1px);
+  width: var(--icon-px);
+  height: var(--icon-px);
+  shape-rendering: crispEdges;
+}
+
+@media (min-resolution: 2dppx) {
+  svg.iconify {
+    --icon-px: calc(var(--icon-units, 24) * 0.5px);
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  svg.iconify {
+    --icon-px: calc(var(--icon-units, 24) * 2px / 3);
+  }
+}
+
+/* The icon bloom of `glow`, for an icon that sits beside glowing text rather than inside it. */
+@utility glow-icon {
+  filter: drop-shadow(0 0 calc(var(--vfd-glow-2) * 0.5) color-mix(in oklab, var(--vfd, currentColor) 40%, transparent));
 }
 
 /* Rides in the ring-offset slot of Tailwind's shadow stack so it composes with materials and rings. */
@@ -1018,6 +1111,24 @@
     0 0 var(--vfd-glow-1) var(--vfd, currentColor),
     0 0 var(--vfd-glow-2) color-mix(in oklab, var(--vfd, currentColor) 45%, transparent);
   box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+/*
+ * Redraws an element as a lit dot-matrix display through the filters in `<VMatrixFilter>`, at a
+ * 3px dot pitch; add `matrix-sm` (2px) or `matrix-lg` (4px) to change it. The filter draws its
+ * own bloom from the lit dots, so the element's text glow is dropped before sampling.
+ */
+@utility matrix {
+  text-shadow: none;
+  filter: var(--matrix-pitch, url(#vacuum-matrix-3));
+}
+
+@utility matrix-sm {
+  --matrix-pitch: url(#vacuum-matrix-2);
+}
+
+@utility matrix-lg {
+  --matrix-pitch: url(#vacuum-matrix-4);
 }
 
 @utility glow-svg {

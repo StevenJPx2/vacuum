@@ -73,6 +73,12 @@ export default defineNuxtModule<ModuleOptions>({
         ],
       },
     },
+    // Installed by @nuxt/ui. Inline SVG icons: a CSS-mask icon clips its own filter, so it could
+    // not glow like the text beside it. Set as a module option, which @nuxt/icon copies over app config.
+    '@nuxt/icon': {
+      optional: true,
+      defaults: { mode: 'svg' },
+    },
     '@nuxtjs/color-mode': {
       optional: true,
       defaults: {

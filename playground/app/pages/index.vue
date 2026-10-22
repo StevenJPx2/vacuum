@@ -346,6 +346,56 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
             </div>
           </VPanel>
 
+          <!-- Prototype: the matrix filter beside the component it imitates. -->
+          <VPanel
+            title="Matrix filter"
+            caption="prototype"
+            class="lg:col-span-2"
+          >
+            <div class="space-y-4">
+              <ShowcaseRow label="Component · 3px">
+                <VDotMatrix
+                  text="PATTERN BLUE"
+                  size="md"
+                />
+              </ShowcaseRow>
+              <ShowcaseRow label="Filter · 3px · 28px">
+                <span class="matrix font-mono text-[28px] leading-none font-medium uppercase text-highlighted">Pattern blue</span>
+              </ShowcaseRow>
+              <ShowcaseRow label="Filter · 2px · 18px">
+                <span class="matrix matrix-sm font-mono text-lg leading-none font-medium uppercase text-highlighted">Pattern blue</span>
+              </ShowcaseRow>
+              <ShowcaseRow label="Filter · 4px · 40px">
+                <span class="matrix matrix-lg font-mono text-[40px] leading-none font-medium uppercase text-highlighted">EVA-01</span>
+              </ShowcaseRow>
+              <ShowcaseRow label="Filter · icons">
+                <UIcon
+                  name="i-pixel-cassette-tape"
+                  class="matrix matrix-sm size-10 text-highlighted"
+                />
+                <UIcon
+                  name="i-pixel-rss"
+                  class="matrix matrix-sm size-10 text-highlighted"
+                />
+              </ShowcaseRow>
+              <ShowcaseRow label="In components">
+                <UAlert
+                  title="Pattern blue"
+                  description="Filtered title, plain description."
+                  variant="subtle"
+                  class="max-w-sm"
+                  :ui="{ title: 'matrix matrix-sm font-mono text-xl font-medium' }"
+                />
+                <USelect
+                  v-model="form.channel"
+                  :items="channels"
+                  class="w-56"
+                  :ui="{ value: 'matrix matrix-sm text-lg' }"
+                />
+              </ShowcaseRow>
+            </div>
+          </VPanel>
+
           <VPanel
             title="Meters"
             caption="bar graph"

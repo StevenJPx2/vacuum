@@ -13,7 +13,7 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 | Radio group | Interlocking radio keys with indicator LEDs |
 | Switch | A chrome toggle knob in a slot ringed by a light that comes on with it |
 | Slider, Progress | A mixer fader over a glowing segmented LED trail and printed scale, and a segmented LED bar graph |
-| Tabs | `pill`: latching source-selector keys in a recessed tray, each with an LED lamp; icons stay plain ink. `link`: a tuner dial with a sliding needle |
+| Tabs | `pill`: latching source-selector keys in a recessed tray; legends are cut through the cap and lit from behind when latched, and a key without an icon carries an LED. `link`: a tuner dial with a sliding needle |
 | Accordion | A stack of manila file folders; the open one shows a paper sheet filed inside |
 | Table | A printout on continuous-feed green-bar paper |
 | Input | A lit field. `outline` is a screen in a moulded frame, `soft` a screen flush in a rubber gasket, `subtle` a screen in a brushed steel bezel, `ghost` bare phosphor over a dashed printed rule, `none` bare phosphor. `highlight` lights a ring around it |
@@ -73,7 +73,8 @@ Vacuum installs `@nuxt/ui` for you and defaults colour mode to dark.
 | Role | Face |
 |---|---|
 | Body, legends, fields (`font-sans`, `font-mono`) | [Ioskeley Mono](https://github.com/ahatem/IoskeleyMono) (OFL-1.1) |
-| Silkscreened labels (`font-label`) | Michroma |
+| Silkscreened labels (`font-label`, `silkscreen`) | Ioskeley Mono semibold capitals |
+| Headings (`font-heading`, `terminal`) | [VT323](https://fonts.google.com/specimen/VT323), from the DEC VT320 terminal (OFL-1.1) |
 | Dot-matrix titles (`font-display`) | Doto |
 
 Ioskeley Mono isn't on a font provider, so at build time Vacuum downloads five weights from the pinned `v2.2.0` release and serves them from `/_vacuum/fonts`, where `@nuxt/fonts` self-hosts them. Set `font: false` to skip the download.
@@ -81,6 +82,10 @@ Ioskeley Mono isn't on a font provider, so at build time Vacuum downloads five w
 ## Icons
 
 Nuxt UI's built-in icons (arrows, close, check, loading, alerts…) are mapped to the [Pixel Icon Library](https://pixeliconlibrary.com) by HackerNoon, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), which ships with the package as `@iconify-json/pixel`. Use any of its icons as `i-pixel-*`, for example `<UIcon name="i-pixel-cassette-tape" />`. The mapping lives in `src/runtime/icons.ts`; override any of it in your `app.config.ts` under `ui.icons`.
+
+Icons render as inline SVG (`@nuxt/icon`'s `mode: 'svg'`) in the colour of the text beside them. A CSS-mask icon clips its own filter, so it couldn't glow the way the text next to it does.
+
+Pixel icons are drawn on a 24-unit grid and only stay sharp when each art pixel covers whole device pixels. Vacuum sizes every icon to the grid for the screen: 12px on Retina (2×), 16px on 3×, 24px on standard displays. The rule is unlayered so it wins over `size-*` classes; set `--icon-units` to a multiple of 24 (for example `[--icon-units:48]`) for a larger icon.
 
 Modal and slideover close keys spell out CLOSE in silkscreen (`legend-word`) instead of the mapped close glyph, so dismissing a panel reads as a hardware control rather than a UI close button. The legend is the key's accessible name, so it follows your locale.
 
@@ -146,13 +151,16 @@ Every component theme is a composition of these utilities; the showcase's Materi
 | `legend-check` | A tick printed on a key, always present like a real legend (`--legend-ink`) |
 | `punched` | Binder punch holes down a sheet's left margin |
 | `note` | Paper held by a gem clip — inner loop in front, outer loop around the back — set down slightly askew |
-| `silkscreen` | Printed chassis label |
+| `silkscreen` | Printed chassis label in terminal capitals |
+| `terminal` | Heading in VT323 terminal capitals |
 | `led`, `led-on` | Indicator LED (`--led-size`), unlit and lit; works on `before:`/`after:` |
 | `needle`, `needle-y` | Glowing index line across a positioned element's centre |
 | `scale`, `scale-y` | Printed tick marks (`--scale-step`, `--scale-height`) |
 | `segments`, `segments-y` | Cut an element into bar-graph segments |
 | `led-bar`, `led-bar-y` | Paint bar-graph segments as background, so their glow is not clipped by a mask |
-| `glow`, `glow-box`, `glow-svg` | Phosphor glow on text, boxes and SVG |
+| `glow`, `glow-box`, `glow-svg` | Phosphor glow on text, boxes and SVG; icons inside `glow` text bloom by the same amount |
+| `glow-icon` | The text glow, for an icon beside glowing text |
+| `etched`, `etched-lit` | A key legend cut through the cap, unlit, and backlit with light leaking through; icons in the legend follow it |
 | `ghost` | Unlit segment tint |
 | `mesh` | Control-grid overlay |
 | `animate-vfd-warmup`, `animate-vfd-flicker`, `animate-vfd-blink` | Tube animations; pair with `motion-safe:` |
