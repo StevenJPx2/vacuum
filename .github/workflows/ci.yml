@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Prepare
+        run: bun run dev:prepare
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Typecheck
+        run: bun run test:types
+
+      - name: Test
+        run: bun run test
+
+      - name: Build
+        run: bun run prepack

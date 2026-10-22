@@ -1,0 +1,4 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+/* Consumers write `@import "@fdcn/vacuum";` — the playground uses the source directly. */
+@import "../../../../src/runtime/vacuum.css";
