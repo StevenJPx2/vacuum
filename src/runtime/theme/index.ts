@@ -5,18 +5,27 @@ import { colors, legend, litVfd, perColor, pigment, tape, vfd } from './shared'
 /** A dark plastic key that keeps its colour through hover, press and disabled states. */
 const keyBg = 'bg-(--vfd-key) hover:bg-(--vfd-key) active:bg-(--vfd-key) disabled:bg-(--vfd-key) aria-disabled:bg-(--vfd-key) dark:disabled:bg-(--vfd-key) dark:aria-disabled:bg-(--vfd-key)'
 
-/** A field is a small screen: lit phosphor text behind glass set in a thin moulded frame. */
-const field = 'screen [--bezel:0.25rem] [--bezel-radius:0.5rem] rounded-(--bezel-radius) font-mono glow'
+/** A text field's shared geometry and phosphor ink; its variant supplies the housing. */
+const fieldBase = 'font-mono glow [--bezel:0.25rem] [--bezel-radius:0.5rem] rounded-(--bezel-radius) border-(length:--bezel) border-transparent'
 const fieldInk = 'text-(--vfd) placeholder:text-[color-mix(in_oklab,var(--vfd)_60%,var(--vfd-window))] caret-(--vfd)'
-const glass = 'bg-(--vfd-window) hover:bg-(--vfd-window) focus:bg-(--vfd-window) has-focus:bg-(--vfd-window) disabled:bg-(--vfd-window) dark:disabled:bg-(--vfd-window)'
-/** The frame replaces Nuxt UI's outline; a highlighted field lights a ring around its frame. */
+/**
+ * Housings, one per Nuxt UI variant: a moulded screen, a flush screen in a rubber gasket, a
+ * screen in a steel bezel, or bare phosphor printed on the panel. All keep the same outer
+ * geometry, so switching variants never shifts a form row.
+ */
 const fieldVariants = [
   ...perColor('root', litVfd),
   ...perColor('base', litVfd),
   // Upstream variant text utilities come after slots, so the selected phosphor wins here.
   { color: colors, class: { base: fieldInk } },
-  { variant: ['soft', 'subtle', 'ghost'], class: { base: glass } },
-  { variant: ['outline', 'subtle'], class: { base: 'ring-0' } },
+  { variant: 'outline', class: { base: 'screen' } },
+  { variant: 'soft', class: { base: 'screen-flush' } },
+  { variant: 'subtle', class: { base: 'screen-steel' } },
+  { variant: 'ghost', class: { base: 'field-dashed field-daylight' } },
+  { variant: 'none', class: { base: 'field-bare field-daylight' } },
+  { variant: ['outline', 'soft', 'subtle'], class: { base: 'ring-0' } },
+  // A lit ring is the focus indicator for every housing; no modern outline.
+  { variant: ['outline', 'soft', 'subtle', 'ghost', 'none'], class: { base: 'focus-visible:outline-0 focus-visible:light-ring-on' } },
   { highlight: true, class: { base: 'light-ring-on' } },
 ]
 
@@ -159,11 +168,11 @@ export const breadcrumb = {
   ],
 }
 
-/* Form fields as small screens */
+/* Form fields: each control is a different physical mechanism */
 
 const fieldTheme = {
   slots: {
-    base: field,
+    base: fieldBase,
     leadingIcon: 'text-(--vfd)',
     trailingIcon: 'text-(--vfd)',
   },
@@ -171,22 +180,49 @@ const fieldTheme = {
 }
 
 export const input = fieldTheme
-export const textarea = fieldTheme
 export const inputNumber = fieldTheme
 
-export const inputTags = {
+// Notes print on a teletype sheet, not on glass: continuous-feed paper in ink.
+export const textarea = {
   slots: {
-    base: field,
-    item: 'rounded-[2px] font-mono uppercase text-[10px]',
+    root: 'paper tractor-feed teletype rounded-none focus-within:outline-2 focus-within:outline-offset-4 focus-within:outline-[color-mix(in_oklab,var(--ui-text)_30%,transparent)]',
+    base: 'font-mono leading-6 resize-none bg-transparent text-(--ui-text) placeholder:text-(--ui-text-muted) caret-(--ui-text) ring-0 focus-visible:outline-none',
   },
-  compoundVariants: fieldVariants,
+  compoundVariants: [
+    { variant: ['outline', 'soft', 'subtle', 'ghost', 'none'], class: { base: 'bg-transparent hover:bg-transparent focus:bg-transparent disabled:bg-transparent dark:disabled:bg-transparent' } },
+  ],
 }
 
+// Tags are a strip of label tape in a slot: the field is the tape, the tags are cut chips.
+export const inputTags = {
+  slots: {
+    root: 'focus-within:outline-2 focus-within:outline-offset-4 focus-within:outline-[color-mix(in_oklab,var(--pigment)_55%,transparent)]',
+    base: `label-tape ${tape.white} tape-field font-mono`,
+    item: `label-tape ${tape.black} rounded-[2px] font-mono text-[10px]`,
+    itemDelete: 'text-(--tape-ink) hover:text-(--tape-ink) hover:bg-white/10',
+    input: 'bg-transparent text-(--tape-ink) placeholder:text-[color-mix(in_oklab,var(--tape-ink)_50%,var(--tape))] caret-(--tape-ink) focus:outline-none',
+  },
+  compoundVariants: [
+    ...perColor('base', pigment),
+    ...perColor('item', pigment),
+    // Nuxt UI's variant fill and ring come after slot classes; put the tape back on top.
+    {
+      color: colors,
+      class: {
+        base: 'bg-(--tape) hover:bg-(--tape) focus:bg-(--tape) has-focus:bg-(--tape) ring-1 ring-inset ring-black/30',
+        item: 'bg-(--tape) text-(--tape-ink) ring-0',
+        itemDelete: 'text-(--tape-ink) hover:text-(--tape-ink) hover:bg-white/10',
+      },
+    },
+  ],
+}
+
+// A channel thumbwheel: a detented drum with a lit index window; its menu is still a VFD screen.
 const selectTheme = {
   slots: {
-    base: field,
-    value: 'glow',
-    placeholder: 'text-[color-mix(in_oklab,var(--vfd)_60%,var(--vfd-window))]',
+    base: 'thumbwheel [--bezel:0.25rem] [--bezel-radius:0.5rem] rounded-(--bezel-radius) relative inline-flex items-center font-mono focus-visible:outline-0',
+    value: 'glow text-(--vfd) font-semibold uppercase tracking-[0.12em]',
+    placeholder: 'text-[color-mix(in_oklab,var(--vfd)_40%,var(--vfd-window))] uppercase tracking-[0.12em]',
     leadingIcon: 'text-(--vfd)',
     trailingIcon: 'text-(--vfd)',
     content: menuCard,
@@ -195,18 +231,29 @@ const selectTheme = {
     itemLeadingIcon: 'text-current group-data-highlighted:not-group-data-disabled:text-current',
     itemDescription: 'text-current opacity-70',
   },
-  compoundVariants: [...fieldVariants, ...perColor('content', litVfd)],
+  compoundVariants: [
+    ...perColor('base', litVfd),
+    ...perColor('value', litVfd),
+    ...perColor('content', litVfd),
+    // The wheel keeps its own dark finish through Nuxt UI's variant backgrounds.
+    { variant: ['outline', 'soft', 'subtle', 'ghost', 'none'], class: { base: 'bg-(--vfd-slot) hover:bg-(--vfd-slot) focus:bg-(--vfd-slot) ring-0 focus-visible:light-ring-on' } },
+    { highlight: true, class: { base: 'light-ring-on' } },
+  ],
 }
 
 export const select = selectTheme
 export const selectMenu = selectTheme
 
+// A code entered on counter keys seated in a recessed tray.
 export const pinInput = {
   slots: {
-    base: `${field} font-display font-black`,
+    root: 'recess rounded-[6px] p-1 inline-flex items-center gap-1.5',
+    base: 'keycap font-mono font-semibold rounded-[3px] text-center ring-0 caret-(--vfd) focus-visible:outline-0',
+    separator: 'text-(--vfd-ghost) flex items-center justify-center',
   },
   compoundVariants: [
-    ...fieldVariants,
+    ...perColor('base', litVfd),
+    { color: colors, class: { base: `${keyBg} focus:bg-(--vfd-key) text-(--vfd-key-legend) focus:text-(--vfd) ring-0 focus-visible:outline-0 focus-visible:light-ring-on` } },
     { size: 'xs', class: { base: 'text-base md:text-base' } },
     { size: 'sm', class: { base: 'text-lg md:text-lg' } },
     { size: 'md', class: { base: 'text-xl md:text-xl' } },

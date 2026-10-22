@@ -39,6 +39,20 @@ describe('ssr', async () => {
     expect(html).toContain('meter-ink-x')
   })
 
+  it('gives each form control its own physical mechanism', async () => {
+    const html = await $fetch<string>('/')
+    // Text fields: one housing per variant, all with the same geometry.
+    expect(html).toContain('screen-flush')
+    expect(html).toContain('screen-steel')
+    expect(html).toContain('field-dashed')
+    expect(html).toContain('field-bare')
+    // Notes on paper, tags on tape, a channel thumbwheel, a code on counter keys.
+    expect(html).toContain('tractor-feed')
+    expect(html).toContain('teletype')
+    expect(html).toContain('tape-field')
+    expect(html).toContain('thumbwheel')
+  })
+
   it('applies the theme preset to Nuxt UI components', async () => {
     const html = await $fetch<string>('/')
     expect(html).toMatch(/<button[^>]*class="[^"]*uppercase[^"]*keycap/)

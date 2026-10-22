@@ -621,7 +621,7 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
       <ShowcaseSection
         id="forms"
         title="Forms"
-        description="Inputs, selection and range controls"
+        description="Screens, paper, tape, a thumbwheel and counter keys"
       >
         <ShowcaseRow
           v-for="variant in inputVariants"
@@ -741,7 +741,7 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
             <UProgress animation="carousel" />
           </div>
         </ShowcaseRow>
-        <ShowcaseRow label="Pin">
+        <ShowcaseRow label="Access code">
           <UPinInput :length="4" />
         </ShowcaseRow>
       </ShowcaseSection>

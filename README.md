@@ -16,7 +16,11 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 | Tabs | `pill`: latching source-selector keys in a recessed tray; a key with an icon lights that icon instead of an LED. `link`: a tuner dial with a sliding needle |
 | Accordion | A stack of manila file folders; the open one shows a paper sheet filed inside |
 | Table | A printout on continuous-feed green-bar paper |
-| Input, Select, Textarea, Pin input | Small screens in a thin moulded frame; text, placeholder and icons light in the field's colour, and `highlight` lights a ring around the frame |
+| Input | A lit field. `outline` is a screen in a moulded frame, `soft` a screen flush in a rubber gasket, `subtle` a screen in a brushed steel bezel, `ghost` bare phosphor over a dashed printed rule, `none` bare phosphor. `highlight` lights a ring around it |
+| Textarea | A teletype sheet on continuous-feed paper: sprocket holes, a printer's margin rule and ink text |
+| Select, Select menu | A detented channel thumbwheel with a lit index window; the open menu is a small VFD screen |
+| Input tags | A strip of white label-maker tape in a slot; each tag is a black tape chip with embossed letters |
+| Pin input | A code on counter keys seated in a recessed tray; the focused key lights its ring and digit |
 | Breadcrumb | A display window |
 | Alert, Toast, Tooltip | Display windows with dot-matrix titles |
 | Badge | Label-maker tape with embossed letters: dyed (`solid`), clear (`outline`), black (`soft`), white (`subtle`) |
@@ -121,17 +125,21 @@ Every component theme is a composition of these utilities; the showcase's Materi
 | `dished`, `dished-y` | A concave keycap top |
 | `window` | Smoked display glass; Nuxt UI text and colour tokens inside it read as lit phosphor |
 | `screen`, `screen-lit` | Glass set in a moulded plastic frame on one element, corners concentric; `screen-lit` is lit edge to edge |
+| `screen-flush`, `screen-steel` | The same glass set flush in a rubber gasket, or in a brushed steel bezel |
+| `field-bare`, `field-dashed` | A field with no housing, or with a dashed printed rule, at the same outer geometry as a framed field |
 | `bezel` | Moulded plastic frame around any child, whose corners follow the frame's (`--bezel`, `--bezel-radius`) |
 | `recess` | Recessed slot or groove |
+| `thumbwheel` | A detented selector drum in a well, with a lit index window and a printed scale at both rims |
 | `paper`, `manila`, `ink` | Paper stock (`--paper`) printed in ink; `ink` alone re-points text tokens to ink and defines `--highlighter` |
 | `tractor-feed`, `greenbar` | Continuous-feed margins with holes and perforations; alternating green rows |
+| `teletype` | A printer's margin rule just inside `tractor-feed` holes |
 | `folder-stack`, `folder`, `folder-tab`, `folder-face` | Stacked file folders with staggered tabs stepping down in a staircase; only tabs and open faces take clicks; the `data-state="open"` folder shows its face, and `paper` inside it is white sheet stock cut with square corners |
 | `rack` | Rack-mount faceplate with ears and screws (`--rack-ear`) |
 | `rails`, `rails-y` | Telescopic drawer runners top and bottom, or on the sides (`--rail`) |
 | `drawer`, `drawer-front-{left,right,top,bottom}` | A drawer with a brushed metal leading edge, recessed finger pull and inset content (`--drawer-front`) |
 | `inset-key` | A key seated in a recessed well, as for an eject or close key |
 | `legend-eject` | A printed eject legend (triangle over a bar) masked from the current ink |
-| `label-tape`, `embossed` | Label-maker tape (`--tape`, `--tape-ink`) and raised lettering (`--emboss` edge colour) |
+| `label-tape`, `embossed` | Label-maker tape (`--tape`, `--tape-ink`) and raised lettering (`--emboss` edge colour); `tape-field` seats a strip in a shallow slot |
 | `metal` | Polished metal for knobs and levers |
 | `light-ring`, `light-ring-on` | An illuminated ring around a control's housing, dim and lit |
 | `lens`, `lens-lit` | A tinted lens over a lamp, unlit and glowing; `lens` composes with `keycap` |
