@@ -7,6 +7,7 @@
   --font-display: "Doto", "Ioskeley Mono", ui-monospace, monospace;
   --font-label: "Ioskeley Mono", ui-monospace, monospace;
   --font-heading: "VT323", "Ioskeley Mono", ui-monospace, monospace;
+  --font-matrix: "Vacuum Matrix", "Ioskeley Mono", ui-monospace, monospace;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -94,6 +95,13 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
   }
+}
+
+/* The `VDotMatrix` glyphs as a font, served by the module (see scripts/matrix-font.ts). */
+@font-face {
+  font-family: "Vacuum Matrix";
+  src: url("/_vacuum/matrix/vacuum-matrix.otf") format("opentype");
+  font-display: block;
 }
 
 @layer theme {
@@ -1021,7 +1029,7 @@
   color: var(--legend-unlit);
   text-shadow: 0 -1px 0 oklch(0% 0 0 / 0.5), 0 1px 0 oklch(100% 0 0 / 0.08);
 
-  & :is(.iconify, svg) {
+  & :is(.iconify, svg):not(.matrix-icon) {
     filter: drop-shadow(0 -1px 0 oklch(0% 0 0 / 0.5));
   }
 
@@ -1070,7 +1078,7 @@
     0 0 var(--vfd-glow-2) color-mix(in oklab, var(--vfd, currentColor) 55%, transparent);
 
   /* A solid pixel icon carries more lit area than a text stroke, so one lighter, tighter bloom matches it. */
-  & svg.iconify {
+  & svg.iconify:not(.matrix-icon) {
     filter: drop-shadow(0 0 calc(var(--vfd-glow-2) * 0.5) color-mix(in oklab, var(--vfd, currentColor) 40%, transparent));
   }
 }
@@ -1114,21 +1122,49 @@ svg.iconify {
 }
 
 /*
- * Redraws an element as a lit dot-matrix display through the filters in `<VMatrixFilter>`, at a
- * 3px dot pitch; add `matrix-sm` (2px) or `matrix-lg` (4px) to change it. The filter draws its
- * own bloom from the lit dots, so the element's text glow is dropped before sampling.
+ * Text set as a lit dot-matrix display in Vacuum Matrix (the `VDotMatrix` glyphs as a font),
+ * over the faint unlit dots of every cell it spans. An em is eight dot rows and a character six
+ * dot columns, so the unlit grid is painted in step with the letters. Keep the font size a
+ * multiple of 8px so dots land on whole pixels: 16px gives a 2px pitch, 24px a 3px pitch.
  */
 @utility matrix {
-  text-shadow: none;
-  filter: var(--matrix-pitch, url(#vacuum-matrix-3));
+  --matrix-dot: calc(1em / 8);
+  --matrix-ghost: color-mix(in oklab, var(--vfd, currentColor) 11%, transparent);
+  --matrix-cell: radial-gradient(circle at calc(var(--matrix-dot) / 2) 50%, var(--matrix-ghost) 0 calc(var(--matrix-dot) * 0.38), transparent calc(var(--matrix-dot) * 0.38 + 0.5px));
+  font-family: var(--font-matrix);
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: 0;
+  word-spacing: 0;
+  line-height: 1;
+  /* Five dot columns per six-column character cell; the sixth stays dark between characters. */
+  background-image: var(--matrix-cell), var(--matrix-cell), var(--matrix-cell), var(--matrix-cell), var(--matrix-cell);
+  background-size: calc(var(--matrix-dot) * 6) var(--matrix-dot);
+  background-position:
+    0 0,
+    var(--matrix-dot) 0,
+    calc(var(--matrix-dot) * 2) 0,
+    calc(var(--matrix-dot) * 3) 0,
+    calc(var(--matrix-dot) * 4) 0;
+  background-origin: content-box;
 }
 
-@utility matrix-sm {
-  --matrix-pitch: url(#vacuum-matrix-2);
-}
+/*
+ * A pixel icon redrawn as a dot-matrix display, one dot per art pixel, through the filters in
+ * `<VMatrixFilter>`. The icon takes a 48-unit grid size, so each art pixel is 2px on a 1× screen,
+ * 1px on 2× and 4/3px on 3×, and the matching filter samples exactly those pixels.
+ */
+@utility matrix-icon {
+  --icon-units: 48;
+  filter: url(#vacuum-matrix-icon-1x);
 
-@utility matrix-lg {
-  --matrix-pitch: url(#vacuum-matrix-4);
+  @media (min-resolution: 2dppx) {
+    filter: url(#vacuum-matrix-icon-2x);
+  }
+
+  @media (min-resolution: 3dppx) {
+    filter: url(#vacuum-matrix-icon-3x);
+  }
 }
 
 @utility glow-svg {

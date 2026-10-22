@@ -104,6 +104,10 @@ export default defineNuxtModule<ModuleOptions>({
       }
     }
 
+    // Vacuum Matrix ships with the package; `matrix` text uses it.
+    nuxt.options.nitro.publicAssets ||= []
+    nuxt.options.nitro.publicAssets.push({ dir: resolve('./runtime/fonts'), baseURL: '/_vacuum/matrix', maxAge: 60 * 60 * 24 * 365 })
+
     nuxt.hook('prepare:types', ({ references }) => {
       references.push({ path: resolve('./runtime/types/app.config.d.ts') })
     })

@@ -346,51 +346,57 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
             </div>
           </VPanel>
 
-          <!-- Prototype: the matrix filter beside the component it imitates. -->
+          <!-- Prototype: the matrix font and icon filter beside the component they match. -->
           <VPanel
-            title="Matrix filter"
+            title="Matrix text and icons"
             caption="prototype"
             class="lg:col-span-2"
           >
             <div class="space-y-4">
-              <ShowcaseRow label="Component · 3px">
+              <ShowcaseRow label="Component · 2px">
                 <VDotMatrix
                   text="PATTERN BLUE"
-                  size="md"
+                  size="sm"
                 />
               </ShowcaseRow>
-              <ShowcaseRow label="Filter · 3px · 28px">
-                <span class="matrix font-mono text-[28px] leading-none font-medium uppercase text-highlighted">Pattern blue</span>
+              <ShowcaseRow label="Font · 2px · 16px">
+                <span class="matrix text-base text-highlighted glow">PATTERN BLUE</span>
               </ShowcaseRow>
-              <ShowcaseRow label="Filter · 2px · 18px">
-                <span class="matrix matrix-sm font-mono text-lg leading-none font-medium uppercase text-highlighted">Pattern blue</span>
+              <ShowcaseRow label="Font · lower case">
+                <span class="matrix text-base text-highlighted glow">Pattern blue confirmed.</span>
               </ShowcaseRow>
-              <ShowcaseRow label="Filter · 4px · 40px">
-                <span class="matrix matrix-lg font-mono text-[40px] leading-none font-medium uppercase text-highlighted">EVA-01</span>
+              <ShowcaseRow label="Font · 3px · 24px">
+                <span class="matrix text-2xl text-highlighted glow">EVA-01</span>
               </ShowcaseRow>
-              <ShowcaseRow label="Filter · icons">
+              <ShowcaseRow label="Icons · plain">
                 <UIcon
-                  name="i-pixel-cassette-tape"
-                  class="matrix matrix-sm size-10 text-highlighted"
+                  v-for="icon in ['i-pixel-cassette-tape', 'i-pixel-rss', 'i-pixel-headphones', 'i-pixel-robot']"
+                  :key="icon"
+                  :name="icon"
+                  class="text-highlighted [--icon-units:48]"
                 />
+              </ShowcaseRow>
+              <ShowcaseRow label="Icons · matrix">
                 <UIcon
-                  name="i-pixel-rss"
-                  class="matrix matrix-sm size-10 text-highlighted"
+                  v-for="icon in ['i-pixel-cassette-tape', 'i-pixel-rss', 'i-pixel-headphones', 'i-pixel-robot']"
+                  :key="icon"
+                  :name="icon"
+                  class="matrix-icon text-highlighted"
                 />
               </ShowcaseRow>
               <ShowcaseRow label="In components">
                 <UAlert
                   title="Pattern blue"
-                  description="Filtered title, plain description."
+                  description="Matrix title, plain description."
                   variant="subtle"
                   class="max-w-sm"
-                  :ui="{ title: 'matrix matrix-sm font-mono text-xl font-medium' }"
+                  :ui="{ title: 'matrix font-matrix font-normal tracking-normal text-base text-highlighted' }"
                 />
                 <USelect
                   v-model="form.channel"
                   :items="channels"
                   class="w-56"
-                  :ui="{ value: 'matrix matrix-sm text-lg' }"
+                  :ui="{ value: 'matrix font-matrix font-normal tracking-normal text-base text-highlighted' }"
                 />
               </ShowcaseRow>
             </div>

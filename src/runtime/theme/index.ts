@@ -100,7 +100,8 @@ export const badge = {
 export const card = {
   slots: {
     root: 'screen [--bezel-radius:0.875rem] rounded-(--bezel-radius) ring-0 text-default [--vfd:var(--ui-primary)]',
-    title: 'font-display font-black text-lg uppercase tracking-[0.04em] text-highlighted glow',
+    // Cards on the screen read as a vacuum readout: the title is dot-matrix.
+    title: 'matrix font-matrix font-normal text-base uppercase tracking-normal text-highlighted glow',
     description: 'font-mono text-muted',
   },
   compoundVariants: [
@@ -135,7 +136,7 @@ export const alert = {
 export const toast = {
   slots: {
     root: 'window mesh rounded-sm ring-0',
-    title: 'font-display font-black text-base uppercase tracking-[0.04em] text-highlighted glow',
+    title: 'matrix font-matrix font-normal text-base uppercase tracking-normal text-highlighted glow',
     description: 'font-mono',
     icon: 'glow-icon',
   },
@@ -145,6 +146,7 @@ export const toast = {
 export const tooltip = {
   slots: {
     content: 'window rounded-xs ring-0 font-mono uppercase tracking-wider glow',
+    icon: 'glow-icon',
   },
 }
 
@@ -162,11 +164,11 @@ export const breadcrumb = {
   slots: {
     root: 'window inline-flex rounded-xs px-3 py-1.5',
     link: 'font-mono uppercase tracking-[0.08em] text-xs',
-    // Icons take the colour of the text they sit in.
-    separatorIcon: 'text-muted',
+    linkLeadingIcon: 'matrix-icon',
+    separatorIcon: 'text-(--ui-color-neutral-500) size-4',
   },
   compoundVariants: [
-    { active: true, class: { link: 'glow' } },
+    { active: true, class: { link: 'glow', linkLeadingIcon: 'glow-icon' } },
   ],
 }
 
@@ -223,7 +225,7 @@ export const inputTags = {
 const selectTheme = {
   slots: {
     base: 'thumbwheel [--bezel:0.25rem] [--bezel-radius:0.5rem] rounded-(--bezel-radius) relative inline-flex items-center font-mono focus-visible:outline-0',
-    value: 'glow text-(--vfd) font-semibold uppercase tracking-[0.12em]',
+    value: 'matrix font-matrix font-normal text-base uppercase tracking-normal glow text-(--vfd)',
     placeholder: 'text-[color-mix(in_oklab,var(--vfd)_40%,var(--vfd-window))] uppercase tracking-[0.12em]',
     leadingIcon: 'text-(--vfd) glow-icon',
     // The drum is its own affordance; no dropdown chevron.
@@ -231,7 +233,9 @@ const selectTheme = {
     content: menuCard,
     label: 'font-mono uppercase tracking-[0.12em] text-[10px] text-muted',
     item: menuItem,
-    itemLeadingIcon: 'text-current group-data-highlighted:not-group-data-disabled:text-current',
+    itemLabel: 'matrix font-matrix font-normal text-base uppercase tracking-normal',
+    itemLeadingIcon: 'matrix-icon group-data-highlighted:not-group-data-disabled:text-current',
+    itemTrailingIcon: 'matrix-icon',
     itemDescription: 'text-current opacity-70',
   },
   compoundVariants: [
@@ -397,6 +401,7 @@ export const tabs = {
         list: 'window rounded-xs border-0 px-2 [--scale-step:8px] [--scale-height:8px]',
         indicator: '[--vfd:var(--ui-error)] bg-transparent',
         trigger: 'text-muted data-[state=active]:text-highlighted data-[state=active]:glow',
+        leadingIcon: 'matrix-icon group-data-[state=active]:glow-icon',
       },
     },
     { orientation: 'horizontal', variant: 'link', class: { list: 'scale pt-1 pb-3.5', indicator: 'needle top-auto bottom-0 h-3.5' } },
