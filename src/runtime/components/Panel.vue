@@ -18,7 +18,7 @@ withDefaults(defineProps<{
 <template>
   <section
     :class="[
-      'relative p-4 sm:p-5',
+      'relative p-4 sm:p-5 matrix-grid',
       bezel ? 'screen' : 'window rounded-sm',
       mesh && 'mesh',
       warmup && 'motion-safe:animate-vfd-warmup',

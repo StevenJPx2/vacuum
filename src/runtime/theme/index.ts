@@ -6,7 +6,7 @@ import { colors, legend, litVfd, perColor, pigment, tape, vfd } from './shared'
 const keyBg = 'bg-(--vfd-key) hover:bg-(--vfd-key) active:bg-(--vfd-key) disabled:bg-(--vfd-key) aria-disabled:bg-(--vfd-key) dark:disabled:bg-(--vfd-key) dark:aria-disabled:bg-(--vfd-key)'
 
 /** A text field's shared geometry and phosphor ink; its variant supplies the housing. */
-const fieldBase = 'font-mono glow [--bezel:0.25rem] [--bezel-radius:0.5rem] rounded-(--bezel-radius) border-(length:--bezel) border-transparent'
+const fieldBase = 'font-mono glow [--bezel:0.375rem] [--bezel-radius:0.625rem] rounded-(--bezel-radius) border-(length:--bezel) border-transparent'
 const fieldInk = 'text-(--vfd) placeholder:text-[color-mix(in_oklab,var(--vfd)_60%,var(--vfd-window))] caret-(--vfd)'
 /**
  * Housings, one per Nuxt UI variant: a moulded screen, a flush screen in a rubber gasket, a
@@ -99,7 +99,7 @@ export const badge = {
 // A screen: display glass in a moulded frame, titled in dot-matrix.
 export const card = {
   slots: {
-    root: 'screen [--bezel-radius:0.875rem] rounded-(--bezel-radius) ring-0 text-default [--vfd:var(--ui-primary)]',
+    root: 'screen [--bezel-radius:0.875rem] rounded-(--bezel-radius) ring-0 text-base text-default [--vfd:var(--ui-primary)] relative matrix-grid',
     // Cards on the screen read as a vacuum readout: the title is dot-matrix.
     title: 'matrix font-matrix font-normal text-base uppercase tracking-normal text-highlighted glow',
     description: 'font-mono text-muted',
@@ -118,7 +118,7 @@ export const card = {
 
 export const alert = {
   slots: {
-    root: 'window mesh rounded-sm',
+    root: 'window mesh rounded-sm text-base relative matrix-grid',
     title: 'matrix font-matrix font-normal text-base uppercase tracking-normal glow',
     description: 'font-mono',
     icon: 'matrix-icon glow-icon',
@@ -136,7 +136,7 @@ export const alert = {
 
 export const toast = {
   slots: {
-    root: 'window mesh rounded-sm ring-0',
+    root: 'window mesh rounded-sm ring-0 text-base relative matrix-grid',
     title: 'matrix font-matrix font-normal text-base uppercase tracking-normal text-highlighted glow',
     description: 'font-mono',
     icon: 'matrix-icon glow-icon',
@@ -146,8 +146,8 @@ export const toast = {
 
 export const tooltip = {
   slots: {
-    content: 'window rounded-xs ring-0 font-mono uppercase tracking-wider glow',
-    text: 'matrix font-matrix font-normal text-base uppercase tracking-normal glow',
+    content: 'window rounded-xs ring-0 font-mono text-xs uppercase tracking-wider glow relative matrix-grid',
+    text: 'matrix font-matrix font-normal text-xs uppercase tracking-normal glow',
   },
 }
 
@@ -163,8 +163,8 @@ export const table = {
 
 export const breadcrumb = {
   slots: {
-    root: 'window inline-flex rounded-xs px-3 py-1.5',
-    link: 'matrix font-matrix font-normal text-base uppercase tracking-normal',
+    root: 'window inline-flex rounded-xs px-3 py-1.5 text-xs relative matrix-grid',
+    link: 'matrix font-matrix font-normal text-xs uppercase tracking-normal',
     linkLeadingIcon: 'matrix-icon glow-icon',
     separatorIcon: 'matrix-icon text-(--ui-color-neutral-500)',
   },
@@ -231,7 +231,7 @@ const selectTheme = {
     leadingIcon: 'text-(--vfd) glow-icon',
     // The drum is its own affordance; no dropdown chevron.
     trailingIcon: 'hidden',
-    content: menuCard,
+    content: `${menuCard} text-base relative matrix-grid`,
     label: 'font-mono uppercase tracking-[0.12em] text-[10px] text-muted',
     item: menuItem,
     itemLabel: 'matrix font-matrix font-normal text-base uppercase tracking-normal',
@@ -490,7 +490,7 @@ export const popover = {
 
 export const dropdownMenu = {
   slots: {
-    content: `${menuCard} [--vfd:var(--ui-primary)]`,
+    content: `${menuCard} [--vfd:var(--ui-primary)] text-base relative matrix-grid`,
     label: 'matrix font-matrix font-normal text-base uppercase tracking-normal text-muted',
     item: 'font-mono before:rounded-[1px]',
     itemLabel: 'matrix font-matrix font-normal text-base uppercase tracking-normal',

@@ -274,8 +274,8 @@
   --mesh-radius: max(0px, calc(var(--bezel-radius, 0.875rem) - var(--bezel, 0.5rem)));
   background:
     linear-gradient(var(--vfd-window), var(--vfd-window)) padding-box,
-    linear-gradient(180deg, oklch(100% 0 0 / 0.1), oklch(100% 0 0 / 0) 35%, oklch(0% 0 0 / 0.28)) border-box,
-    linear-gradient(oklch(19% 0.008 220), oklch(19% 0.008 220)) border-box;
+    linear-gradient(180deg, oklch(100% 0 0 / 0.12), oklch(100% 0 0 / 0) 30%, oklch(0% 0 0 / 0.35)) border-box,
+    linear-gradient(oklch(16% 0.008 220), oklch(16% 0.008 220)) border-box;
   --tw-shadow:
     inset 0 2px 7px oklch(0% 0 0 / 0.8),
     inset 0 0 0 1px oklch(0% 0 0 / 0.75),
@@ -314,12 +314,12 @@
   --mesh-radius: max(0px, calc(var(--bezel-radius, 0.875rem) - var(--bezel, 0.5rem)));
   background:
     linear-gradient(var(--vfd-window), var(--vfd-window)) padding-box,
-    linear-gradient(180deg, oklch(100% 0 0 / 0.05), oklch(0% 0 0 / 0.3)) border-box,
-    linear-gradient(oklch(30% 0.006 220), oklch(26% 0.006 220)) border-box;
+    linear-gradient(180deg, oklch(0% 0 0 / 0.5), oklch(0% 0 0 / 0.2)) border-box,
+    linear-gradient(oklch(12% 0.006 220), oklch(10% 0.006 220)) border-box;
   --tw-shadow:
     inset 0 4px 10px oklch(0% 0 0 / 0.75),
     inset 0 0 0 1px oklch(0% 0 0 / 0.7),
-    0 1px 0 var(--vfd-highlight);
+    0 1px 0 oklch(100% 0 0 / 0.05);
 }
 
 /* The same screen in a brushed steel bezel, for a metal-faced module. */
@@ -330,13 +330,13 @@
   --mesh-radius: max(0px, calc(var(--bezel-radius, 0.875rem) - var(--bezel, 0.5rem)));
   background:
     linear-gradient(var(--vfd-window), var(--vfd-window)) padding-box,
-    radial-gradient(circle at 30% 22%, oklch(100% 0 0 / 0.8), oklch(100% 0 0 / 0) 55%) border-box,
-    linear-gradient(160deg, oklch(88% 0.005 220), oklch(62% 0.008 220) 55%, oklch(78% 0.006 220)) border-box;
+    radial-gradient(circle at 30% 22%, oklch(100% 0 0 / 0.9), oklch(100% 0 0 / 0) 40%) border-box,
+    linear-gradient(160deg, oklch(92% 0.003 220), oklch(72% 0.006 220) 50%, oklch(85% 0.004 220)) border-box;
   --tw-shadow:
     inset 0 2px 7px oklch(0% 0 0 / 0.8),
     inset 0 0 0 1px oklch(0% 0 0 / 0.75),
     0 0 0 1px oklch(0% 0 0 / 0.55),
-    0 1px 0 oklch(100% 0 0 / 0.35),
+    0 1px 0 oklch(100% 0 0 / 0.6),
     0 2px 3px var(--vfd-shadow),
     0 12px 24px -12px var(--vfd-shadow);
 }
@@ -1084,26 +1084,29 @@
 }
 
 /*
- * Pixel icons are drawn on a 24-unit grid, one unit per art pixel, and only stay sharp when each
- * art pixel covers whole device pixels: 24px on a 1x screen, 12px on 2x, 16px on 3x. Unlayered,
- * so it wins over Nuxt UI's `size-*` icon classes. Set `--icon-units` (a multiple of 24, e.g.
- * 48) for a larger icon.
+ * Pixel icons are drawn on a 24-unit grid. `shape-rendering: crispEdges` snaps their edges to
+ * device pixels, so they stay sharp at any CSS size. Sizing stays with Nuxt UI's `size-*`
+ * classes, which match the text beside the icon. Set `--icon-units` to a multiple of 24 and
+ * add the `pixel-icon` class for a grid-snapped size (24px on 1x, 12px on 2x, 16px on 3x).
  */
 svg.iconify {
-  --icon-px: calc(var(--icon-units, 24) * 1px);
-  width: var(--icon-px);
-  height: var(--icon-px);
   shape-rendering: crispEdges;
 }
 
+.pixel-icon {
+  --icon-px: calc(var(--icon-units, 24) * 1px);
+  width: var(--icon-px);
+  height: var(--icon-px);
+}
+
 @media (min-resolution: 2dppx) {
-  svg.iconify {
+  .pixel-icon {
     --icon-px: calc(var(--icon-units, 24) * 0.5px);
   }
 }
 
 @media (min-resolution: 3dppx) {
-  svg.iconify {
+  .pixel-icon {
     --icon-px: calc(var(--icon-units, 24) * 2px / 3);
   }
 }
@@ -1128,25 +1131,43 @@ svg.iconify {
  * multiple of 8px so dots land on whole pixels: 16px gives a 2px pitch, 24px a 3px pitch.
  */
 @utility matrix {
-  --matrix-dot: calc(1em / 8);
-  --matrix-ghost: color-mix(in oklab, var(--vfd, currentColor) 11%, transparent);
-  --matrix-cell: radial-gradient(circle at calc(var(--matrix-dot) / 2) 50%, var(--matrix-ghost) 0 calc(var(--matrix-dot) * 0.38), transparent calc(var(--matrix-dot) * 0.38 + 0.5px));
   font-family: var(--font-matrix);
   font-weight: 400;
   font-synthesis: none;
   letter-spacing: 0;
   word-spacing: 0;
   line-height: 1;
-  /* Five dot columns per six-column character cell; the sixth stays dark between characters. */
-  background-image: var(--matrix-cell), var(--matrix-cell), var(--matrix-cell), var(--matrix-cell), var(--matrix-cell);
-  background-size: calc(var(--matrix-dot) * 6) var(--matrix-dot);
-  background-position:
-    0 0,
-    var(--matrix-dot) 0,
-    calc(var(--matrix-dot) * 2) 0,
-    calc(var(--matrix-dot) * 3) 0,
-    calc(var(--matrix-dot) * 4) 0;
-  background-origin: content-box;
+}
+
+/*
+ * The unlit dot grid of a display, painted across the whole surface behind its contents. Pair
+ * with `matrix` on the text inside: the grid tiles from the content box so its dots line up with
+ * the letters, but it covers the whole panel the way a real display does.
+ */
+@utility matrix-grid {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    --matrix-dot: calc(1em / 8);
+    --matrix-ghost: color-mix(in oklab, var(--vfd, currentColor) 11%, transparent);
+    --matrix-cell: radial-gradient(circle at calc(var(--matrix-dot) / 2) 50%, var(--matrix-ghost) 0 calc(var(--matrix-dot) * 0.38), transparent calc(var(--matrix-dot) * 0.38 + 0.5px));
+    background-image: var(--matrix-cell), var(--matrix-cell), var(--matrix-cell), var(--matrix-cell), var(--matrix-cell);
+    background-size: calc(var(--matrix-dot) * 6) var(--matrix-dot);
+    background-position:
+      0 0,
+      var(--matrix-dot) 0,
+      calc(var(--matrix-dot) * 2) 0,
+      calc(var(--matrix-dot) * 3) 0,
+      calc(var(--matrix-dot) * 4) 0;
+    background-origin: content-box;
+    background-clip: border-box;
+  }
 }
 
 /*
