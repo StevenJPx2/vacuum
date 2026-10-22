@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useId } from 'vue'
 import { vfd } from '../theme/shared'
 import type { VfdColor } from '../theme/shared'
 import { dotGlyph } from '../utils/glyphs'
@@ -24,6 +24,10 @@ const props = withDefaults(defineProps<{
 
 const ROWS = 8
 const ADVANCE = 6
+const COLUMNS = 5
+/** Unlit dots sit a touch smaller than lit ones, so the lit grid reads as brighter. */
+const GHOST_RADIUS = 0.38
+const LIT_RADIUS = 0.42
 
 const sizes = {
   sm: 'h-4',
@@ -32,20 +36,35 @@ const sizes = {
   xl: 'h-16',
 }
 
+const ghostId = `vacuum-matrix-${useId()}`
+
 const dots = computed(() => {
   const chars = [...props.text.padEnd(props.length ?? 0, ' ')]
   const lit: [number, number][] = []
-  const unlit: [number, number][] = []
   chars.forEach((char, index) => {
     dotGlyph(char).forEach((column, x) => {
       column.forEach((on, y) => {
-        const point: [number, number] = [index * ADVANCE + x, y]
-        if (on) lit.push(point)
-        else unlit.push(point)
+        if (on) lit.push([index * ADVANCE + x, y])
       })
     })
   })
-  return { lit, unlit, width: chars.length * ADVANCE - 1 }
+  return { lit, width: chars.length * ADVANCE - 1 }
+})
+
+/**
+ * One path for every lit dot instead of one element per dot: a long display can carry
+ * hundreds of dots, and creating that many nodes makes the browser recalculate style
+ * for the whole subtree each time the display mounts or re-renders.
+ */
+const litPath = computed(() => {
+  if (props.dot === 'square') {
+    return dots.value.lit.map(([x, y]) => `M${x + 0.08} ${y + 0.08}h0.84v0.84h-0.84z`).join('')
+  }
+  return dots.value.lit.map(([x, y]) => {
+    const cx = x + 0.5
+    const top = y + 0.5 - LIT_RADIUS
+    return `M${cx} ${top}a${LIT_RADIUS} ${LIT_RADIUS} 0 1 1 0 ${LIT_RADIUS * 2}a${LIT_RADIUS} ${LIT_RADIUS} 0 1 1 0 ${-LIT_RADIUS * 2}`
+  }).join('')
 })
 </script>
 
@@ -62,51 +81,49 @@ const dots = computed(() => {
       warmup && 'motion-safe:animate-vfd-warmup',
     ]"
   >
-    <g
+    <defs
       v-if="ghost"
       class="ghost"
-      aria-hidden="true"
     >
-      <template v-if="dot === 'round'">
-        <circle
-          v-for="([x, y]) in dots.unlit"
-          :key="`${x}:${y}`"
-          :cx="x + 0.5"
-          :cy="y + 0.5"
-          r="0.38"
-        />
-      </template>
-      <template v-else>
-        <rect
-          v-for="([x, y]) in dots.unlit"
-          :key="`${x}:${y}`"
-          :x="x + 0.1"
-          :y="y + 0.1"
-          width="0.8"
-          height="0.8"
-        />
-      </template>
-    </g>
-    <g class="fill-current glow-svg">
-      <template v-if="dot === 'round'">
-        <circle
-          v-for="([x, y]) in dots.lit"
-          :key="`${x}:${y}`"
-          :cx="x + 0.5"
-          :cy="y + 0.5"
-          r="0.42"
-        />
-      </template>
-      <template v-else>
-        <rect
-          v-for="([x, y]) in dots.lit"
-          :key="`${x}:${y}`"
-          :x="x + 0.08"
-          :y="y + 0.08"
-          width="0.84"
-          height="0.84"
-        />
-      </template>
-    </g>
+      <!-- A tile of five dot cells, so the gaps between characters stay dark. -->
+      <pattern
+        :id="ghostId"
+        :width="ADVANCE"
+        height="1"
+        patternUnits="userSpaceOnUse"
+      >
+        <template v-if="dot === 'round'">
+          <circle
+            v-for="column in COLUMNS"
+            :key="column"
+            :cx="column - 0.5"
+            cy="0.5"
+            :r="GHOST_RADIUS"
+            fill="currentColor"
+          />
+        </template>
+        <template v-else>
+          <rect
+            v-for="column in COLUMNS"
+            :key="column"
+            :x="column - 0.9"
+            y="0.1"
+            width="0.8"
+            height="0.8"
+            fill="currentColor"
+          />
+        </template>
+      </pattern>
+    </defs>
+    <rect
+      v-if="ghost"
+      :width="dots.width"
+      :height="ROWS"
+      :fill="`url(#${ghostId})`"
+    />
+    <path
+      class="fill-current glow-svg"
+      :d="litPath"
+    />
   </svg>
 </template>

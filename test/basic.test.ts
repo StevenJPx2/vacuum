@@ -24,6 +24,21 @@ describe('ssr', async () => {
     expect(html).toContain('aria-label="HI"')
   })
 
+  it('draws a dot matrix as one lit path over a ghost tile', async () => {
+    const html = await $fetch<string>('/')
+    const matrix = html.match(/<svg[^>]*aria-label="HI"[\s\S]*?<\/svg>/)?.[0] ?? ''
+    expect(matrix).toContain('<pattern')
+    expect(matrix.match(/<circle/g)).toHaveLength(5)
+    expect(matrix.match(/<path/g)).toHaveLength(1)
+  })
+
+  it('paints a meter from one segmented fill instead of per-bar nodes', async () => {
+    const html = await $fetch<string>('/')
+    expect(html).toContain('role="meter"')
+    expect(html).toContain('meter-ghost')
+    expect(html).toContain('meter-ink-x')
+  })
+
   it('applies the theme preset to Nuxt UI components', async () => {
     const html = await $fetch<string>('/')
     expect(html).toMatch(/<button[^>]*class="[^"]*uppercase[^"]*keycap/)

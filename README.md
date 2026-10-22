@@ -22,7 +22,7 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 | Badge | Label-maker tape with embossed letters: dyed (`solid`), clear (`outline`), black (`soft`), white (`subtle`) |
 | Card | Screens in a moulded frame; `solid` is lit edge to edge, `soft` is bare glass |
 | Modal | A rack-mount module with rack ears and screws |
-| Slideover | A drawer pulled out of the chassis: a brushed leading edge with a recessed finger pull, and a close key set into the faceplate |
+| Slideover | A drawer pulled out of the chassis: a brushed leading edge with a recessed finger pull, and an eject key set into the faceplate |
 | Dropdown menu, Select menus | A small VFD screen; the highlighted line inverts to dark text on lit phosphor |
 | Popover | A paper note held by a steel gem clip whose outer loop wraps behind the sheet |
 
@@ -78,6 +78,8 @@ Ioskeley Mono isn't on a font provider, so at build time Vacuum downloads five w
 
 Nuxt UI's built-in icons (chevrons, close, check, loading, alerts…) are mapped to the [Pixel Icon Library](https://pixeliconlibrary.com) by HackerNoon, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), which ships with the package as `@iconify-json/pixel`. Use any of its icons as `i-pixel-*`, for example `<UIcon name="i-pixel-cassette-tape" />`. The mapping lives in `src/runtime/icons.ts`; override any of it in your `app.config.ts` under `ui.icons`.
 
+Modal and slideover close keys print an eject legend (`legend-eject`) instead of the mapped close glyph, so dismissing a panel reads as a hardware control rather than a UI close button. The accessible name is still “Close”.
+
 `@nuxt/icon` finds collections installed under your app's or workspace's `node_modules`, which covers bun and npm installs. With pnpm's strict layout, add `@iconify-json/pixel` to your app's dependencies too, or the icons load from the Iconify API at runtime.
 
 ## Display components
@@ -92,6 +94,12 @@ Nuxt UI's built-in icons (chevrons, close, check, loading, alerts…) are mapped
 ```
 
 Every display takes `color` (any Nuxt UI semantic colour) and `size`. Segment and dot-matrix displays also accept `ghost`, `blink` and `warmup`.
+
+## Performance
+
+Displays keep their node count fixed. `VDotMatrix` paints the unlit grid with a single pattern and every lit dot as one path, and `VMeter` paints its whole bar graph as a segmented gradient with one glow. A twelve-channel meter bank mounts about forty nodes instead of three hundred, so opening a panel no longer forces a style recalculation over hundreds of children.
+
+Reka, Nuxt UI's overlay engine, sets `pointer-events: none` on `<body>` while a modal layer is open. The property inherits, so that one change recalculates the style of every element on the page — tens of milliseconds on a long page. Vacuum keeps the body interactive instead (`body:where([data-scroll-locked], [style*="pointer-events: none"]) { pointer-events: auto !important }`). The full-screen overlay still takes input, so outside clicks and focus trapping are unchanged.
 
 ## Runtime switching
 
@@ -122,6 +130,7 @@ Every component theme is a composition of these utilities; the showcase's Materi
 | `rails`, `rails-y` | Telescopic drawer runners top and bottom, or on the sides (`--rail`) |
 | `drawer`, `drawer-front-{left,right,top,bottom}` | A drawer with a brushed metal leading edge, recessed finger pull and inset content (`--drawer-front`) |
 | `inset-key` | A key seated in a recessed well, as for an eject or close key |
+| `legend-eject` | A printed eject legend (triangle over a bar) masked from the current ink |
 | `label-tape`, `embossed` | Label-maker tape (`--tape`, `--tape-ink`) and raised lettering (`--emboss` edge colour) |
 | `metal` | Polished metal for knobs and levers |
 | `light-ring`, `light-ring-on` | An illuminated ring around a control's housing, dim and lit |

@@ -24,8 +24,8 @@ const fieldVariants = [
 const menuCard = 'screen [--bezel:0.25rem] [--bezel-radius:0.375rem] rounded-(--bezel-radius) ring-0 font-mono'
 const menuItem = 'font-mono before:rounded-[1px] data-highlighted:not-data-disabled:text-(--vfd-window) data-highlighted:not-data-disabled:before:bg-(--vfd)'
 
-/** A printed close legend on a key seated in the faceplate, not a floating glyph. */
-const closeKey = `keycap inset-key ${keyBg} rounded-[3px] size-8 justify-center text-(--vfd-key-legend) focus-visible:outline-2 focus-visible:outline-offset-4`
+/** A printed eject legend on a key seated in the faceplate, not a floating close glyph. */
+const closeKey = `keycap inset-key legend-eject [&_.iconify]:hidden [&>svg]:hidden ${keyBg} rounded-[3px] size-8 justify-center text-(--vfd-key-legend) focus-visible:outline-2 focus-visible:outline-offset-4`
 
 /* Keys */
 

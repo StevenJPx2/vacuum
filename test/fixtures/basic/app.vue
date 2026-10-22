@@ -6,6 +6,7 @@ const appConfig = useAppConfig()
   <UApp>
     <VSegmentDisplay value="12:34" />
     <VDotMatrix text="HI" />
+    <VMeter :value="55" />
     <UButton label="Engage" />
     <USwitch label="Power" />
     <UAlert
