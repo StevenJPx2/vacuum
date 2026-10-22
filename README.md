@@ -82,7 +82,7 @@ Ioskeley Mono isn't on a font provider, so at build time Vacuum downloads five w
 
 ## Icons
 
-Nuxt UI's built-in icons (arrows, close, check, loading, alerts…) are mapped to the [Pixel Icon Library](https://pixeliconlibrary.com) by HackerNoon, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), which ships with the package as `@iconify-json/pixel`. Use any of its icons as `i-pixel-*`, for example `<UIcon name="i-pixel-cassette-tape" />`. The mapping lives in `src/runtime/icons.ts`; override any of it in your `app.config.ts` under `ui.icons`.
+Nuxt UI's built-in icons (angle brackets, close, check, loading, alerts…) are mapped to the [Pixel Icon Library](https://pixeliconlibrary.com) by HackerNoon, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), which ships with the package as `@iconify-json/pixel`. Use any of its icons as `i-pixel-*`, for example `<UIcon name="i-pixel-cassette-tape" />`. The mapping lives in `src/runtime/icons.ts`; override any of it in your `app.config.ts` under `ui.icons`.
 
 Icons render as inline SVG (`@nuxt/icon`'s `mode: 'svg'`) in the colour of the text beside them. A CSS-mask icon clips its own filter, so it couldn't glow the way the text next to it does.
 

@@ -1,8 +1,9 @@
 /**
  * Nuxt UI's built-in icons, drawn from HackerNoon's Pixel Icon Library (`@iconify-json/pixel`, CC-BY-4.0).
  * Where the set has no exact glyph, the closest in meaning stands in (noted inline).
- * There are no chevrons: wherever Nuxt UI would draw one, a pixel arrow stands in, and purely
- * decorative ones (select triggers, accordions) are hidden by the theme.
+ * Chevrons and arrows are replaced with angle brackets, which read as classic 80s
+ * navigation glyphs rather than modern arrow icons. Purely decorative ones (select triggers,
+ * accordions) are hidden by the theme.
  */
 export const icons = {
   arrowDown: 'i-pixel-arrow-down',
@@ -11,12 +12,12 @@ export const icons = {
   arrowUp: 'i-pixel-arrow-up',
   caution: 'i-pixel-exclaimation',
   check: 'i-pixel-check',
-  chevronDoubleLeft: 'i-pixel-arrow-left',
-  chevronDoubleRight: 'i-pixel-arrow-right',
-  chevronDown: 'i-pixel-arrow-down',
-  chevronLeft: 'i-pixel-arrow-left',
-  chevronRight: 'i-pixel-arrow-right',
-  chevronUp: 'i-pixel-arrow-up',
+  chevronDoubleLeft: 'i-pixel-angle-left',
+  chevronDoubleRight: 'i-pixel-angle-right',
+  chevronDown: 'i-pixel-angle-down',
+  chevronLeft: 'i-pixel-angle-left',
+  chevronRight: 'i-pixel-angle-right',
+  chevronUp: 'i-pixel-angle-up',
   close: 'i-pixel-times',
   copy: 'i-pixel-copy',
   copyCheck: 'i-pixel-check',
