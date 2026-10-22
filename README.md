@@ -4,6 +4,24 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 
 Live showcase: [vacuum.stjhn.xyz](https://vacuum.stjhn.xyz)
 
+![Showcase overview](assets/gifs/hero.gif)
+
+## Showcase
+
+| Section | Preview |
+|---|---|
+| Displays | ![Displays](assets/gifs/displays.gif) |
+| Materials | ![Materials](assets/gifs/materials.gif) |
+| Forms | ![Forms](assets/gifs/forms.gif) |
+| Navigation | ![Navigation](assets/gifs/navigation.gif) |
+| Overlays | ![Overlays](assets/gifs/overlays.gif) |
+| Cards | ![Cards](assets/gifs/cards.gif) |
+| Badges | ![Badges](assets/gifs/badges.gif) |
+| Buttons | ![Buttons](assets/gifs/buttons.gif) |
+| Alerts | ![Alerts](assets/gifs/alerts.gif) |
+| Palette | ![Palette](assets/gifs/palette.gif) |
+| Data | ![Data](assets/gifs/data.gif) |
+
 - **Dark** is a black hi-fi chassis with silkscreened legends.
 - **Daylight** is a brushed silver chassis with dark legends.
 - **Display windows** are dark smoked glass with lit phosphor in both modes.
