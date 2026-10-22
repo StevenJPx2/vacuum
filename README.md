@@ -4,25 +4,189 @@ An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every 
 
 Live showcase: [vacuum.stjhn.xyz](https://vacuum.stjhn.xyz)
 
-![Showcase overview](assets/gifs/hero.gif)
+![Vacuum components being used: typing, switching tabs, dragging a slider and opening panels](assets/showcase/hero.gif)
 
 ## Showcase
 
-Interactive sections are recorded as GIFs; static ones are stills.
+Each GIF shows one component in use. Static examples are JPEGs.
 
-| Section | Preview |
-|---|---|
-| Displays | ![Displays](assets/gifs/displays.gif) |
-| Materials | ![Materials](assets/gifs/materials.jpg) |
-| Forms | ![Forms](assets/gifs/forms.gif) |
-| Navigation | ![Navigation](assets/gifs/navigation.gif) |
-| Overlays | ![Overlays](assets/gifs/overlays.gif) |
-| Cards | ![Cards](assets/gifs/cards.jpg) |
-| Badges | ![Badges](assets/gifs/badges.jpg) |
-| Buttons | ![Buttons](assets/gifs/buttons.gif) |
-| Alerts | ![Alerts](assets/gifs/alerts.jpg) |
-| Palette | ![Palette](assets/gifs/palette.jpg) |
-| Data | ![Data](assets/gifs/data.jpg) |
+### Displays
+
+**Segment display** — Seven- and fourteen-segment readouts, with a blinking clock.
+
+![Segment display colours, sizes and blinking digits](assets/showcase/segment.gif)
+
+**Dot matrix** — Text drawn on a 5×7 grid, with round or square dots.
+
+![Dot-matrix text in different colours and sizes](assets/showcase/dot-matrix.jpg)
+
+**Meter** — Live horizontal levels and a twelve-channel vertical meter bank.
+
+![Meter levels rising and falling across warning thresholds](assets/showcase/meters.gif)
+
+**Annunciator** — Click a lamp to toggle its illuminated legend; REC blinks when active.
+
+![Toggling Play, Rec, Dolby and Over annunciator lamps](assets/showcase/annunciators.gif)
+
+**Matrix text and icons** — The matrix font and icon filter beside the SVG display they match.
+
+![Matrix font, SVG text and filtered pixel icons](assets/showcase/matrix-text.jpg)
+
+**Panel** — A moulded frame and smoked-glass window holding several readouts together.
+
+![Panel with a clock, track title, status lamps and stereo meters](assets/showcase/panel.jpg)
+
+### Buttons and forms
+
+**Button** — Hover and press the different keycap variants.
+
+![Pressing solid, outline, soft, subtle, ghost and link buttons](assets/showcase/buttons.gif)
+
+**Input** — Type into a framed screen; the shared value appears across all five variants.
+
+![Editing a callsign and typing into coloured inputs](assets/showcase/inputs.gif)
+
+**Textarea** — Add lines to a continuous-feed teletype sheet.
+
+![Typing a multiline transmission log on paper](assets/showcase/textarea.gif)
+
+**Select** — Open the thumbwheel's display menu and choose another channel.
+
+![Opening the channel selector and selecting Channels 3 and 1](assets/showcase/select.gif)
+
+**Input tags** — Type a label, press Enter to cut a tape chip, and remove it with Backspace.
+
+![Adding and removing label-tape tags](assets/showcase/tags.gif)
+
+**Checkbox** — Press the lens to switch the tick and light ring on or off.
+
+![Checking and unchecking illuminated checkbox keys](assets/showcase/checkbox.gif)
+
+**Switch** — Move the chrome knob between its off and on detents.
+
+![Toggling chrome switches and their light rings](assets/showcase/switch.gif)
+
+**Radio group** — Select one mode; the other keys release. Both examples share the same value.
+
+![Selecting Auto, Manual and Standby radio keys](assets/showcase/radio.gif)
+
+**Slider** — Drag the fader to change its level and segmented light trail.
+
+![Dragging slider handles to raise and lower their values](assets/showcase/slider.gif)
+
+**Progress** — Segmented level bars, including an animated indeterminate indicator.
+
+![Progress bar variants with a moving indeterminate indicator](assets/showcase/progress.gif)
+
+**Pin input** — Enter a four-digit code; focus advances between the counter keys.
+
+![Typing 1984 into four counter-style PIN keys](assets/showcase/pin.gif)
+
+### Navigation
+
+**Tabs** — Change audio sources using latching keys or the sliding tuner needle.
+
+![Switching between Tuner, Tape and Aux in both tab variants](assets/showcase/tabs.gif)
+
+**Accordion** — Open and close a folder to reveal the paper filed inside.
+
+![Opening Cathode, Grid and Anode accordion folders](assets/showcase/accordion.gif)
+
+**Pagination** — Select a page or use the next and previous keys.
+
+![Changing the selected page with numbered and arrow keys](assets/showcase/pagination.gif)
+
+**Breadcrumb** — A path printed inside a smoked-glass display window.
+
+![System, Audio and Equaliser breadcrumb](assets/showcase/breadcrumb.jpg)
+
+**Kbd** — A keyboard shortcut shown as a pair of physical keycaps.
+
+![Command and K keycap legends](assets/showcase/kbd.jpg)
+
+**Separator** — An etched rule with a printed legend.
+
+![End of transmission separator](assets/showcase/separator.jpg)
+
+### Overlays
+
+**Modal** — Open a rack-mount confirmation panel and press Launch to dismiss it.
+
+![Opening the confirmation modal and pressing Launch](assets/showcase/modal.gif)
+
+**Slideover** — Pull out a diagnostics drawer with live meters, then press CLOSE.
+
+![Opening and closing the diagnostics drawer](assets/showcase/slideover.gif)
+
+**Popover** — Open a clipped paper note and dismiss it with Escape.
+
+![Opening and dismissing the paper-note popover](assets/showcase/popover.gif)
+
+**Tooltip** — Hover a control to reveal its small display window.
+
+![Hovering to show a tooltip and moving away to hide it](assets/showcase/tooltip.gif)
+
+**Dropdown menu** — Open the VFD menu and move between its inverted selection rows.
+
+![Hovering Diagnostics, Calibrate and Shut down menu items](assets/showcase/menu.gif)
+
+**Toast** — Trigger notifications in different signal colours.
+
+![Triggering primary, success and error toast notifications](assets/showcase/toasts.gif)
+
+### Materials and static components
+
+**Keycaps** — Press and release a plain key beside a latched one.
+
+![Pressing material keycaps](assets/showcase/keycaps.gif)
+
+**Folder stack** — Switch between labelled files and close the open folder.
+
+![Opening Personnel, Pattern blue, Archive and Budget folders](assets/showcase/folders.gif)
+
+**Surfaces** — Chassis, smoked glass, recesses, rack metal and paper stock.
+
+![Physical surface material samples](assets/showcase/surfaces.jpg)
+
+**Tape and lamps** — Embossed labels, chrome, tinted lenses and indicator LEDs.
+
+![Label tape and indicator material samples](assets/showcase/tape-and-lamps.jpg)
+
+**Badges** — Dyed, clear, black and white label-maker tape.
+
+![Badge variants, colours and sizes](assets/showcase/badges.jpg)
+
+**Alerts** — Status messages behind coloured display glass.
+
+![Alert variants and signal colours](assets/showcase/alerts.jpg)
+
+**Cards** — Framed display surfaces with keycap actions and tape status labels.
+
+![Card surface variants](assets/showcase/cards.jpg)
+
+**Table** — A continuous-feed green-bar printout with tape status labels.
+
+![Unit status table on green-bar paper](assets/showcase/table.jpg)
+
+**Avatar, avatar group and chip** — Identity keys grouped together, with a small notification lamp.
+
+![Grouped unit avatars and a notification chip](assets/showcase/avatars.jpg)
+
+**Palette** — Four phosphor ramps and smoked-glass neutrals.
+
+![Amber, cyan, green, red and glass colour scales](assets/showcase/palette.jpg)
+
+### Runtime controls
+
+Change phosphor colour and glow strength without rebuilding, or replay the tube warm-up.
+
+![Changing phosphor colour, glow strength and replaying warm-up](assets/showcase/phosphor.gif)
+
+Switch between a black chassis and brushed silver daylight mode; the display glass stays dark.
+
+![Switching from dark to daylight mode and back](assets/showcase/daylight.gif)
+
+## Material language
 
 - **Dark** is a black hi-fi chassis with silkscreened legends.
 - **Daylight** is a brushed silver chassis with dark legends.
@@ -48,7 +212,7 @@ Interactive sections are recorded as GIFs; static ones are stills.
 | Badge | Label-maker tape with embossed letters: dyed (`solid`), clear (`outline`), black (`soft`), white (`subtle`) |
 | Card | Screens in a moulded frame; `solid` is lit edge to edge, `soft` is bare glass |
 | Modal | A rack-mount module with rack ears and screws |
-| Slideover | A drawer pulled out of the chassis: a brushed leading edge with a recessed finger pull, and an eject key set into the faceplate |
+| Slideover | A drawer pulled out of the chassis: a brushed leading edge with a recessed finger pull, and a CLOSE key set into the faceplate |
 | Dropdown menu, Select menus | A small VFD screen; the highlighted line inverts to dark text on lit phosphor |
 | Popover | A paper note held by a steel gem clip whose outer loop wraps behind the sheet |
 
