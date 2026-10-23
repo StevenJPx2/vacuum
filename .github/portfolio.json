@@ -1,0 +1,44 @@
+{
+  "body": [
+    "An **80s hardware UI kit** for Nuxt, built on Nuxt UI, where each component is styled as a physical object: keycaps that travel when pressed, an accordion drawn as manila folders, and a table printed on green-bar paper.",
+    "Adds **SVG display components** for vacuum fluorescent readouts: segment digits, dot-matrix text, bar-graph meters and annunciator lamps.",
+    "Has **dark and daylight** themes and four phosphor colours (amber, cyan, green and red) with adjustable glow, switchable at runtime. Displays keep a **fixed node count**, so large meters stay cheap to style."
+  ],
+  "areas": [
+    "developer-tools",
+    "interaction-design"
+  ],
+  "links": [
+    {
+      "label": "Demo",
+      "url": "https://vacuum.stjhn.xyz"
+    }
+  ],
+  "demos": [
+    {
+      "video": ".github/portfolio/segment.mp4",
+      "poster": ".github/portfolio/segment.jpg",
+      "caption": "Segment display colours, sizes and blinking digits."
+    },
+    {
+      "video": ".github/portfolio/meters.mp4",
+      "poster": ".github/portfolio/meters.jpg",
+      "caption": "Meter levels rising and falling across warning thresholds."
+    },
+    {
+      "video": ".github/portfolio/buttons.mp4",
+      "poster": ".github/portfolio/buttons.jpg",
+      "caption": "Pressing solid, outline, soft, subtle, ghost and link buttons."
+    },
+    {
+      "video": ".github/portfolio/slider.mp4",
+      "poster": ".github/portfolio/slider.jpg",
+      "caption": "Dragging slider handles to raise and lower their values."
+    },
+    {
+      "video": ".github/portfolio/modal.mp4",
+      "poster": ".github/portfolio/modal.jpg",
+      "caption": "Opening the confirmation modal and pressing Launch."
+    }
+  ]
+}
