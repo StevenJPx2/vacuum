@@ -375,4 +375,4 @@ The 14-segment table and the 5×7 dot-matrix font come from Adafruit's [LED Back
 
 ## License
 
-MIT
+MIT. Third-party notices are in [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES).
