@@ -2,7 +2,7 @@
 
 An 80s hardware UI kit for Nuxt, built on [Nuxt UI](https://ui.nuxt.com). Every component is a physical object: keys you press, lamps that light, screens behind smoked glass, label tape and paper. It adds SVG display components for vacuum fluorescent readouts: segment digits, dot-matrix text, bar-graph meters and annunciator lamps.
 
-Live showcase: [vacuum.stjhn.xyz](https://vacuum.stjhn.xyz)
+Live showcase: [vacuum.stjhn.xyz](https://vacuum.stjhn.xyz). Each pull request gets its own preview.
 
 ![Vacuum components being used: typing, switching tabs, dragging a slider and opening panels](assets/showcase/hero.gif)
 
