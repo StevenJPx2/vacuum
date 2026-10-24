@@ -15,7 +15,7 @@
       "bun run dev:prepare && bun run lint",
       "bun run dev:prepare && bun run test:types",
       "bun run dev:prepare && bun run test",
-      "bun run prepack"
+      "bun run dev:prepare && bun run prepack"
     ],
     "build": "bun run dev:prepare && bunx nuxi generate playground",
     "assets": "playground/.output/public"
