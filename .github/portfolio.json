@@ -8,12 +8,18 @@
     "developer-tools",
     "interaction-design"
   ],
-  "links": [
-    {
-      "label": "Demo",
-      "url": "https://vacuum.stjhn.xyz"
-    }
-  ],
+  "deploy": {
+    "domain": "vacuum.stjhn.xyz",
+    "link": "Demo",
+    "checks": [
+      "bun run dev:prepare && bun run lint",
+      "bun run dev:prepare && bun run test:types",
+      "bun run dev:prepare && bun run test",
+      "bun run prepack"
+    ],
+    "build": "bun run dev:prepare && bunx nuxi generate playground",
+    "assets": "playground/.output/public"
+  },
   "demos": [
     {
       "video": ".github/portfolio/segment.mp4",
